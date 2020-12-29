@@ -1,0 +1,106 @@
+blockquote,
+body,
+dd,
+div,
+dl,
+dt,
+fieldset,
+figcaption,
+figure,
+form,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+input,
+li,
+ol,
+p,
+pre,
+td,
+textarea,
+th,
+ul {
+  padding: 0;
+  margin: 0;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+img {
+  border: none;
+}
+
+a {
+  cursor: pointer;
+  text-decoration: none;
+  color: #333;
+  transition: 0.3s;
+}
+
+body {
+  font-family: Arial, "\5FAE\8F6F\96C5\9ED1";
+}
+
+/*form*/
+
+button,
+fieldset,
+input,
+option,
+select,
+textarea {
+  outline: 0;
+  vertical-align: middle;
+}
+
+input[type="text"],
+input[type="password"] {
+  padding-left: 5px;
+  box-sizing: border-box;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="button"] {
+  font-family: "Microsoft YaHei";
+}
+
+ul li {
+  box-sizing: border-box;
+}
+
+input::-ms-clear {
+  display: none;
+}
+
+input[type="password"]::-ms-reveal {
+  display: none;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: 0 0;
+  font-family: "Microsoft YaHei";
+}
+
+textarea {
+  resize: none;
+  padding: 5px !important;
+  line-height: 24px;
+  font-family: "Microsoft YaHei";
+}
+
+.icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
+}
