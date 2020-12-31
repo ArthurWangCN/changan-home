@@ -214,6 +214,23 @@
   justify-content: space-between;
 }
 
+.knowledge-nodata {
+  display: flex;
+  align-items: center;
+  color: #666;
+}
+.knowledge-nodata .iconfont {
+  width: 14px;
+  height: 16px;
+  fill: #bbb;
+}
+.knowledge-nodata span {
+  margin-left: 4px;
+  margin-top: 2px;
+  font-size: 12px;
+}
+.knowledge-nodata span:hover {color: #666;}
+
 /* 专业频道 */
 .professional-channel {
   width: 408px;

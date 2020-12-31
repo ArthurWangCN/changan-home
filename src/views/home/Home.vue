@@ -13,12 +13,16 @@
       <div class="flex">
         <!-- 专业频道、图、个人信息 -->
         <channel />
-        <div class="banner">
+        <!-- <div class="banner">
           <img src="../../assets/img/banner.jpg" alt="" />
           <div class="notice-link">
             <p>通知公告:长安汽车与宁德时代更新盖世汽车讯距外媒</p>
             <a href="#">查看更多</a>
           </div>
+        </div> -->
+        <div class="banner">
+          <!-- 轮播图 -->
+          <banner />
         </div>
         <!-- 个人信息 -->
         <personal />
@@ -39,7 +43,7 @@
         </div>
         <!-- 热门标签 -->
         <div class="hot-tags">
-          <div class="hot-tags-title circle-title">
+          <!-- <div class="hot-tags-title circle-title">
             <div class="title-left">
               <p class="circle-title-name">热门标签</p>
             </div>
@@ -53,7 +57,8 @@
             >
               {{ item }}
             </div>
-          </div>
+          </div> -->
+          <hot-tag />
         </div>
       </div>
       <!-- 热门圈子 -->
@@ -80,6 +85,8 @@ import Column from "@/components/Column.vue";
 import Information from "@/components/Information.vue";
 import HotTopic from "@/components/HotTopic.vue";
 import Map from "@/components/Map.vue";
+import Banner from "@/components/Banner.vue";
+import HotTag from "@/components/HotTag.vue";
 
 export default {
   name: "home",
@@ -97,6 +104,8 @@ export default {
     Information,
     HotTopic,
     Map,
+    Banner,
+    HotTag,
   },
   data() {
     return {

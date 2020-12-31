@@ -42,6 +42,9 @@ export const DeleteSubscribe = params => axios.get('/index/spe/unsubscribe', { p
 //加入圈子
 export const getForum = params => axios.get('/index/circle/joinCircle', { params });
 
+// 轮播图列表
+export const getBanner = params => axios.get('/index/banner/list', { params });
+
 export default {
   getUserInfo,
   getChannel,
@@ -56,5 +59,6 @@ export default {
   getSpecialDetail,
   getSubscribe,
   DeleteSubscribe,
-  getForum
+  getForum,
+  getBanner
 }

@@ -6,6 +6,7 @@
           v-for="(item, index) in searchdata"
           @click="changeHomeSearchTopic(item)"
           :class="currentTopic === item ? 'active' : ''"
+          :key="index"
         >
           {{ item }}
         </li>
@@ -27,7 +28,7 @@
     <div class="hot-search">
       <h4 class="hot-search-title">热搜</h4>
       <div class="hot-search-words">
-        <span v-for="(item, index) in hotdata" @click="goHot(item)">{{
+        <span v-for="(item, index) in hotdata" :key="index" @click="goHot(item)">{{
           item
         }}</span>
       </div>

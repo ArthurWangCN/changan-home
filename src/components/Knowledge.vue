@@ -68,6 +68,11 @@
                             />
                           </span>
                         </div>
+                        <div class="knowledge-nodata" v-else>
+                          <svg class="iconfont" aria-hidden="true">
+                            <use xlink:href="#iconnothing" />
+                          </svg><span>暂无内容</span>
+                        </div>
                       </el-dropdown-item>
                     </div>
                   </el-scrollbar>
@@ -144,6 +149,11 @@
                               direction="vertical"
                             />
                           </span>
+                        </div>
+                        <div class="knowledge-nodata" v-else>
+                          <svg class="iconfont" aria-hidden="true">
+                            <use xlink:href="#iconnothing" />
+                          </svg><span>暂无内容</span>
                         </div>
                       </el-dropdown-item>
                     </div>
