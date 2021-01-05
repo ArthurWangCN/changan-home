@@ -235,7 +235,7 @@
 /* 专业频道 */
 .professional-channel {
   width: 408px;
-  height: 420px;
+  height: 400px;
   background: #fff;
   border-radius: 10px;
   display: flex;
@@ -310,7 +310,7 @@
   position: relative;
   border-radius: 10px;
   width: 694px;
-  height: 420px;
+  height: 400px;
   overflow: hidden;
 }
 .banner img {
@@ -337,11 +337,9 @@
 
 /* 个人信息 */
 .home-personal-info {
-  box-sizing: border-box;
-  padding-top: 10px;
   width: 298px;
   background: #fff;
-  height: 420px;
+  height: 400px;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
@@ -671,7 +669,6 @@
   display: flex;
   color: #333333;
   margin-bottom: 18px;
-  position: relative;
 }
 .hot-knowlege .normal-column-item span {
   font-size: 12px;
@@ -705,21 +702,6 @@
 }
 .hot-knowlege .recommend-item-info {
   width: 64%;
-}
-
-/* 通知公告 */
-.notice-item .notice-item-name {
-  margin-left: 0;
-}
-.notice .notice-item .notice-item-dot {
-  position: absolute;
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  left: -12px;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: #ddd;
 }
 
 /* 热门圈子 */
@@ -846,12 +828,12 @@
 }
 /* 行业资讯 */
 .industry-information {
-  box-sizing: border-box;
+  margin-top: 20px;
   padding-bottom: 30px;
   width: 1122px;
   background: #fff;
   border-radius: 10px;
-  min-height: 420px;
+  min-height: 310px;
 }
 .industry-information .title-left {
   display: flex;
@@ -889,12 +871,12 @@
 
 /* 热门话题 */
 .hot-topic {
-  box-sizing: border-box;
+  margin-top: 20px;
   padding-bottom: 30px;
   width: 1122px;
   background: #fff;
   border-radius: 10px;
-  height: 420px;
+  min-height: 310px;
 }
 .hot-topic-title .title-left {
   display: flex;
@@ -920,12 +902,12 @@
 
 /* 热门标签 */
 .hot-tags {
+  margin-top: 20px;
   width: 298px;
   background: #fff;
   border-radius: 10px;
   box-sizing: border-box;
-  height: 420px;
-  overflow: hidden;
+  min-height: 700px;
 }
 .hot-tag-content {
   display: flex;

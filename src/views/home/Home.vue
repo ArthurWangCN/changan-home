@@ -33,34 +33,21 @@
         <!-- 热点知识 -->
         <hot-knowledge />
       </div>
-      <div class="flex">
-        <!-- 行业资讯和热门话题 -->
-        <div class="left-list">
-          <!-- 行业资讯 -->
-          <information />
-          <!-- 热门话题 -->
-          <hot-topic />
-        </div>
-        <!-- 热门标签 -->
-        <div class="hot-tags">
-          <!-- <div class="hot-tags-title circle-title">
-            <div class="title-left">
-              <p class="circle-title-name">热门标签</p>
-            </div>
-          </div>
-          <div class="hot-tag-content">
-            <div
-              :class="`hot-tag loop-colors${index % 7}`"
-              v-for="(item, index) in hotTags"
-              :key="index"
-              @click="goSearch(item)"
-            >
-              {{ item }}
-            </div>
-          </div> -->
-          <hot-tag />
-        </div>
+
+      <div class="flex" style="margin-top: 20px">
+        <!-- 行业资讯 -->
+        <information />
+        <!-- 通知公告 -->
+        <notice />
       </div>
+
+      <div class="flex" style="margin-top: 20px">
+        <!-- 热门话题 -->
+        <hot-topic />
+        <!-- 热门标签 -->
+        <hot-tag />
+      </div>
+      
       <!-- 热门圈子 -->
       <hot-forum />
       <!-- 专栏 -->
@@ -87,6 +74,7 @@ import HotTopic from "@/components/HotTopic.vue";
 import Map from "@/components/Map.vue";
 import Banner from "@/components/Banner.vue";
 import HotTag from "@/components/HotTag.vue";
+import Notice from "@/components/Notice.vue";
 
 export default {
   name: "home",
@@ -106,6 +94,7 @@ export default {
     Map,
     Banner,
     HotTag,
+    Notice,
   },
   data() {
     return {

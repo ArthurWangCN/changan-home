@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="hot-tags">
     <div class="hot-tags-title circle-title">
       <div class="title-left">
         <p class="circle-title-name">热门标签</p>
@@ -35,16 +35,16 @@ export default {
         "活塞",
         "KC分析",
         "PVC",
-        "喷涂",
-        "涂装",
-        "摆臂",
-        "OBU",
-        "ETC",
-        "悬置",
-        "规范",
-        "缺陷",
-        "SRM",
-        "盐雾",
+        // "喷涂",
+        // "涂装",
+        // "摆臂",
+        // "OBU",
+        // "ETC",
+        // "悬置",
+        // "规范",
+        // "缺陷",
+        // "SRM",
+        // "盐雾",
       ],
     };
   },

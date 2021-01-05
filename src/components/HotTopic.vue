@@ -114,7 +114,7 @@ export default {
   methods: {
     init() {
       getHotTopic({
-        size: 8,
+        size: 12,
         current: 1,
         type: this.currentHotTopic,
       })
@@ -123,7 +123,7 @@ export default {
             const data = json.content;
             if (data.rows.length > 0) {
               this.loading = true;
-              let leftdata = data.rows.slice(0, 4);
+              let leftdata = data.rows.slice(0, 6);
               leftdata = leftdata.map((item, index) => {
                 if (index == 0) {
                   item.isShowPicInfo = true;
@@ -133,7 +133,7 @@ export default {
                 item.createTime = showDate(item.createTime);
                 return item;
               });
-              let rightdata = data.rows.slice(4);
+              let rightdata = data.rows.slice(6);
               rightdata = rightdata.map((item, index) => {
                 if (index == 0) {
                   item.isShowPicInfo = true;

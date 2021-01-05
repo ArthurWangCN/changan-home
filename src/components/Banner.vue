@@ -1,7 +1,7 @@
 <template>
   <el-carousel
     trigger="click"
-    height="400px"
+    height="420px"
   >
     <el-carousel-item v-for="banner in bannerList" :key="banner.id" v-show="banner.isShow">
       <!-- <img src="../assets/img/banner.jpg" alt="" />
