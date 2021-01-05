@@ -945,59 +945,59 @@
   transform: translateY(-2px);
 }
 .hot-tag.loop-colors0 {
-  border: 1px solid rgba(129, 215, 124, 0.7);
+  border: 1px solid #81d77c;
   color: #36cd01;
 }
 .hot-tag.loop-colors1 {
-  border: 1px solid rgba(234, 110, 104, 0.7);
+  border: 1px solid #ea6e68;
   color: #ef2d22;
 }
 .hot-tag.loop-colors2 {
-  border: 1px solid rgba(137, 218, 199, 0.7);
+  border: 1px solid #89dac7;
   color: #04e6b3;
 }
 .hot-tag.loop-colors3 {
-  border: 1px solid rgba(245, 205, 58, 0.7);
+  border: 1px solid #f5cd3a;
   color: #fc9b03;
 }
 .hot-tag.loop-colors4 {
-  border: 1px solid rgba(133, 183, 244, 0.7);
+  border: 1px solid #85b7f4;
   color: #0e7bf8;
 }
 .hot-tag.loop-colors5 {
-  border: 1px solid rgba(234, 138, 225, 0.7);
+  border: 1px solid #ea8ae1;
   color: #f004da;
 }
 .hot-tag.loop-colors6 {
-  border: 1px solid rgba(159, 158, 236, 0.7);
+  border: 1px solid #9f9eec;
   color: #6b69f2;
 }
 .hot-tag.loop-colors0:hover {
-  background: rgba(129, 215, 124, 0.7);
+  background: #81d77c;
   color: #fff;
 }
 .hot-tag.loop-colors1:hover {
-  background: rgba(234, 110, 104, 0.7);
+  background: #ea6e68;
   color: #fff;
 }
 .hot-tag.loop-colors2:hover {
-  background: rgba(137, 218, 199, 0.7);
+  background: #89dac7;
   color: #fff;
 }
 .hot-tag.loop-colors3:hover {
-  background: rgba(245, 205, 58, 0.7);
+  background: #f5cd3a;
   color: #fff;
 }
 .hot-tag.loop-colors4:hover {
-  background: rgba(133, 183, 244, 0.7);
+  background: #85b7f4;
   color: #fff;
 }
 .hot-tag.loop-colors5:hover {
-  background: rgba(234, 138, 225, 0.7);
+  background: #ea8ae1;
   color: #fff;
 }
 .hot-tag.loop-colors6:hover {
-  background: rgba(159, 158, 236, 0.7);
+  background: #9f9eec;
   color: #fff;
 }
 
@@ -1008,7 +1008,7 @@
   height: 416px;
   background: #fff;
   border-radius: 10px;
-  margin-bottom: 30px;
+  margin-bottom: 50px;
 }
 
 .el-dialog__footer {

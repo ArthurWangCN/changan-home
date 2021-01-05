@@ -26,7 +26,7 @@ const routes = [
   },
   {
     path: '/manage/demand',     //后台管理 —— 用户需求管理
-    name: 'manage',
+    name: 'demand',
     component: UserDemand
   }
 ];

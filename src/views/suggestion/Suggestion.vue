@@ -1,11 +1,11 @@
 <template>
   <div class="suggestion manage-comp">
-    <div class="suggestion-header">
+    <div class="suggestion-header flex-align-c">
       <ul class="suggestion-tabs">
         <li :class="{'tab-active': tabActive==0}" @click="tabActive=0">意见建议</li>
         <li :class="{'tab-active': tabActive==1}" @click="tabActive=1">意见分类管理</li>
       </ul>
-      <div>
+      <div class="flex-align-c">
         <span class="btn-export">导出数据</span>
         <el-input
           v-model="serachText"
@@ -25,23 +25,28 @@
         </el-input>
       </div>
     </div>
+
+    <div class="suggestion-content">
+      <suggestion-list v-if="tabActive==0"></suggestion-list>
+      <suggestion-type v-if="tabActive==1"></suggestion-type>
+    </div>
   </div>
 </template>
 
 <script>
 import '@/assets/css/manage.css';
-import SuggestionList from './SuggestionList.vue';
-import SuggestionClassification from './SuggestionClassification.vue';
+import SuggestionList from './SuggestionList';
+import SuggestionType from './SuggestionType';
 export default {
   name: 'suggestion',
-  component: {
+  components: {
     SuggestionList,
-    SuggestionClassification
+    SuggestionType
   },
   data() {
     return {
       serachText: '',
-      tabActive: 0,
+      tabActive: 0,   // 0:意见建议  1:意见分类管理
     }
   },
   methods: {
@@ -53,8 +58,6 @@ export default {
 <style scoped>
 .suggestion-header {
   margin-bottom: 20px;
-  display: flex;
-  align-items: center;
   justify-content: space-between;
 }
 
