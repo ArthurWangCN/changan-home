@@ -710,6 +710,7 @@
 /* 通知公告 */
 .notice-item .notice-item-name {
   margin-left: 0;
+  font-size: 14px;
 }
 .notice .notice-item .notice-item-dot {
   position: absolute;

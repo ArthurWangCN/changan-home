@@ -2,7 +2,7 @@
   <div class="hot-knowlege notice">
     <div class="hot-knowlege-title circle-title">
       <p class="circle-title-name">通知公告</p>
-      <a class="more">更多</a>
+      <a class="more" @click="goMore">更多</a>
     </div>
     <div class="hot-knowlege-items">
       <div
@@ -108,6 +108,13 @@ export default {
       });
       this.hotKnowlege = newHotKnowlege;
     },
+
+    goMore() {
+      let routeUrl = this.$router.resolve({
+        path: "/notice"
+      });
+      window.open(routeUrl.href, '_blank');
+    }
   },
 };
 </script>

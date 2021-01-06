@@ -3,7 +3,6 @@
     <el-button type="primary" @click="typeDialogVisible=true;operation='add'" style="margin-bottom:20px;">新建分类</el-button>
 
     <el-table
-      ref="singleTable"
       :data="typeList"
       :header-cell-style="headerStyle"
       :row-style="rowStyle"

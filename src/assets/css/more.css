@@ -1,0 +1,23 @@
+.more-wrapper {
+  background-color: #f1f2f5;
+}
+.more-breadcrumb {
+  width: 1200px;
+  height: 50px;
+  line-height: 50px;
+  margin: 0 auto;
+  font-size: 12px;
+  color: #999999;
+  cursor: pointer;
+}
+.breadcrumb-cur {
+  color: #333333;
+  cursor: default;
+}
+.more-content {
+  width: 1200px;
+  min-height: calc(100vh - 215px);
+  margin: 0 auto 50px;
+  border-radius: 10px;
+  background-color: #ffffff;
+}
