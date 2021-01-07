@@ -12,10 +12,24 @@ const routes = [
   },
 
   {
-    path: '/notice',     // 通知公告 更多
+    path: '/notice',     // 更多 通知公告列表页
     name: 'notice',
     component: () => import(
       /* webpackChunkName: "more" */ '@/views/more/Notice.vue'
+    )
+  },
+  {
+    path: '/noticeDetail',     // 更多 通知公告详情页
+    name: 'noticeDetail',
+    component: () => import(
+      /* webpackChunkName: "more" */ '@/views/more/NoticeDetail.vue'
+    )
+  },
+  {
+    path: '/feedback',     // 反馈建议
+    name: 'feedback',
+    component: () => import(
+      /* webpackChunkName: "more" */ '@/views/more/Feedback.vue'
     )
   },
 
@@ -27,10 +41,10 @@ const routes = [
     )
   },
   {
-    path: '/manage/suggestion',   // 后台管理 —— 反馈建议管理
-    name: 'suggestion',
+    path: '/manage/opinion',   // 后台管理 —— 反馈建议管理
+    name: 'opinion',
     component: () => import(
-      /* webpackChunkName: "manage" */ '@/views/manage/suggestion/Suggestion.vue'
+      /* webpackChunkName: "manage" */ '@/views/manage/opinion/Opinion.vue'
     )
   },
   {

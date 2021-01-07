@@ -1,14 +1,14 @@
 <template>
-  <div class="suggestion manage-comp">
-    <div class="suggestion-header flex-align-c">
-      <ul class="suggestion-tabs">
+  <div class="opinion manage-comp">
+    <div class="opinion-header flex-align-c">
+      <ul class="opinion-tabs">
         <li :class="{'tab-active': tabActive==0}" @click="tabActive=0">意见建议</li>
         <li :class="{'tab-active': tabActive==1}" @click="tabActive=1">意见分类管理</li>
       </ul>
       <div class="flex-align-c">
-        <span class="btn-export">导出数据</span>
+        <span class="btn-export" @click="exportData">导出数据</span>
         <el-input
-          v-model="serachText"
+          v-model="searchText"
           placeholder="搜索"
           @keyup.13.native="search"
           size="small"
@@ -26,45 +26,54 @@
       </div>
     </div>
 
-    <div class="suggestion-content">
-      <suggestion-list v-if="tabActive==0"></suggestion-list>
-      <suggestion-type v-if="tabActive==1"></suggestion-type>
+    <div class="opinion-content">
+      <opinion-list ref="opinionList" :searchText="searchText" v-if="tabActive==0"></opinion-list>
+      <opinion-type ref="opinionType" v-if="tabActive==1"></opinion-type>
     </div>
   </div>
 </template>
 
 <script>
 import '@/assets/css/manage.css';
-import SuggestionList from './SuggestionList';
-import SuggestionType from './SuggestionType';
+import OpinionList from './OpinionList';
+import OpinionType from './OpinionType';
 export default {
-  name: 'suggestion',
+  name: 'opinion',
   components: {
-    SuggestionList,
-    SuggestionType
+    OpinionList,
+    OpinionType
   },
   data() {
     return {
-      serachText: '',
+      searchText: '',
       tabActive: 0,   // 0:意见建议  1:意见分类管理
     }
   },
   methods: {
-    search() {}
+    search() {
+      if (this.tabActive === 0) {
+        this.$refs.opinionList.getOpinionList();
+      }
+    },
+    exportData() {
+      if (this.tabActive === 0) {
+        this.$refs.opinionList.exportExcel();
+      }
+    }
   }
 }
 </script>
 
 <style scoped>
-.suggestion-header {
+.opinion-header {
   margin-bottom: 20px;
   justify-content: space-between;
 }
 
-.suggestion-tabs {
+.opinion-tabs {
   display: flex;
 }
-.suggestion-tabs li {
+.opinion-tabs li {
   margin-right: 10px;
   cursor: pointer;
 }

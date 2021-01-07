@@ -138,6 +138,9 @@ export default {
 .search-input { width: 320px; }
 .search-input >>> .el-input__inner{
   height: 36px;
+  line-height: 36px;
+  font-size: 12px;
+  color: #999999;
   border-radius: 18px;
   padding: 0 30px 0 20px;
 }

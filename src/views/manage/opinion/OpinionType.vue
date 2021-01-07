@@ -13,7 +13,7 @@
           {{ scope.$index + 1 }}
         </template>
       </el-table-column>
-      <el-table-column prop="type" label="分类" align="center"></el-table-column>
+      <el-table-column prop="type_name" label="分类" align="center"></el-table-column>
       <el-table-column label="操作" align="center" width="300">
         <template slot-scope="scope">
           <el-button type="text" @click="editType(scope.row)">编辑</el-button>
@@ -69,23 +69,15 @@
 </template>
 
 <script>
+import {
+  getOpinionTypeList,
+  addOpinionType
+} from '@/api/interface/manage';
 export default {
-  name: 'suggestionType',
+  name: 'opinionType',
   data() {
     return {
-      typeList: [{
-        id: '111',
-        type: '平台模块设置',
-      }, {
-        id: '222',
-        type: '平台bug',
-      }, {
-        id: '333',
-        type: '新需求',
-      }, {
-        id: '444',
-        type: '改版建议',
-      }],
+      typeList: [],
       headerStyle: {
         height: "50px",
         background: "#498be3",
@@ -111,7 +103,29 @@ export default {
       return this.operation === 'add' ? '新建分类' : '编辑分类'
     }
   },
+  created() {
+    this.init();
+  },
   methods: {
+    init() {
+      this.getOpinionTypeList();
+    },
+
+    getOpinionTypeList() {
+      getOpinionTypeList()
+      .then(res => {
+        if (res.success) {
+          this.typeList = res.content;
+        } else {
+          this.$message.error(res.message);
+        }
+      })
+      .catch(err => {
+        this.$message.error(err.message);
+      })
+    },
+
+
     // 搜索
     search() {},
 
@@ -120,8 +134,18 @@ export default {
       this.operation = 'edit';
       this.typeDialogVisible = true;
     },
+    // 新建/编辑分类
     confirmDialog() {
       console.log(this.operation);
+      if (this.operation === 'add') {
+        addOpinionType({
+          typeName: this.typeName
+        }).then(res => {
+
+        })
+      }
+      this.typeDialogVisible = false;
+      this.typeName = '';
     },
     cancelDialog() {
       this.typeDialogVisible = false;

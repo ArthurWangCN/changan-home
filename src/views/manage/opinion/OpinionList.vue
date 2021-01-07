@@ -2,9 +2,10 @@
   <div>
     <el-table
       ref="singleTable"
-      :data="suggestionList"
+      :data="opinionList"
       :header-cell-style="headerStyle"
       :row-style="rowStyle"
+      v-loading="isLoading"
       stripe
     >
       <el-table-column label="序号" align="center" width="80">
@@ -32,6 +33,7 @@
     <el-pagination
       @current-change="handleCurrentChange"
       :current-page.sync="currentPage"
+      hide-on-single-page
       :page-size="10"
       layout="prev, pager, next, jumper"
       :total="total"
@@ -64,67 +66,17 @@
 </template>
 
 <script>
+import {
+  getOpinionList,
+  replyOpinion,
+  getOpinionExcel,
+} from '@/api/interface/manage';
 export default {
-  name: 'suggestionList',
+  name: 'opinionList',
   data() {
     return {
-      suggestionList: [{
-              "id": 3,
-              "userId": "1",
-              "userName": "1",
-              "userUnit": "",
-              "userTel": "",
-              "submitInfo": "提交的意见1",
-              "submitTime": "2020-11-18 15:16",
-              "opType": "",
-              "replyStatus": "",
-              "reply": "",
-              "replyId": "",
-              "replyTime": "2020-11-18 15:18"
-          },
-          {
-              "id": 18,
-              "userId": "1",
-              "userName": "null",
-              "userUnit": "null",
-              "userTel": "null",
-              "submitInfo": "提交的意见",
-              "submitTime": "2020-11-18 15:12",
-              "opType": 1,
-              "replyStatus": "0",
-              "reply": "",
-              "replyId": "",
-              "replyTime": "2020-11-18 15:14"
-          },
-          {
-              "id": 17,
-              "userId": "1",
-              "userName": "null",
-              "userUnit": "null",
-              "userTel": "null",
-              "submitInfo": "",
-              "submitTime": "2020-11-18 14:59",
-              "opType": 1,
-              "replyStatus": "0",
-              "reply": "回复的意见",
-              "replyId": "",
-              "replyTime": "2020-11-18 15:14"
-          },
-          {
-              "id": 2,
-              "userId": "1",
-              "userName": "",
-              "userUnit": "",
-              "userTel": "",
-              "submitInfo": "",
-              "submitTime": "",
-              "opType": "",
-              "replyStatus": "",
-              "reply": "",
-              "replyId": "",
-              "replyTime": ""
-          }
-      ],
+      isLoading: false,
+      opinionList: [],
       headerStyle: {
         height: "50px",
         background: "#498be3",
@@ -138,28 +90,87 @@ export default {
         backgroundColor: "",
       },
       currentPage: 1,
-      total: 13,
+      total: 0,
       replyVisible: false,
       replyContent: '',
+      curReplyId: '',
     }
   },
+  props: {
+    searchText: {
+      type: String,
+      default: ''
+    }
+  },
+  created() {
+    this.init();
+  },
   methods: {
-    // 搜索
-    search() {},
+    init() {
+      this.getOpinionList();
+    },
+
+    // 获取意见列表
+    getOpinionList() {
+      this.isLoading = true;
+      let params = {
+        current: this.currentPage,
+        size: 10,
+      }
+      if (this.searchText !== '') {
+        params = {
+          ...params,
+          info: this.searchText
+        }
+      }
+      getOpinionList(params)
+      .then(res => {
+        if (res.records) {
+          this.opinionList = res.records;
+          this.total = res.total
+        }
+      }).catch(err => {
+        this.$message.error(err.message);
+      }).finally(_ => {
+        this.isLoading = false;
+      })
+    },
 
     // 回复
     reply(row) {
       this.replyVisible = true;
+      this.curReplyId = row.id;
     },
     confirmReply() {
+      replyOpinion({
+        id: this.curReplyId,
+        reply: this.replyContent
+      }).then(res => {
 
+      }).catch(err => {
+        this.$message.error(err.message);
+      }).finally(_ => {
+        this.cancelReply();
+      })
     },
     cancelReply() {
       this.replyVisible = false;
+      this.curReplyId = '';
+      this.replyContent = '';
     },
 
     // 分页器
-    handleCurrentChange() {}
+    handleCurrentChange(current) {
+      this.currentPage = current;
+      this.getOpinionList();
+    },
+
+    exportExcel() {
+      getOpinionExcel()
+      .then(res => {
+        console.log(res)
+      })
+    }
   }
 }
 </script>
