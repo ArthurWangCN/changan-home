@@ -1,19 +1,28 @@
 <template>
   <div>
-    <el-button type="primary" @click="typeDialogVisible=true;operation='add'" style="margin-bottom:20px;">新建分类</el-button>
+    <el-button
+      class="type-add-btn"
+      type="primary"
+      @click="typeDialogVisible=true;operation='add'"
+      style="margin-bottom:20px;"
+    >新建分类</el-button>
 
     <el-table
       :data="typeList"
       :header-cell-style="headerStyle"
       :row-style="rowStyle"
+      v-loading="isLoading"
       stripe
     >
+      <template slot="empty">
+        <p v-show="!isLoading">暂无数据</p>
+      </template>
       <el-table-column label="序号" align="center" width="100">
         <template slot-scope="scope">
           {{ scope.$index + 1 }}
         </template>
       </el-table-column>
-      <el-table-column prop="type_name" label="分类" align="center"></el-table-column>
+      <el-table-column prop="typeName" label="分类" align="center"></el-table-column>
       <el-table-column label="操作" align="center" width="300">
         <template slot-scope="scope">
           <el-button type="text" @click="editType(scope.row)">编辑</el-button>
@@ -29,6 +38,7 @@
       layout="prev, pager, next, jumper"
       :total="total"
       background
+      hide-on-single-page
       style="text-align: center; margin-top: 50px; margin-bottom: 30px"
     />
 
@@ -71,12 +81,17 @@
 <script>
 import {
   getOpinionTypeList,
-  addOpinionType
+  addOpinionType,
+  editOpinionType,
+  delOpinionType,
+  getOpinionTypeExcel
 } from '@/api/interface/manage';
+import { downloadExcel } from '@/utils/index';
 export default {
   name: 'opinionType',
   data() {
     return {
+      isLoading: false,
       typeList: [],
       headerStyle: {
         height: "50px",
@@ -91,16 +106,23 @@ export default {
         backgroundColor: "",
       },
       currentPage: 1,
-      total: 13,
+      total: 0,
       typeDialogVisible: false,
       // delTypeVisible: false,
       typeName: '',
       operation: 'add',  // add:新建分类 ; edit:编辑分类
+      curTypeId: '',
     }
   },
   computed:{
     dialogTitle() {
       return this.operation === 'add' ? '新建分类' : '编辑分类'
+    }
+  },
+  props: {
+    searchText: {
+      type: String,
+      default: ''
     }
   },
   created() {
@@ -112,16 +134,30 @@ export default {
     },
 
     getOpinionTypeList() {
-      getOpinionTypeList()
+      this.isLoading = true;
+      let params = {
+        current: this.currentPage,
+        size: 10,
+      }
+      if (this.searchText !== '') {
+        params = {
+          ...params,
+          search: this.searchText
+        }
+      }
+      getOpinionTypeList(params)
       .then(res => {
         if (res.success) {
-          this.typeList = res.content;
+          this.typeList = res.content.records;
+          this.total = res.content.total;
         } else {
           this.$message.error(res.message);
         }
       })
       .catch(err => {
         this.$message.error(err.message);
+      }).finally(_ => {
+        this.isLoading = false;
       })
     },
 
@@ -131,17 +167,36 @@ export default {
 
     // 编辑
     editType(row) {
+      console.log(row)
+      this.typeName = row.typeName;
+      this.curTypeId = row.id;
       this.operation = 'edit';
       this.typeDialogVisible = true;
     },
     // 新建/编辑分类
     confirmDialog() {
       console.log(this.operation);
+      // 新建
       if (this.operation === 'add') {
         addOpinionType({
           typeName: this.typeName
         }).then(res => {
-
+          if (res.success) {
+            this.getOpinionTypeList();
+          }
+        }).catch(err => {
+          this.$message.error(err.message);
+        })
+      } else if (this.operation === 'edit') { // 编辑
+        editOpinionType({
+          id: this.curTypeId,
+          typeName: this.typeName
+        }).then(res => {
+          if (res.success) {
+            this.getOpinionTypeList();
+          }
+        }).catch(err => {
+          this.$message.error(err.message);
         })
       }
       this.typeDialogVisible = false;
@@ -153,20 +208,38 @@ export default {
     },
 
     // 删除
-    delType(data, index) {
+    delType(row, index) {
       this.$confirm("删除后将无法恢复，确认继续删除？", "删除提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning",
       })
       .then(() => {
-        console.log('del...')
+        delOpinionType(row.id)
+        .then(res => {
+          if (res.success) {
+            this.getOpinionTypeList();
+          }
+        }).catch(err => {
+          this.$message.error(err.message);
+        })
       })
       .catch(() => {});
     },
 
     // 分页器
-    handleCurrentChange() {}
+    handleCurrentChange(current) {
+      this.currentPage = current;
+      this.getOpinionTypeList();
+    },
+
+    // 导出excel
+    exportExcel() {
+      getOpinionTypeExcel()
+      .then(res => {
+        downloadExcel(res, '意见分类管理.xlsx');
+      })
+    }
   }
 }
 </script>

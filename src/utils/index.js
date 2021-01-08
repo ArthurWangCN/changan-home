@@ -35,11 +35,27 @@ const mapdata = [{
 
 const colordata = ["#6f94fd", "#edc62e", "#1bc696", "#61baff", "#8662cf", "#eca22e", "#4693f2"]
 
+const downloadExcel = (res, fileName) => {
+  let blob = new Blob([res], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8"}); // 为blob设置文件类型，这里以.xlsx为例
+  if ('download' in document.createElement('a')) { // 非IE下载
+    let url = window.URL.createObjectURL(blob); // 创建一个临时的url指向blob对象
+    let a = document.createElement("a");
+    a.href = url;
+    a.download = fileName;
+    a.click();
+    // 释放这个临时的对象url
+    window.URL.revokeObjectURL(url);
+  } else {  // IE10+下载
+    navigator.msSaveBlob(blob, fileName);
+  }
+}
+
 export {
   showDate,
   publiceUrl,
   mapdata,
-  colordata
+  colordata,
+  downloadExcel
 }
 
 

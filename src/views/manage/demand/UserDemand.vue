@@ -1,9 +1,9 @@
 <template>
   <div class="user-demand manage-comp">
     <div class="user-demand-header">
-      <span class="btn-export">导出数据</span>
+      <span class="btn-export" @click="exportExcel">导出数据</span>
       <el-input
-        v-model="serachText"
+        v-model="searchText"
         placeholder="搜索"
         @keyup.13.native="search"
         size="small"
@@ -24,6 +24,7 @@
       :data="demandList"
       :header-cell-style="headerStyle"
       :row-style="rowStyle"
+      v-loading="isLoading"
       stripe
     >
       <el-table-column label="序号" align="center" width="80">
@@ -62,6 +63,7 @@
       @current-change="handleCurrentChange"
       :current-page.sync="currentPage"
       :page-size="10"
+      hide-on-single-page
       layout="prev, pager, next, jumper"
       :total="total"
       background
@@ -94,72 +96,18 @@
 
 <script>
 import '@/assets/css/manage.css';
+import {
+  getDemandList,
+  replyDemand,
+  getDemandExcel
+} from '@/api/interface/manage';
+import { downloadExcel } from '@/utils/index';
 export default {
   name: 'userDemand',
   data() {
     return {
-      demandList: [
-        {
-            "id": 4,
-            "userId": "1",
-            "userName": "小米",
-            "userUnit": "null",
-            "userTel": "null",
-            "submitTime": "2020-11-18 15:53",
-            "demandContent": "需求内容XXX",
-            "supplier": "已有信息或已交流供应商",
-            "requiredItems": "所需物品/单位",
-            "reply": "",
-            "replyId": "",
-            "replyTime": "2020-11-18 16:05",
-            "demandStatus": "0"
-        },
-        {
-            "id": 3,
-            "userId": "1",
-            "userName": "小米",
-            "userUnit": "null",
-            "userTel": "null",
-            "submitTime": "2020-11-18 15:52",
-            "demandContent": "",
-            "supplier": "已有信息或已交流供应商",
-            "requiredItems": "所需物品/单位",
-            "reply": "",
-            "replyId": "",
-            "replyTime": "2020-11-18 16:05",
-            "demandStatus": "0"
-        },
-        {
-            "id": 1,
-            "userId": "1",
-            "userName": "小米",
-            "userUnit": "小米",
-            "userTel": "123",
-            "submitTime": "",
-            "demandContent": "",
-            "supplier": "",
-            "requiredItems": "",
-            "reply": "",
-            "replyId": "",
-            "replyTime": "2020-11-18 16:05",
-            "demandStatus": ""
-        },
-        {
-            "id": 2,
-            "userId": "1",
-            "userName": "小米",
-            "userUnit": "",
-            "userTel": "",
-            "submitTime": "",
-            "demandContent": "",
-            "supplier": "",
-            "requiredItems": "",
-            "reply": "",
-            "replyId": "",
-            "replyTime": "2020-11-18 16:05",
-            "demandStatus": ""
-        }
-    ],
+      isLoading: false,
+      demandList: [],
       headerStyle: {
         height: "50px",
         background: "#498be3",
@@ -172,30 +120,92 @@ export default {
         color: "#323232",
         backgroundColor: "",
       },
-      serachText: '',
+      searchText: '',
       currentPage: 1,
-      total: 13,
+      total: 0,
       replyVisible: false,
       replyContent: '',
+      curDemandId: '',
     }
   },
+  created() {
+    this.init();
+  },
   methods: {
+    init() {
+      this.getDemandList();
+    },
+
+    getDemandList() {
+      this.isLoading = true;
+      let params = {
+        current: this.currentPage,
+        size: 10,
+      }
+      if (this.searchText !== '') {
+        params = {
+          ...params,
+          info: this.searchText
+        }
+      }
+      getDemandList(params)
+      .then(res => {
+        if (res.records) {
+          this.demandList = res.records;
+          this.total = res.total
+        }
+      }).catch(err => {
+        this.$message.error(err.message);
+      }).finally(_ => {
+        this.isLoading = false;
+      })
+    },
+
     // 搜索
-    search() {},
+    search() {
+      this.currentPage = 1;
+      this.getDemandList();
+    },
 
     // 回复
     reply(row) {
       this.replyVisible = true;
+      this.curDemandId = row.id;
     },
     confirmReply() {
-
+      replyDemand({
+        id: this.curDemandId,
+        reply: this.replyContent
+      }).then(res => {
+        if (res.success) {
+          this.$message.success('已回复');
+        }
+      }).catch(err => {
+        this.$message.error(err.message);
+      }).finally(_ => {
+        this.cancelReply();
+      })
     },
     cancelReply() {
       this.replyVisible = false;
+      this.curDemandId = '';
+      this.replyContent = '';
+
     },
 
     // 分页器
-    handleCurrentChange() {}
+    handleCurrentChange(current) {
+      this.currentPage = current;
+      this.getDemandList();
+    },
+
+    // 导出excel
+    exportExcel() {
+      getDemandExcel()
+      .then(res => {
+        downloadExcel(res, '用户需求管理.xlsx');
+      })
+    },
   }
 }
 </script>

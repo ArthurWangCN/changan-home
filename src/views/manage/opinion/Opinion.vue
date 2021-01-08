@@ -2,8 +2,8 @@
   <div class="opinion manage-comp">
     <div class="opinion-header flex-align-c">
       <ul class="opinion-tabs">
-        <li :class="{'tab-active': tabActive==0}" @click="tabActive=0">意见建议</li>
-        <li :class="{'tab-active': tabActive==1}" @click="tabActive=1">意见分类管理</li>
+        <li class="opinion-tab-btn" :class="{'tab-active': tabActive==0}" @click="tabActive=0">意见建议</li>
+        <li class="opinion-tab-btn" :class="{'tab-active': tabActive==1}" @click="tabActive=1">意见分类管理</li>
       </ul>
       <div class="flex-align-c">
         <span class="btn-export" @click="exportData">导出数据</span>
@@ -28,7 +28,7 @@
 
     <div class="opinion-content">
       <opinion-list ref="opinionList" :searchText="searchText" v-if="tabActive==0"></opinion-list>
-      <opinion-type ref="opinionType" v-if="tabActive==1"></opinion-type>
+      <opinion-type ref="opinionType" :searchText="searchText" v-if="tabActive==1"></opinion-type>
     </div>
   </div>
 </template>
@@ -53,11 +53,15 @@ export default {
     search() {
       if (this.tabActive === 0) {
         this.$refs.opinionList.getOpinionList();
+      } else if (this.tabActive === 1) {
+        this.$refs.opinionType.getOpinionTypeList();
       }
     },
     exportData() {
       if (this.tabActive === 0) {
         this.$refs.opinionList.exportExcel();
+      } else if (this.tabActive === 1) {
+        this.$refs.opinionType.exportExcel();
       }
     }
   }
@@ -78,6 +82,6 @@ export default {
   cursor: pointer;
 }
 .tab-active {
-  color: #409eff;
+  background-color: #367fff;
 }
 </style>

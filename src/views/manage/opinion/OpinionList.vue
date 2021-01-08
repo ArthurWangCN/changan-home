@@ -8,6 +8,9 @@
       v-loading="isLoading"
       stripe
     >
+      <template slot="empty">
+        <p v-show="!isLoading">暂无数据</p>
+      </template>
       <el-table-column label="序号" align="center" width="80">
         <template slot-scope="scope">
           {{ scope.$index + 1 }}
@@ -71,6 +74,7 @@ import {
   replyOpinion,
   getOpinionExcel,
 } from '@/api/interface/manage';
+import { downloadExcel } from '@/utils/index';
 export default {
   name: 'opinionList',
   data() {
@@ -146,7 +150,9 @@ export default {
         id: this.curReplyId,
         reply: this.replyContent
       }).then(res => {
-
+        if (res.success) {
+          this.$message.success('已回复');
+        }
       }).catch(err => {
         this.$message.error(err.message);
       }).finally(_ => {
@@ -168,9 +174,9 @@ export default {
     exportExcel() {
       getOpinionExcel()
       .then(res => {
-        console.log(res)
+        downloadExcel(res, '意见建议.xlsx');
       })
-    }
+    },
   }
 }
 </script>

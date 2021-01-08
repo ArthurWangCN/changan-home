@@ -5,6 +5,16 @@
   height: 100vh;
 }
 
+.opinion-tab-btn {
+  width: 140px;
+  height: 36px;
+  background-color: #999999;
+  color: #ffffff;
+  line-height: 36px;
+  text-align: center;
+  border-radius: 4px;
+}
+
 /* 搜索框 */
 .manage-comp .manage-search-input {
   width: 160px;
@@ -60,12 +70,22 @@
   font-size: 14px;
   padding: 7px 15px;
   color: #fff;
-  background-color: #367fff;
   text-align: center;
   cursor: pointer;
   border-radius: 4px;
   margin-left: auto;
   margin-right: 10px;
+}
+.type-add-btn, .btn-export {
+  background-color: #498be3;
+  border-color: #498be3;
+}
+.type-add-btn.el-button--primary:focus,
+.type-add-btn.el-button--primary:hover,
+.btn-export:hover,
+.btn-export:focus {
+  background-color: #66b1ff;
+  border-color: #66b1ff;
 }
 
 .flex-align-c{

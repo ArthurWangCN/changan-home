@@ -7,6 +7,7 @@
     <div class="column-cards" v-if="loading">
       <el-card
         v-for="(item, index) in data"
+        :key="item.sys_id"
         :body-style="{ padding: '0px' }"
         shadow="never"
         @click="goColumn(item.sys_id)"
@@ -29,6 +30,7 @@
               <span>订阅{{ item.subscribe_num }}人</span>
             </div>
             <button
+              style="width:75px;"
               v-if="!item.is_Subscribe"
               @click="getSubscribe(true, item.sys_id)"
             >

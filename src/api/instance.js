@@ -17,7 +17,7 @@ instance.interceptors.request.use((config) => {
             return qs.stringify(params, { arrayFormat: 'repeat' })
         }
     }
-    config.headers['AID'] = '478fa41df104438bbe63e7de0206e5d1';
+    config.headers['AID'] = '4c98694604bb4e3c9f3207b14f6ac450';
     return config;
 }, (error) => {
     // Do something with request error

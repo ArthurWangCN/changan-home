@@ -1,20 +1,31 @@
 <template>
   <el-carousel
+    class="home-carousel"
     trigger="click"
     height="420px"
+    arrow="never"
   >
-    <el-carousel-item v-for="banner in bannerList" :key="banner.id" v-show="banner.isShow">
+    <el-carousel-item>
+      <img src="../assets/img/banner.jpg" alt="" />
+    </el-carousel-item>
+    <el-carousel-item>
+      <img src="../assets/img/banner.jpg" alt="" />
+    </el-carousel-item>
+    <el-carousel-item>
+      <img src="../assets/img/banner.jpg" alt="" />
+    </el-carousel-item>
+    <!-- <el-carousel-item v-for="banner in bannerList" :key="banner.id" v-show="banner.isShow"> -->
       <!-- <img src="../assets/img/banner.jpg" alt="" />
       <div class="notice-link">
         <p>通知公告:长安汽车与宁德时代更新盖世汽车讯距外媒</p>
         <a href="#">查看更多</a>
       </div> -->
-      <img :src="banner.imgUrl" alt="" />
-      <div class="notice-link">
+      <!-- <img :src="banner.imgUrl" alt="" /> -->
+      <!-- <div class="notice-link">
         <p>{{ banner.title }}</p>
         <a href="#">查看更多</a>
-      </div>
-    </el-carousel-item>
+      </div> -->
+    <!-- </el-carousel-item> -->
   </el-carousel>
 </template>
 
@@ -40,9 +51,9 @@ export default {
         .then((json) => {
           if (json.success) {
             this.bannerList = json.content;
-            if(this.bannerList.length === 1) {
-              document.querySelector('.el-carousel__indicators').style.display = 'none';
-            }
+            // if(this.bannerList.length === 1) {
+            //   document.querySelector('.el-carousel__indicators').style.display = 'none';
+            // }
             console.log(this.bannerList);
           } else {
             this.$message.error(json.message);
@@ -57,4 +68,17 @@ export default {
 </script>
 
 <style scoped>
+.home-carousel >>> .el-carousel__button {
+  opacity: 1;
+  background-color: #a8a8a8;
+  width: 20px;
+  height: 4px;
+  border-radius: 2px;
+}
+.home-carousel >>> .el-carousel__indicator.is-active button {
+  background-color: #ffffff;
+  width: 30px;
+  height: 6px;
+  border-radius: 3px;
+}
 </style>
