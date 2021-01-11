@@ -37,7 +37,7 @@ const routes = [
     path: '/manage/home',     // 后台管理 —— 首页设置
     name: 'manage',
     component: () => import(
-      /* webpackChunkName: "manage" */ '@/views/manage/ManageHome.vue'
+      /* webpackChunkName: "manage" */ '@/views/manage/home/ManageHome.vue'
     )
   },
   {

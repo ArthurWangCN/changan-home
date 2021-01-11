@@ -8,7 +8,6 @@ export const getOpinionList = params => axios.get('/opinion/page', { params });
 export const replyOpinion = params => axios.put('/opinion/reply', params);
 
 // 意见反馈导出Excel
-// export const getOpinionExcel = params => axios.get('/opinion/excel', { params }, );
 export const getOpinionExcel = params => axios({
   url: '/opinion/excel',
   method: 'GET',
@@ -50,6 +49,16 @@ export const getDemandExcel = params => axios({
   responseType: 'blob'
 });
 
+// 获取通知公告列表
+export const getNoticeList = params => axios.get('/index/notice/list', { params });
+
+// 发布公告
+export const addNotice = params => axios.post('/notice/add', params);
+
+// 删除通知公告
+export const delNotice = params => axios.delete('/notice/delete', { params });
+
+
 export default {
   getOpinionList,
   replyOpinion,
@@ -62,4 +71,6 @@ export default {
   getDemandList,
   replyDemand,
   getDemandExcel,
+  getNoticeList,
+  delNotice,
 }

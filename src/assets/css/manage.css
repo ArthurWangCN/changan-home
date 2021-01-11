@@ -5,7 +5,10 @@
   height: 100vh;
 }
 
+.home-tab-btn,
+.manage-home-btn,
 .opinion-tab-btn {
+  display: inline-block;
   width: 140px;
   height: 36px;
   background-color: #999999;
@@ -17,7 +20,7 @@
 
 /* 搜索框 */
 .manage-comp .manage-search-input {
-  width: 160px;
+  width: 180px;
 }
 .manage-comp .manage-search-input .el-input__inner {
   padding-left: 15px;
@@ -54,7 +57,7 @@
 
 /* 弹窗 */
 .manage-dialog.el-dialog {
-  border-radius: 16px;
+  border-radius: 8px;
 }
 .manage-dialog.el-dialog .el-dialog__header { border-bottom: 1px solid #eee; }
 .manage-dialog.el-dialog .el-dialog__footer { text-align: center; }
@@ -88,7 +91,24 @@
   border-color: #66b1ff;
 }
 
+/* 首页设置 */
+.manage-home-comp {
+  padding-top: 20px;
+}
+.manage-home-btn {
+  width: 130px;
+  cursor: pointer;
+  background-color: #13bc75;
+}
+
+
 .flex-align-c{
   display: flex;
   align-items: center;
 }
+
+.flex-space-between {
+  justify-content: space-between;
+}
+
+.ml10 { margin-left: 10px; }

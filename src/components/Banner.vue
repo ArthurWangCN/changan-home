@@ -5,7 +5,7 @@
     height="420px"
     arrow="never"
   >
-    <el-carousel-item>
+    <!-- <el-carousel-item>
       <img src="../assets/img/banner.jpg" alt="" />
     </el-carousel-item>
     <el-carousel-item>
@@ -13,19 +13,20 @@
     </el-carousel-item>
     <el-carousel-item>
       <img src="../assets/img/banner.jpg" alt="" />
-    </el-carousel-item>
-    <!-- <el-carousel-item v-for="banner in bannerList" :key="banner.id" v-show="banner.isShow"> -->
+    </el-carousel-item> -->
+    <el-carousel-item v-for="banner in bannerList" :key="banner.id" v-show="banner.isShow">
       <!-- <img src="../assets/img/banner.jpg" alt="" />
       <div class="notice-link">
         <p>通知公告:长安汽车与宁德时代更新盖世汽车讯距外媒</p>
         <a href="#">查看更多</a>
       </div> -->
-      <!-- <img :src="banner.imgUrl" alt="" /> -->
+      <img :src="banner.imgUrl" alt="" />
+      <!-- <img src="../assets/img/banner.jpg" alt="" /> -->
       <!-- <div class="notice-link">
         <p>{{ banner.title }}</p>
         <a href="#">查看更多</a>
       </div> -->
-    <!-- </el-carousel-item> -->
+    </el-carousel-item>
   </el-carousel>
 </template>
 
