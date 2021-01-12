@@ -101,6 +101,12 @@
   background-color: #13bc75;
 }
 
+/* 富文本编辑器 */
+.manage-editor .ql-container {
+  height: 200px;
+  font-size: 14px;
+  color: #333333;
+}
 
 .flex-align-c{
   display: flex;
@@ -112,3 +118,7 @@
 }
 
 .ml10 { margin-left: 10px; }
+
+.el-upload-list__item.is-success.focusing .el-icon-close-tip{
+  display: none !important;
+}

@@ -138,17 +138,11 @@ export default {
 
     getDemandList() {
       this.isLoading = true;
-      let params = {
+      getDemandList({
         current: this.currentPage,
         size: 10,
-      }
-      if (this.searchText !== '') {
-        params = {
-          ...params,
-          info: this.searchText
-        }
-      }
-      getDemandList(params)
+        search: this.searchText
+      })
       .then(res => {
         if (res.records) {
           this.demandList = res.records;

@@ -5,7 +5,7 @@
         <li class="opinion-tab-btn" :class="{'tab-active': tabActive==0}" @click="tabActive=0">意见建议</li>
         <li class="opinion-tab-btn" :class="{'tab-active': tabActive==1}" @click="tabActive=1">意见分类管理</li>
       </ul>
-      <div class="flex-align-c">
+      <div class="flex-align-c" v-show="tabActive===0">
         <span class="btn-export" @click="exportData">导出数据</span>
         <el-input
           v-model="searchText"

@@ -1,7 +1,7 @@
 <template>
   <div class="manage-home-comp">
     <div class="flex-align-c flex-space-between home-comp-header">
-      <span class="manage-home-btn" @click="noticeDialogVisible=true;">发布公告</span>
+      <span class="manage-home-btn" @click="addNotice">发布公告</span>
       <el-input
         v-model="searchText"
         placeholder="搜索"
@@ -66,11 +66,17 @@
       width="700px"
       :before-close="cancelDialog"
     >
-      <div class="edit-content">
-        <el-input placeholder="请输入标题" v-model="noticeTitle"></el-input>
+      <div class="edit-content manage-editor">
+        <el-input placeholder="请输入标题" class="notice-title-input" v-model="noticeTitle"></el-input>
+        <quill-editor ref="myTextEditor" v-model="noticeContent" :options="editorOption" @focus="onEditorFocus($event)"></quill-editor>
         <div class="notice-upload flex-align-c">
           <el-upload
-            action="/index/file/upload"
+            action="/file/upload"
+            :file-list="fileList"
+					  :before-upload="beforeUpload"
+            :on-success="onUploadSucc"
+            :before-remove="beforeRemove"
+            :on-remove="onRemoveSucc"
           >
             <span class="manage-home-btn" style="width: 120px;">上传附件</span>
           </el-upload>
@@ -104,13 +110,23 @@
 
 <script>
 // import '@/assets/css/manage.css';
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
+
+import { quillEditor } from 'vue-quill-editor'
 import {
   getNoticeList,
+  getNoticeInfo,
   addNotice,
+  editNotice,
   delNotice,
 } from '@/api/interface/manage';
 export default {
   name: 'homeNotice',
+  components: {
+    quillEditor
+  },
   data() {
     return {
       isLoading: false,
@@ -130,11 +146,30 @@ export default {
       },
       currentPage: 1,
       total: 0,
-      noticeDialogVisible: true,
+      noticeDialogVisible: false,
       delNoticeVisible: false,
       curNotice: '',
       noticeTitle: '',
-      operation: 'add',
+      noticeContent: '',
+      editorOption: {
+        placeholder: "请输入公告内容",
+        modules:{
+          toolbar:[
+            [{ 'font': [] }],     //字体
+            [{ 'size': ['small', false, 'large', 'huge'] }], // 字体大小
+            // [{ 'header': [1, 2, 3, 4, 5, 6, false] }],     //几级标题
+            ['bold', 'italic', 'underline', 'strike'],    //加粗，斜体，下划线，删除线
+            [{ 'list': 'ordered'}, { 'list': 'bullet' }],     //列表
+            [{ 'color': [] }, { 'background': [] }],     // 字体颜色，字体背景颜色
+            [{ 'align': [] }],    //对齐方式
+            ['link', 'image']    //上传图片、上传视频
+          ]
+        }
+      },
+      operation: 'add',   // add:发布公告  edit:编辑公告
+      fileList: [],   // 上传文件的列表
+      addFileList: [],  // 新增文件列表
+      delFileList: [],  // 删除文件列表
     }
   },
   computed: {
@@ -155,6 +190,7 @@ export default {
       getNoticeList({
         current: this.currentPage,
         size: 10,
+        search: this.searchText
       }).then(res => {
         if (res.success) {
           this.noticeList = res.content.records;
@@ -170,22 +206,112 @@ export default {
       })
     },
 
-    search() {},
+    search() {
+      this.getNoticeList();
+    },
 
+    addNotice() {
+      this.fileList = [];
+      this.operation = 'add';
+      this.noticeTitle = '';
+      this.noticeDialogVisible=true;
+    },
 
-    editNotice() {},
+    editNotice(row) {
+      this.fileList = [];
+      this.curNotice = row;
+      this.operation = 'edit';
+      this.noticeDialogVisible = true;
+      getNoticeInfo({
+        noticeSysId: row.sysId
+      }).then(res => {
+        if (res.success) {
+          const notice = res.content;
+          this.noticeTitle = notice.title;
+          this.noticeContent = notice.content;
+          this.fileList = []
+          notice.attachmentList.map(item => {
+            console.log(item)
+            this.fileList.push({
+              name: item.attachmentName,
+              url: item.attachmentUrl,
+              delId: item.id
+            })
+          });
+          console.log(this.fileList)
+        } else {
+          this.$message.error(res.message);
+        }
+      })
+      .catch(err => {
+        this.$message.error(err.message);
+      }).finally(_ => {
+      })
+    },
 
-    handleCurrentChange() {},
+    handleCurrentChange(current) {
+      this.currentPage = current;
+      this.getNoticeList();
+    },
 
+    // 新建/编辑公告确定
     confirmDialog() {
+      if (this.noticeTitle === '') {
+        this.$message.warning('公告标题不能为空');
+        return;
+      }
       if (this.operation === 'add') {
+        let attachmentList = [];
+        this.fileList.map(item => {
+          attachmentList.push({
+            "status": 1,
+            "attachmentName": item.name,
+            "attachmentUrl": item.response.message
+          })
+        })
         addNotice({
           notice: {
             title: this.noticeTitle,
             abstracttext: '',
-            content: ''
+            content: this.noticeContent
           },
-          attachmentList:{}
+          attachmentList
+        }).then(res => {
+          if (res.success) {
+            this.getNoticeList();
+          } else {
+            this.$message.error(res.message);
+          }
+        })
+        .catch(err => {
+          this.$message.error(err.message);
+        }).finally(_ => {
+        })
+      } else if (this.operation === 'edit') {
+        console.log(this.delFileList)
+        editNotice({
+          notice: {
+            id: this.curNotice.id,
+            sysId: this.curNotice.sysId,
+            title: this.noticeTitle,
+            abstracttext: '',
+            content: this.noticeContent
+          },
+          attachmentList: [
+            ...this.addFileList,
+            ...this.delFileList
+          ]
+        }).then(res => {
+          if (res.success) {
+            this.getNoticeList();
+          } else {
+            this.$message.error(res.message);
+          }
+        })
+        .catch(err => {
+          this.$message.error(err.message);
+        }).finally(_ => {
+          this.fileList = [];
         })
       }
       this.noticeDialogVisible = false;
@@ -193,6 +319,7 @@ export default {
 
     cancelDialog() {
       this.noticeDialogVisible = false;
+      this.fileList = [];
     },
 
     // 删除公告
@@ -220,6 +347,51 @@ export default {
     cancelDel() {
       this.delNoticeVisible = false;
     },
+
+    // 富文本编辑器
+    onEditorChange({ editor, html, text }) {
+      this.noticeContent = html;
+    },
+    onEditorFocus() {
+    },
+
+    // 上传
+    beforeUpload(file) {
+      console.log(file);
+      const isLt500M = file.size / 1024 / 1024 <= 500;
+      if (!isLt500M) {
+        this.$message.warning('文件大小500M以内');
+        return false;
+      }
+    },
+    onUploadSucc(res, file, fileList) {
+      this.fileList = fileList;
+      console.log(file)
+      if (this.operation === 'edit') {
+        this.addFileList.push({
+          attachmentName: file.name,
+          attachmentUrl: file.response.message,
+          status: 1
+        });
+      }
+    },
+    beforeRemove(file, fileList) {
+      return this.$confirm(`确定移除 ${ file.name }？`);
+      // console.log(fileList)
+    },
+    onRemoveSucc(file, fileList) {
+      console.log(file)
+      console.log(fileList)
+      this.fileList = fileList;
+      if (this.operation === 'edit') {
+        this.delFileList.push({
+          id: file.delId,
+          attachmentName: file.name,
+          attachmentUrl: file.url,
+          status: -1
+        })
+      }
+    }
   }
 }
 </script>
@@ -230,5 +402,15 @@ export default {
 }
 .notice-upload {
   margin-top: 10px;
+}
+.notice-title-input {
+  margin-bottom: 10px;
+}
+.manage-editor >>> .el-input__inner {
+  border-radius: 0;
+  border-color: #cccccc;
+}
+.manage-editor >>> .el-input__inner:focus {
+  border-color: #409eff;
 }
 </style>

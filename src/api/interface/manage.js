@@ -50,10 +50,16 @@ export const getDemandExcel = params => axios({
 });
 
 // 获取通知公告列表
-export const getNoticeList = params => axios.get('/index/notice/list', { params });
+export const getNoticeList = params => axios.get('/notice/list', { params });
+
+// 获取通知公告详情
+export const getNoticeInfo = params => axios.get('/notice/info', { params });
 
 // 发布公告
 export const addNotice = params => axios.post('/notice/add', params);
+
+// 编辑公告
+export const editNotice = params => axios.post('/notice/update', params);
 
 // 删除通知公告
 export const delNotice = params => axios.delete('/notice/delete', { params });
@@ -72,5 +78,8 @@ export default {
   replyDemand,
   getDemandExcel,
   getNoticeList,
+  getNoticeInfo,
+  addNotice,
+  editNotice,
   delNotice,
 }

@@ -117,17 +117,11 @@ export default {
     // 获取意见列表
     getOpinionList() {
       this.isLoading = true;
-      let params = {
+      getOpinionList({
         current: this.currentPage,
         size: 10,
-      }
-      if (this.searchText !== '') {
-        params = {
-          ...params,
-          info: this.searchText
-        }
-      }
-      getOpinionList(params)
+        search: this.searchText
+      })
       .then(res => {
         if (res.records) {
           this.opinionList = res.records;
