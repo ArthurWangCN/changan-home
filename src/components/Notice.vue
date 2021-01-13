@@ -8,7 +8,7 @@
       <div
         class="hot-knowlege-item-wrapper"
         v-for="(item, index) in hotKnowlege"
-        :key="index"
+        :key="item.sysId"
       >
         <div class="first-column-item" v-show="item.isShowPicInfo">
           <div class="item-img">
@@ -21,7 +21,7 @@
             </svg> -->
           </div>
           <div class="recommend-item-info">
-            <div class="first-item-title">{{ item.title }}</div>
+            <div class="first-item-title" @click="goNoticeDetail(item)">{{ item.title }}</div>
             <div class="first-item-intro">{{ item.detail }}</div>
           </div>
         </div>
@@ -49,57 +49,53 @@
   </div>
 </template>
 <script>
+import {
+  getNotice,
+  getNoticeInfo
+} from '@/api/interface/more.js';
 export default {
   data() {
     return {
-      // 热点知识
-      hotKnowlege: [
-        {
-          title: "长安汽车与宁德时代…",
-          detail: "盖世汽车讯据外媒拉加拿大电池研密度的新一代电池",
-          imgUrl: "../../assets/img/document.jpg",
-          isShowPicInfo: false,
-        },
-        {
-          title: "通用为电动车信息",
-          detail: "盖世汽车讯据外媒拉加拿大电池研密度的新一代电池",
-          imgUrl: "../../assets/img/document.jpg",
-          isShowPicInfo: false,
-        },
-        {
-          title: "上汽大众ID.4信息",
-          detail: "盖世汽车讯据外媒拉加拿大电池研密度的新一代电池",
-          imgUrl: "../../assets/img/document.jpg",
-          isShowPicInfo: false,
-        },
-        {
-          title: "探访XPT蔚来科技",
-          detail: "盖世汽车讯据外媒拉加拿大电池研密度的新一代电池",
-          imgUrl: "../../assets/img/document.jpg",
-          isShowPicInfo: true,
-        },
-        {
-          title: "科学家从原子层研究",
-          detail: "盖世汽车讯据外媒拉加拿大电池研密度的新一代电池",
-          imgUrl: "../../assets/img/document.jpg",
-          isShowPicInfo: false,
-        },
-        {
-          title: "CAICV联盟发布,智网",
-          detail: "盖世汽车讯据外媒拉加拿大电池研密度的新一代电池",
-          imgUrl: "../../assets/img/document.jpg",
-          isShowPicInfo: false,
-        },
-        {
-          title: "CAICV联盟发布,智网",
-          detail: "盖世汽车讯据外媒拉加拿大电池研密度的新一代电池",
-          imgUrl: "../../assets/img/document.jpg",
-          isShowPicInfo: false,
-        },
-      ],
+      hotKnowlege: [],  // 热点知识
     };
   },
+  created() {
+    this.init();
+  },
   methods: {
+
+    init() {
+      this.getNotice();
+    },
+
+    getNotice() {
+      getNotice({
+        current: 1,
+        size: 8,
+        search: ''
+      }).then(res => {
+        if (res.success) {
+          let arr = res.content.records;
+          arr.forEach(item => {
+            this.hotKnowlege.push({
+              title: item.title,
+              detail: item.abstractText,
+              imgUrl: item.imgUrl,
+              isShowPicInfo: false,
+              sysId: item.sysId,
+            })
+          });
+          this.hotKnowlege[0].isShowPicInfo = true;
+        } else {
+          this.$message.error(res.message);
+        }
+      })
+      .catch(err => {
+        this.$message.error(err.message);
+      }).finally(_ => {
+      })
+    },
+
     // 热点知识鼠标上移显示待图片的信息
     showHotKnowlegeItemWithImg(index) {
       const newHotKnowlege = this.hotKnowlege.map((item, itemIndex) => {
@@ -110,10 +106,17 @@ export default {
     },
 
     goMore() {
-      let routeUrl = this.$router.resolve({
-        path: "/notice"
-      });
-      window.open(routeUrl.href, '_blank');
+      // let routeUrl = this.$router.resolve({
+      //   path: "/notice"
+      // });
+      // window.open(routeUrl.href, '_blank');
+      this.$router.push({
+        path: '/notice'
+      })
+    },
+
+    goNoticeDetail(item) {
+      this.$router.push({path: `/notice/detail/${item.sysId}`});
     }
   },
 };

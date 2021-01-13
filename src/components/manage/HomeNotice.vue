@@ -66,12 +66,13 @@
       width="700px"
       :before-close="cancelDialog"
     >
-      <div class="edit-content manage-editor">
+      <div class="edit-content manage-editor" v-loading="dialogLoading">
         <el-input placeholder="请输入标题" class="notice-title-input" v-model="noticeTitle"></el-input>
         <quill-editor ref="myTextEditor" v-model="noticeContent" :options="editorOption" @focus="onEditorFocus($event)"></quill-editor>
         <div class="notice-upload flex-align-c">
           <el-upload
             action="/file/upload"
+            multiple
             :file-list="fileList"
 					  :before-upload="beforeUpload"
             :on-success="onUploadSucc"
@@ -80,7 +81,7 @@
           >
             <span class="manage-home-btn" style="width: 120px;">上传附件</span>
           </el-upload>
-          <span class="ml10" style="color: #367fff">文件大小500M以内</span>
+          <span class="notice-upload-tip">文件大小500M以内</span>
         </div>
 
       </div>
@@ -122,6 +123,9 @@ import {
   editNotice,
   delNotice,
 } from '@/api/interface/manage';
+import {
+  html2text
+} from '@/utils/index.js';
 export default {
   name: 'homeNotice',
   components: {
@@ -130,6 +134,7 @@ export default {
   data() {
     return {
       isLoading: false,
+      dialogLoading: false,
       searchText: '',
       noticeList: [],
       headerStyle: {
@@ -214,13 +219,15 @@ export default {
       this.fileList = [];
       this.operation = 'add';
       this.noticeTitle = '';
+      this.noticeContent = '';
       this.noticeDialogVisible=true;
     },
 
     editNotice(row) {
+      this.operation = 'edit';
+      this.dialogLoading = true;
       this.fileList = [];
       this.curNotice = row;
-      this.operation = 'edit';
       this.noticeDialogVisible = true;
       getNoticeInfo({
         noticeSysId: row.sysId
@@ -246,6 +253,7 @@ export default {
       .catch(err => {
         this.$message.error(err.message);
       }).finally(_ => {
+        this.dialogLoading = false;
       })
     },
 
@@ -260,6 +268,12 @@ export default {
         this.$message.warning('公告标题不能为空');
         return;
       }
+      if (this.noticeContent === '') {
+        this.$message.warning('公告内容不能为空');
+        return;
+      }
+      let abstract = html2text(this.noticeContent).substring(0, 200);
+
       if (this.operation === 'add') {
         let attachmentList = [];
         this.fileList.map(item => {
@@ -272,13 +286,14 @@ export default {
         addNotice({
           notice: {
             title: this.noticeTitle,
-            abstracttext: '',
+            abstracttext: abstract,
             content: this.noticeContent
           },
           attachmentList
         }).then(res => {
           if (res.success) {
             this.getNoticeList();
+            this.$message.success('发布成功');
           } else {
             this.$message.error(res.message);
           }
@@ -294,7 +309,7 @@ export default {
             id: this.curNotice.id,
             sysId: this.curNotice.sysId,
             title: this.noticeTitle,
-            abstracttext: '',
+            abstracttext: abstract,
             content: this.noticeContent
           },
           attachmentList: [
@@ -304,6 +319,7 @@ export default {
         }).then(res => {
           if (res.success) {
             this.getNoticeList();
+            this.$message.success('编辑成功');
           } else {
             this.$message.error(res.message);
           }
@@ -312,6 +328,8 @@ export default {
           this.$message.error(err.message);
         }).finally(_ => {
           this.fileList = [];
+          this.addFileList = [];
+          this.delFileList = [];
         })
       }
       this.noticeDialogVisible = false;
@@ -334,6 +352,7 @@ export default {
       }).then(res => {
         if (res.success) {
           this.getNoticeList();
+          this.$message.success('已删除');
         } else {
           this.$message.error(res.message);
         }
@@ -402,6 +421,13 @@ export default {
 }
 .notice-upload {
   margin-top: 10px;
+  position: relative;
+}
+.notice-upload-tip {
+  position: absolute;
+  left: 130px;
+  top: 10px;
+  color: #367fff;
 }
 .notice-title-input {
   margin-bottom: 10px;

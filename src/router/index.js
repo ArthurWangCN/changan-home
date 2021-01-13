@@ -19,7 +19,7 @@ const routes = [
     )
   },
   {
-    path: '/noticeDetail',     // 更多 通知公告详情页
+    path: '/notice/detail/:id',     // 更多 通知公告详情页
     name: 'noticeDetail',
     component: () => import(
       /* webpackChunkName: "more" */ '@/views/more/NoticeDetail.vue'

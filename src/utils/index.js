@@ -35,6 +35,7 @@ const mapdata = [{
 
 const colordata = ["#6f94fd", "#edc62e", "#1bc696", "#61baff", "#8662cf", "#eca22e", "#4693f2"]
 
+// 下载Excel
 const downloadExcel = (res, fileName) => {
   let blob = new Blob([res], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8"}); // 为blob设置文件类型，这里以.xlsx为例
   if ('download' in document.createElement('a')) { // 非IE下载
@@ -50,12 +51,51 @@ const downloadExcel = (res, fileName) => {
   }
 }
 
+// html转纯文本
+const html2text = (htmlStr) => {
+  if (!htmlStr) return '';
+  let reg=/<\/?.+?\/?>/g;
+  return htmlStr.replace(reg,'');
+}
+
+const formatList = {
+  'word': ['doc', 'docx'],
+  'xls': ['xls', 'xlsx'],
+  'ppt': ['ppt', 'pptx'],
+  'pdf': ['pdf'],
+  'caj': ['caj'],
+  'kdh': ['kdh'],
+  'xml': ['xml'],
+  'txt': ['txt'],
+  'zip': ['rar', 'zip'],
+  'img': ['jpg', 'png', 'tif', 'jpeg', 'webp'],
+  'gif': ['gif'],
+  'mind': ['xmind', 'md'],
+  'audio': ['wav', 'mp3', 'wma', 'aac', 'flac'],
+  'video': ['avi', 'mov', 'swf', 'flv', 'mp4', 'mpg', 'mpeg', 'rm', 'rmvb'],
+};
+
+// 获取文件图标
+const getFileIcon = (format) => {
+  if (!format) return;
+  let iconType;
+  console.log(formatList)
+  for (let key in formatList) {
+    if (formatList[key].indexOf(format) > -1) {
+      iconType = key;
+    }
+  }
+  return iconType || 'other';
+}
+
 export {
   showDate,
   publiceUrl,
   mapdata,
   colordata,
-  downloadExcel
+  downloadExcel,
+  html2text,
+  getFileIcon
 }
 
 

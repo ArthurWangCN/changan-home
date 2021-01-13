@@ -132,7 +132,7 @@ export default {
     getItem(id) {
       getInformationItem({
         type: id,
-        size: 10,
+        size: 12,
         current: 1,
       })
         .then((json) => {
@@ -140,7 +140,7 @@ export default {
             const data = json.content.records;
             if (data.length > 0) {
               this.loading = true;
-              let leftdata = data.slice(0, 4);
+              let leftdata = data.slice(0, 6);
               leftdata = leftdata.map((item, index) => {
                 if (index == 0) {
                   item.isShowPicInfo = true;
@@ -150,7 +150,8 @@ export default {
                 item.createDate = showDate(item.createDate);
                 return item;
               });
-              let rightdata = data.slice(4, 8);
+              let rightdata = data.slice(6, 12);
+              console.log(rightdata)
               rightdata = rightdata.map((item, index) => {
                 if (index == 0) {
                   item.isShowPicInfo = true;

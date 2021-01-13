@@ -5,22 +5,16 @@
     height="420px"
     arrow="never"
   >
-    <!-- <el-carousel-item>
-      <img src="../assets/img/banner.jpg" alt="" />
+    <el-carousel-item v-if="bannerList.length<=0">
+      <img src="../assets/img/default-banner.png" alt="" />
     </el-carousel-item>
-    <el-carousel-item>
-      <img src="../assets/img/banner.jpg" alt="" />
-    </el-carousel-item>
-    <el-carousel-item>
-      <img src="../assets/img/banner.jpg" alt="" />
-    </el-carousel-item> -->
     <el-carousel-item v-for="banner in bannerList" :key="banner.id" v-show="banner.isShow">
       <!-- <img src="../assets/img/banner.jpg" alt="" />
       <div class="notice-link">
         <p>通知公告:长安汽车与宁德时代更新盖世汽车讯距外媒</p>
         <a href="#">查看更多</a>
       </div> -->
-      <img :src="banner.imgUrl" alt="" />
+      <img :src="banner.imgUrl" alt=" " />
       <!-- <img src="../assets/img/banner.jpg" alt="" /> -->
       <!-- <div class="notice-link">
         <p>{{ banner.title }}</p>
@@ -81,5 +75,9 @@ export default {
   width: 30px;
   height: 6px;
   border-radius: 3px;
+}
+.home-carousel >>> .el-carousel__item{
+  background-image: url('../assets/img/default-banner.png');
+  background-size: cover;
 }
 </style>

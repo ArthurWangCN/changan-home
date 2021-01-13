@@ -6,7 +6,7 @@
       <div class="more-breadcrumb ">
         <span @click="goHome">智谷首页</span>
         <i class="el-icon-arrow-right" style="margin:0 6px;"></i>
-        <span class="breadcrumb-cur">通知公告</span>
+        <span class="breadcrumb-cur" @click="goNotice">通知公告</span>
       </div>
 
       <div class="more-content more-notice">
@@ -16,10 +16,11 @@
             <el-input
               class="search-input"
               placeholder="搜索公告"
-              v-model="noticeInput"
+              v-model="searchText"
+              @keyup.13.native="search"
             >
             </el-input>
-            <i class="el-icon-search notice-search"></i>
+            <i class="el-icon-search notice-search" @click="search"></i>
           </div>
         </div>
 
@@ -30,12 +31,19 @@
             :key="item.id"
           >
             <div class="notice-item-header">
-              <span><span class="notice-item-title">{{item.title}}</span></span>
+              <span><span class="notice-item-title" @click="goNoticeDetail(item.sysId)">{{item.title}}</span></span>
               <span class="notice-item-date">{{item.createDate}}</span>
             </div>
             <p class="notice-abstract">{{item.abstractText}}</p>
           </li>
         </ul>
+
+        <div class="nodata-tip" v-if="noticeList.length <= 0">
+          <div>
+            <img src="../../assets/img/nothing_l.png" alt="">
+            <p>暂无数据</p>
+          </div>
+        </div>
 
         <el-pagination
           :current-page="currentPage"
@@ -61,7 +69,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      noticeInput: '',
+      searchText: '',
       noticeList:  [],
       currentPage: 1,
       total: 0,
@@ -82,7 +90,8 @@ export default {
       this.isLoading = true;
       getNotice({
         current: this.currentPage,
-        size: 10
+        size: 10,
+        search: this.searchText
       }).then(res => {
         if (res.success) {
           this.noticeList = res.content.records;
@@ -96,11 +105,25 @@ export default {
         this.isLoading = false;
       })
     },
+
     goHome() {
       this.$router.push({path: '/'})
     },
+
+    goNotice() {
+      this.$router.push({path: '/notice'})
+    },
+
+    goNoticeDetail(sysId) {
+      this.$router.push({path: `/notice/detail/${sysId}`});
+    },
+
     handleCurrentChange(currentPage) {
       this.currentPage = currentPage;
+      this.getNotice();
+    },
+
+    search() {
       this.getNotice();
     }
   }

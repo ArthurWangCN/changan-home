@@ -122,3 +122,14 @@
 .el-upload-list__item.is-success.focusing .el-icon-close-tip{
   display: none !important;
 }
+.el-list-enter-active,
+.el-list-leave-active {
+  transition: none;
+}
+.el-list-enter,
+.el-list-leave-active {
+  opacity: 0;
+}
+.el-upload-list {
+  max-width: 500px;
+}
