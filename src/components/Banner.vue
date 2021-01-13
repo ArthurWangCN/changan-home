@@ -49,7 +49,6 @@ export default {
             // if(this.bannerList.length === 1) {
             //   document.querySelector('.el-carousel__indicators').style.display = 'none';
             // }
-            console.log(this.bannerList);
           } else {
             this.$message.error(json.message);
           }

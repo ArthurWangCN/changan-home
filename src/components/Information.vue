@@ -151,7 +151,6 @@ export default {
                 return item;
               });
               let rightdata = data.slice(6, 12);
-              console.log(rightdata)
               rightdata = rightdata.map((item, index) => {
                 if (index == 0) {
                   item.isShowPicInfo = true;

@@ -19,6 +19,13 @@ const routes = [
     )
   },
   {
+    path: '/colleague',     // 搜同事
+    name: 'noticeDetail',
+    component: () => import(
+      /* webpackChunkName: "more" */ '@/views/more/Colleague.vue'
+    )
+  },
+  {
     path: '/notice/detail/:id',     // 更多 通知公告详情页
     name: 'noticeDetail',
     component: () => import(
