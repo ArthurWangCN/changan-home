@@ -58,6 +58,13 @@
   font-size: 16px;
   line-height: 30px;
 }
+.detail-content p a {
+  text-decoration: underline solid #333333;
+  text-underline-position:under;
+}
+.detail-content p a:hover {
+  color: #3d8cfc;
+}
 .detail-content img {
   display: block;
   margin: 40px auto;
@@ -111,10 +118,23 @@
   height: 14px;
   fill: #666666;
 }
-.colleague-wrapper .el-pagination { text-align: center; }
+.colleague-wrapper .el-pagination {
+  text-align: center;
+  margin-bottom: 50px;
+}
 .colleague-wrapper .el-pager li,
 .colleague-wrapper .el-pagination button {
   background-color: #f1f2f5;
+}
+.colleague-wrapper .el-pagination__editor .el-input__inner {
+  background-color: #f1f2f5;
+  border-color: #dddddd;
+}
+.colleague-wrapper .nothing {
+  margin-top: 200px;
+}
+.colleague-wrapper .nothing img {
+  width: 220px;
 }
 
 

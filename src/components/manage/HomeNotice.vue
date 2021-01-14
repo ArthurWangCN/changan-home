@@ -28,11 +28,11 @@
       stripe
     >
       <template slot="empty">
-        <p v-show="!isLoading">暂无数据</p>
+        <p v-show="!isLoading" style="display:none;">暂无数据</p>
       </template>
       <el-table-column label="序号" align="center" width="100">
         <template slot-scope="scope">
-          {{ scope.$index + 1 }}
+          {{ getIndex(scope.$index) }}
         </template>
       </el-table-column>
       <el-table-column prop="title" label="公告名称" align="left"></el-table-column>
@@ -71,7 +71,7 @@
         <quill-editor ref="myTextEditor" v-model="noticeContent" :options="editorOption" @focus="onEditorFocus($event)"></quill-editor>
         <div class="notice-upload flex-align-c">
           <el-upload
-            action="/file/upload"
+            :action="actionUrl"
             multiple
             :file-list="fileList"
 					  :before-upload="beforeUpload"
@@ -110,6 +110,9 @@
 </template>
 
 <script>
+import {
+  formatDate
+} from '@/utils/index';
 // import '@/assets/css/manage.css';
 import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
@@ -175,6 +178,8 @@ export default {
       fileList: [],   // 上传文件的列表
       addFileList: [],  // 新增文件列表
       delFileList: [],  // 删除文件列表
+      selectTip: true,
+      actionUrl: '/home/file/upload',
     }
   },
   computed: {
@@ -184,6 +189,20 @@ export default {
   },
   created() {
     this.init();
+    console.log(process.env.NODE_ENV);
+    if (process.env.NODE_ENV === 'development') {
+      this.actionUrl = '/file/upload';
+    }
+  },
+  watch: {
+    noticeDialogVisible(val) {
+      if (val) {
+        this.$nextTick(_ => {
+          let qlLink = document.querySelector('.ql-link');
+          qlLink.title = "请选中文字添加链接";
+        })
+      }
+    }
   },
   methods: {
     init() {
@@ -199,6 +218,9 @@ export default {
       }).then(res => {
         if (res.success) {
           this.noticeList = res.content.records;
+          this.noticeList.forEach(item => {
+            item.createDate = formatDate(item.createDate);
+          })
           this.total = res.content.total;
         } else {
           this.$message.error(res.message);
@@ -238,14 +260,12 @@ export default {
           this.noticeContent = notice.content;
           this.fileList = []
           notice.attachmentList.map(item => {
-            console.log(item)
             this.fileList.push({
               name: item.attachmentName,
               url: item.attachmentUrl,
               delId: item.id
             })
           });
-          console.log(this.fileList)
         } else {
           this.$message.error(res.message);
         }
@@ -410,7 +430,18 @@ export default {
           status: -1
         })
       }
-    }
+    },
+
+    // 表格索引
+    getIndex(i) {
+      let index;
+      if (i == 9) {
+        index =  this.currentPage + '0'
+      } else {
+        index = (this.currentPage>1?(this.currentPage - 1)+'':'') + (i + 1);
+      }
+      return index;
+    },
   }
 }
 </script>

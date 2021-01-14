@@ -15,7 +15,10 @@ export const getNoticeInfo = params => axios.get('/notice/info', { params });
 export const findColleague = params => axios({
   url: '/index/user/findColleague',
   method: 'POST',
-  data: qs.stringify(params)
+  data: params,
+  headers: {
+    'Content-type': 'application/json;charset=UTF-8'
+  },
 });
 
 export default {

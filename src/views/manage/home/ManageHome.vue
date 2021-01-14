@@ -10,17 +10,27 @@
       >{{item.name}}</li>
     </ul>
 
-    <home-notice v-show="tabActive === 'notice'"></home-notice>
+    <home-notice v-if="tabActive === 'notice'"></home-notice>
+
+    <hot-setting v-if="tabActive === 'circle'" key="circle" tabActive="circle"></hot-setting>
+    <hot-setting v-if="tabActive === 'column'" key="column" tabActive="column"></hot-setting>
+    <hot-setting v-if="tabActive === 'topic'" key="topic" tabActive="topic"></hot-setting>
+
+    <!-- <login-pic v-if="tabActive === 'login'"></login-pic> -->
   </div>
 </template>
 
 <script>
 import '@/assets/css/manage.css';
 import HomeNotice from '@/components/manage/HomeNotice.vue';
+import HotSetting from '@/components/manage/HotSetting.vue';
+import LoginPic from '@/components/manage/LoginPic.vue';
 export default {
   name: 'manageHome',
   components: {
     HomeNotice,
+    HotSetting,
+    LoginPic,
   },
   data() {
     return {

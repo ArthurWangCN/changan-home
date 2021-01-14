@@ -69,8 +69,15 @@ export default {
         window.open(
           publiceUrl + "/circle/#/circle-square?searchKey=" + this.keyword
         );
-      } else {
+      } else if (this.currentTopic == "同事") {
         console.log("搜同事");
+        let routeUrl = this.$router.resolve({
+          path: "/colleague",
+          query: {
+            searchKey: this.keyword
+          }
+        });
+        window.open(routeUrl.href, '_blank');
       }
     },
 

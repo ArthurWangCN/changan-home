@@ -64,6 +64,23 @@ export const editNotice = params => axios.post('/notice/update', params);
 // 删除通知公告
 export const delNotice = params => axios.delete('/notice/delete', { params });
 
+// 获取热门圈子列表
+export const getHotCircleList = params => axios.get('/hotCircleManage/list', { params });
+
+// 热门圈子首页置顶
+export const topHotCircle = params => axios.put('/hotCircleManage/portalCircleTop', params);
+
+// 获取热门专栏列表
+export const getHotColumnList = params => axios.get('/hotColumnManage/list', { params });
+
+// 热门专栏首页置顶
+export const topHotColumn = params => axios.put('/hotColumnManage/isHomeTop', params);
+
+// 获取热门话题列表
+export const getHotTopicList = params => axios.get('/hotQuestionManage/list', { params });
+
+// 热门话题首页置顶
+export const topHotTopic = params => axios.put('/hotQuestionManage/portalCircleTop', params);
 
 export default {
   getOpinionList,
@@ -82,4 +99,10 @@ export default {
   addNotice,
   editNotice,
   delNotice,
+  getHotCircleList,
+  topHotCircle,
+  getHotColumnList,
+  topHotColumn,
+  getHotTopicList,
+  topHotTopic,
 }

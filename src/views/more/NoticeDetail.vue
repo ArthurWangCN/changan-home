@@ -58,7 +58,8 @@ import {
   getNoticeInfo
 } from '@/api/interface/more';
 import {
-  getFileIcon
+  getFileIcon,
+  formatDate
 } from '@/utils/index.js';
 export default {
   name: 'moreNotice',
@@ -87,15 +88,13 @@ export default {
       }).then(res => {
         if (res.success) {
           this.notice = res.content;
-          console.log(this.notice);
+          this.notice.createDate = formatDate(this.notice.createDate);
           this.notice.attachmentList.forEach(item => {
             let nameArr = item.attachmentName.split('.');
             let format = nameArr[nameArr.length -1];
             let iconType = `#icon${getFileIcon(format)}-s`;
-            console.log(iconType)
             this.$set(item, 'iconType', iconType);
           });
-          console.log(this.notice.attachmentList)
         } else {
           this.$message.error(res.message)
         }

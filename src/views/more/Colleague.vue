@@ -19,6 +19,8 @@
           </el-input>
         </div>
 
+        <nothing v-if="!isLoading&&colleagueList.length<=0"></nothing>
+
         <ul class="colleague-list clearfix">
           <li
             class="colleague-item"
@@ -33,16 +35,16 @@
                   <span class="user-id">{{ item.loginId }}</span>
                 </p>
                 <p class="mb10 text-ellipsis">
-                  <svg class="iconfont" aria-hidden="true">
+                  <svg class="iconfont" aria-hidden="true" style="transform: translateY(2px);">
                     <use xlink:href="#iconposition" />
                   </svg>
                   <span>研发工程师</span>
                 </p>
                 <p class="text-ellipsis">
-                  <svg class="iconfont" aria-hidden="true">
+                  <svg class="iconfont" aria-hidden="true" style="transform: translateY(2px);">
                     <use xlink:href="#icondepartment" />
                   </svg>
-                  <span>{{ item.departmentName }}</span>
+                  <span :title="item.departmentName">{{ item.departmentName }}</span>
                 </p>
               </div>
             </div>
@@ -51,25 +53,25 @@
                 <svg class="iconfont" aria-hidden="true">
                   <use xlink:href="#iconemail1" />
                 </svg>
-                <span>wx10000@cnki.net</span>
+                <span class="user-infos">wx10000@cnki.net</span>
               </p>
               <p>
                 <svg class="iconfont" aria-hidden="true">
                   <use xlink:href="#iconextension" />
                 </svg>
-                <span>010-87839732</span>
+                <span class="user-infos">010-87839732</span>
               </p>
               <p>
                 <svg class="iconfont" aria-hidden="true">
                   <use xlink:href="#iconphone1" />
                 </svg>
-                <span>13701380518</span>
+                <span  class="user-infos">13701380518</span>
               </p>
               <p>
                 <svg class="iconfont" aria-hidden="true">
                   <use xlink:href="#iconproject1" />
                 </svg>
-                大数据智能标引
+                <span class="user-infos">大数据智能标引</span>
               </p>
             </div>
           </li>
@@ -92,12 +94,14 @@
 
 <script>
 import '@/assets/css/more.css';
+import Nothing from '@/components/nothing.vue';
 import {
   findColleague
 } from '@/api/interface/more';
 export default {
   name: 'Colleague',
   components: {
+    Nothing,
     Top: window.TopCommonFooter.Top,
     CommonFooter: window.TopCommonFooter.CommonFooter,
   },
@@ -111,6 +115,8 @@ export default {
     }
   },
   created() {
+    console.log(this.$route.query);
+    this.searchText = this.$route.query.searchKey || '';
     this.init();
   },
   methods: {
@@ -139,6 +145,7 @@ export default {
     },
 
     search() {
+      this.currentPage = 1;
       this.findColleague();
     },
 
@@ -155,12 +162,10 @@ export default {
 </script>
 
 <style scoped>
-.more-content{
-  /* margin-bottom: 20px; */
-}
 .colleague-wrapper {
   background-color: #f1f2f5;
   border-radius: 0;
+  margin-bottom: 0;
 }
 .colleague-list{
 }
@@ -223,5 +228,12 @@ export default {
 }
 .info-bottom .iconfont {
   margin-right: 20px;
+}
+.user-infos {
+  display: block;
+  max-width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 </style>

@@ -14,6 +14,14 @@ Vue.use(Nothing);
 
 Vue.component('nothing', Nothing);
 
+router.beforeEach((to, from, next) => {
+  /* 路由发生变化的时候修改页面title */
+  if (to.meta.title) {
+    document.title = to.meta.title
+  }
+  next()
+})
+
 Vue.config.productionTip = false;
 
 new Vue({

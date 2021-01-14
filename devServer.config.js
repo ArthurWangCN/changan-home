@@ -24,7 +24,7 @@ const getCookie = (userAgent) => {
 let flag = false;
 const proxyConfig = [{
   // 开发需要代理的请求列表
-  context: ['/index', 'opinion', 'demand', 'notice', 'file'],
+  context: ['/index', 'opinion', 'demand', 'notice', 'file', 'hotCircleManage', 'information', 'hotColumnManage', 'hotQuestionManage'],
   // 跨域代理目标地址
   target: "http://39.99.217.114:8081",
   changeOrigin: true,

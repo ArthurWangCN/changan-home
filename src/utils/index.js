@@ -79,13 +79,21 @@ const formatList = {
 const getFileIcon = (format) => {
   if (!format) return;
   let iconType;
-  console.log(formatList)
   for (let key in formatList) {
     if (formatList[key].indexOf(format) > -1) {
       iconType = key;
     }
   }
   return iconType || 'other';
+}
+
+// 格式化日期
+const formatDate = (d) => {
+  // let newDate = /\d{4}-\d{1,2}-\d{1,2}/g.exec(d);
+  if (!d) return '';
+  let date = d.substr(0, 10);
+  date = date.replace(/-/g, '/');
+  return date;
 }
 
 export {
@@ -95,7 +103,8 @@ export {
   colordata,
   downloadExcel,
   html2text,
-  getFileIcon
+  getFileIcon,
+  formatDate,
 }
 
 

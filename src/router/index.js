@@ -8,7 +8,10 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: Home
+    component: Home,
+    meta: {
+      title: '智谷研发知识平台'
+    }
   },
 
   {
@@ -20,7 +23,7 @@ const routes = [
   },
   {
     path: '/colleague',     // 搜同事
-    name: 'noticeDetail',
+    name: 'colleague',
     component: () => import(
       /* webpackChunkName: "more" */ '@/views/more/Colleague.vue'
     )
@@ -37,7 +40,10 @@ const routes = [
     name: 'feedback',
     component: () => import(
       /* webpackChunkName: "more" */ '@/views/more/Feedback.vue'
-    )
+    ),
+    meta: {
+      title: '后台管理'
+    }
   },
 
   {
@@ -45,21 +51,30 @@ const routes = [
     name: 'manage',
     component: () => import(
       /* webpackChunkName: "manage" */ '@/views/manage/home/ManageHome.vue'
-    )
+    ),
+    meta: {
+      title: '后台管理'
+    }
   },
   {
     path: '/manage/opinion',   // 后台管理 —— 反馈建议管理
     name: 'opinion',
     component: () => import(
       /* webpackChunkName: "manage" */ '@/views/manage/opinion/Opinion.vue'
-    )
+    ),
+    meta: {
+      title: '后台管理'
+    }
   },
   {
     path: '/manage/demand',     //后台管理 —— 用户需求管理
     name: 'demand',
     component: () => import(
       /* webpackChunkName: "manage" */ '@/views/manage/demand/UserDemand.vue'
-    )
+    ),
+    meta: {
+      title: '后台管理'
+    }
   }
 ];
 
