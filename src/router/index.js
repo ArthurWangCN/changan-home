@@ -40,10 +40,7 @@ const routes = [
     name: 'feedback',
     component: () => import(
       /* webpackChunkName: "more" */ '@/views/more/Feedback.vue'
-    ),
-    meta: {
-      title: '后台管理'
-    }
+    )
   },
 
   {

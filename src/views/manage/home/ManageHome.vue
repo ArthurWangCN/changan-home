@@ -10,7 +10,7 @@
       >{{item.name}}</li>
     </ul>
 
-    <!-- <home-banner v-if="tabActive === 'banner'"></home-banner> -->
+    <home-banner v-if="tabActive === 'banner'"></home-banner>
 
     <home-notice v-if="tabActive === 'notice'"></home-notice>
 
@@ -48,7 +48,7 @@ export default {
         { id:"topic", name: "热门话题设置" },
         { id:"login", name: "登录页图片修改" }
       ],
-      tabActive: 'notice'
+      tabActive: 'banner'
     }
   }
 }

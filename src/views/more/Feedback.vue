@@ -13,18 +13,60 @@
         <el-tabs v-model="tabName">
           <el-tab-pane label="发表意见" name="opinion">
             <div class="feedback-opinion">
-              <p>请选择意见类型：</p>
-              <el-select v-model="value" placeholder="请选择">
+              <p class="mt30 mb20">请选择意见类型：</p>
+              <el-select v-model="opinionType" placeholder="请选择">
                 <el-option
-                  v-for="item in options"
+                  v-for="item in opinionTypeList"
                   :key="item.value"
                   :label="item.label"
                   :value="item.value">
                 </el-option>
               </el-select>
+              <p class="mt30 mb20">请填写对平台的意见和建议：</p>
+              <el-input
+                type="textarea"
+                maxlength="500"
+                show-word-limit
+                placeholder="请输入您要写的意见"
+                v-model="opinionText">
+              </el-input>
+              <div class="feedback-btns">
+                <el-button type="primary" @click="submitOpinion" round>提交</el-button>
+                <el-button @click="cancelOpinion" round>取消</el-button>
+              </div>
             </div>
           </el-tab-pane>
-          <el-tab-pane label="我有外部行业资讯需求" name="demand">我有外部行业资讯需求</el-tab-pane>
+          <el-tab-pane label="我有外部行业资讯需求" name="demand">
+            <div class="feedback-demand">
+              <p class="mt30 mb20">需求内容：</p>
+              <el-input
+                type="textarea"
+                maxlength="500"
+                show-word-limit
+                placeholder="请输入内容"
+                v-model="opinionText">
+              </el-input>
+              <p class="mt30 mb20">已有信息或已交流供应商：</p>
+              <el-input
+                type="textarea"
+                maxlength="500"
+                show-word-limit
+                placeholder="请输入内容"
+                v-model="opinionText">
+              </el-input>
+              <p class="mt30 mb20">所需项目/所需单位：</p>
+              <el-input
+                class="project-input"
+                type="textarea"
+                placeholder="请输入内容"
+                v-model="opinionText">
+              </el-input>
+              <div class="feedback-btns">
+                <el-button type="primary" @click="submitOpinion" round>提交</el-button>
+                <el-button @click="cancelOpinion" round>取消</el-button>
+              </div>
+            </div>
+          </el-tab-pane>
           <el-tab-pane label="意见反馈记录" name="opinionRecord">意见反馈记录</el-tab-pane>
           <el-tab-pane label="需求反馈记录" name="demandRecord">需求反馈记录</el-tab-pane>
         </el-tabs>
@@ -44,7 +86,7 @@ export default {
     return {
       isLoading: false,
       tabName: 'opinion',
-      options: [{
+      opinionTypeList: [{
           value: '选项1',
           label: '黄金糕'
         }, {
@@ -60,7 +102,8 @@ export default {
           value: '选项5',
           label: '北京烤鸭'
         }],
-        value: ''
+        opinionType: '',
+        opinionText: ''
     }
   },
   components: {
@@ -68,6 +111,16 @@ export default {
     CommonFooter: window.TopCommonFooter.CommonFooter,
   },
   methods: {
+
+    // 提交意见
+    submitOpinion() {
+
+    },
+    cancelOpinion() {
+
+    },
+
+
     goHome() {
 
     }
@@ -96,9 +149,30 @@ export default {
 }
 .feedback-content >>> .el-tabs__nav-wrap::after { background-color: #eeeeee; }
 
-.feedback-opinion {
+.feedback-opinion,
+.feedback-demand {
   font-size: 14px;
   color: #333333;
 }
+.feedback-opinion >>> .el-select {
+  width: 100%;
+}
+.feedback-opinion >>> .el-textarea__inner{
+  resize: none;
+  height: 304px;
+}
+.feedback-btns {
+  margin-top: 100px;
+  text-align: center;
+}
+
+.feedback-demand >>> .el-textarea__inner {
+  resize: none;
+  height: 200px;
+}
+.feedback-demand .project-input >>> .el-textarea__inner{
+  height: 160px;
+}
+.feedback-demand .feedback-btns { margin-top: 50px; }
 </style>
 

@@ -209,6 +209,7 @@ export default {
       this.getNoticeList();
     },
 
+    // 获取通知公告列表
     getNoticeList() {
       this.isLoading = true;
       getNoticeList({
@@ -237,6 +238,7 @@ export default {
       this.getNoticeList();
     },
 
+    // 点击发布公告
     addNotice() {
       this.fileList = [];
       this.operation = 'add';
@@ -245,6 +247,7 @@ export default {
       this.noticeDialogVisible=true;
     },
 
+    // 点击编辑公告
     editNotice(row) {
       this.operation = 'edit';
       this.dialogLoading = true;
@@ -416,7 +419,6 @@ export default {
     },
     beforeRemove(file, fileList) {
       return this.$confirm(`确定移除 ${ file.name }？`);
-      // console.log(fileList)
     },
     onRemoveSucc(file, fileList) {
       console.log(file)
