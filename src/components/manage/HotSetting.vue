@@ -59,14 +59,16 @@
       <!-- 热门话题 -->
       <template v-if="tabActive==='topic'">
         <el-table-column prop="questionTitle" label="题名" align="left"></el-table-column>
-        <el-table-column prop="circleId" label="圈子" align="center" width="400"></el-table-column>
-        <el-table-column prop="creator" label="提问人" align="center" width="200"></el-table-column>
+        <el-table-column prop="circleName" label="圈子" align="center" width="400"></el-table-column>
+        <el-table-column prop="creatorName" label="提问人" align="center" width="200"></el-table-column>
         <el-table-column prop="createTime" label="提交时间" align="center" width="200"></el-table-column>
       </template>
 
       <el-table-column label="操作" align="center" width="300">
         <template slot-scope="scope">
-          <el-button type="text" @click="top(scope.row)"><span v-if="(scope.row.portalTop || scope.row.homeIsTopping)===1">取消</span>门户置顶</el-button>
+          <el-button type="text" @click="top(scope.row)">
+            <span v-if="(scope.row.portalTop || scope.row.homeIsTopping)===1">取消</span><span v-if="tabActive!=='topic'">门户</span>置顶
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -216,6 +218,7 @@ export default {
           this.dataList = res.content.rows;
           this.dataList.forEach(item => {
             item.createTime = formatDate(item.createTime);
+            if (item.portalTop === '') item.portalTop = 0;
           });
           this.total = res.content.totalRows;
         } else {
@@ -283,8 +286,8 @@ export default {
     // 话题置顶
     topHotTopic(row) {
       topHotTopic({
-        questionId: row.circleId,
-        portalTop: row.portalTop===0?1:0
+        questionId: row.id,
+        portalTop: (row.portalTop===0||'')?1:0
       }).then(res => {
         if (res.success) {
           let succMsg = row.portalTop === 0 ? '置顶成功' : '取消置顶成功';

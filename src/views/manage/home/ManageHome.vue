@@ -10,6 +10,8 @@
       >{{item.name}}</li>
     </ul>
 
+    <!-- <home-banner v-if="tabActive === 'banner'"></home-banner> -->
+
     <home-notice v-if="tabActive === 'notice'"></home-notice>
 
     <hot-setting v-if="tabActive === 'circle'" key="circle" tabActive="circle"></hot-setting>
@@ -22,12 +24,14 @@
 
 <script>
 import '@/assets/css/manage.css';
+import HomeBanner from '@/components/manage/HomeBanner.vue';
 import HomeNotice from '@/components/manage/HomeNotice.vue';
 import HotSetting from '@/components/manage/HotSetting.vue';
 import LoginPic from '@/components/manage/LoginPic.vue';
 export default {
   name: 'manageHome',
   components: {
+    HomeBanner,
     HomeNotice,
     HotSetting,
     LoginPic,

@@ -38,7 +38,7 @@
                   <svg class="iconfont" aria-hidden="true" style="transform: translateY(2px);">
                     <use xlink:href="#iconposition" />
                   </svg>
-                  <span>研发工程师</span>
+                  <span>{{ item.position || "暂无岗位信息" }}</span>
                 </p>
                 <p class="text-ellipsis">
                   <svg class="iconfont" aria-hidden="true" style="transform: translateY(2px);">
@@ -53,25 +53,25 @@
                 <svg class="iconfont" aria-hidden="true">
                   <use xlink:href="#iconemail1" />
                 </svg>
-                <span class="user-infos">wx10000@cnki.net</span>
+                <span class="user-infos">{{ item.email || "暂无" }}</span>
               </p>
               <p>
                 <svg class="iconfont" aria-hidden="true">
                   <use xlink:href="#iconextension" />
                 </svg>
-                <span class="user-infos">010-87839732</span>
+                <span class="user-infos">{{ item.phone || "暂无" }}</span>
               </p>
               <p>
                 <svg class="iconfont" aria-hidden="true">
                   <use xlink:href="#iconphone1" />
                 </svg>
-                <span  class="user-infos">13701380518</span>
+                <span  class="user-infos">{{ item.mobile || "暂无" }}</span>
               </p>
               <p>
                 <svg class="iconfont" aria-hidden="true">
                   <use xlink:href="#iconproject1" />
                 </svg>
-                <span class="user-infos">大数据智能标引</span>
+                <span class="user-infos">暂无项目信息</span>
               </p>
             </div>
           </li>

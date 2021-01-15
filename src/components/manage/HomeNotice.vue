@@ -68,7 +68,7 @@
     >
       <div class="edit-content manage-editor" v-loading="dialogLoading">
         <el-input placeholder="请输入标题" class="notice-title-input" v-model="noticeTitle"></el-input>
-        <quill-editor ref="myTextEditor" v-model="noticeContent" :options="editorOption" @focus="onEditorFocus($event)"></quill-editor>
+        <quill-editor ref="noticeContentEditor" v-model="noticeContent" :options="editorOption" @focus="onEditorFocus($event)"></quill-editor>
         <div class="notice-upload flex-align-c">
           <el-upload
             :action="actionUrl"
@@ -184,12 +184,12 @@ export default {
   },
   computed: {
     dialogTitle() {
-      return '发布公告'
+      return this.operation === 'add' ? '发布公告' : '编辑公告';
     }
   },
   created() {
     this.init();
-    console.log(process.env.NODE_ENV);
+    console.log(process.env.NODE_ENV,'--env');
     if (process.env.NODE_ENV === 'development') {
       this.actionUrl = '/file/upload';
     }

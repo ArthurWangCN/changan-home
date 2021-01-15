@@ -82,6 +82,11 @@ export const getHotTopicList = params => axios.get('/hotQuestionManage/list', { 
 // 热门话题首页置顶
 export const topHotTopic = params => axios.put('/hotQuestionManage/portalCircleTop', params);
 
+// 轮播图列表
+export const getBannerList = params => axios.get('/banner/list', { params });
+
+
+
 export default {
   getOpinionList,
   replyOpinion,
@@ -105,4 +110,5 @@ export default {
   topHotColumn,
   getHotTopicList,
   topHotTopic,
+  getBannerList,
 }

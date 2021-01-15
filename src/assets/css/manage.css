@@ -101,6 +101,18 @@
   background-color: #13bc75;
 }
 
+/* 轮播图上传 */
+.banner-upload {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+}
+.banner-upload .el-upload{
+  width: 120px;
+  height: 36px;
+  border: none;
+}
+
 /* 富文本编辑器 */
 .manage-editor .ql-container {
   height: 200px;
