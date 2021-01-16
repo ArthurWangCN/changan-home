@@ -117,7 +117,7 @@ import {
 import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
-
+import { handlers } from '@/utils/quillEditor.js';
 import { quillEditor } from 'vue-quill-editor'
 import {
   getNoticeList,
@@ -162,16 +162,29 @@ export default {
       editorOption: {
         placeholder: "请输入公告内容",
         modules:{
-          toolbar:[
-            [{ 'font': [] }],     //字体
-            [{ 'size': ['small', false, 'large', 'huge'] }], // 字体大小
-            // [{ 'header': [1, 2, 3, 4, 5, 6, false] }],     //几级标题
-            ['bold', 'italic', 'underline', 'strike'],    //加粗，斜体，下划线，删除线
-            [{ 'list': 'ordered'}, { 'list': 'bullet' }],     //列表
-            [{ 'color': [] }, { 'background': [] }],     // 字体颜色，字体背景颜色
-            [{ 'align': [] }],    //对齐方式
-            ['link', 'image']    //上传图片、上传视频
-          ]
+          // toolbar:[
+          //   [{ 'font': [] }],     //字体
+          //   [{ 'size': ['small', false, 'large', 'huge'] }], // 字体大小
+          //   // [{ 'header': [1, 2, 3, 4, 5, 6, false] }],     //几级标题
+          //   ['bold', 'italic', 'underline', 'strike'],    //加粗，斜体，下划线，删除线
+          //   [{ 'list': 'ordered'}, { 'list': 'bullet' }],     //列表
+          //   [{ 'color': [] }, { 'background': [] }],     // 字体颜色，字体背景颜色
+          //   [{ 'align': [] }],    //对齐方式
+          //   ['link', 'image']    //上传图片、上传视频
+          // ],
+          toolbar: {
+            handlers: handlers,
+            container: [
+              [{ 'font': [] }],     //字体
+              [{ 'size': ['small', false, 'large', 'huge'] }], // 字体大小
+              // [{ 'header': [1, 2, 3, 4, 5, 6, false] }],     //几级标题
+              ['bold', 'italic', 'underline', 'strike'],    //加粗，斜体，下划线，删除线
+              [{ 'list': 'ordered'}, { 'list': 'bullet' }],     //列表
+              [{ 'color': [] }, { 'background': [] }],     // 字体颜色，字体背景颜色
+              [{ 'align': [] }],    //对齐方式
+              ['link', 'image']    //上传图片、上传视频
+            ]
+          }
         }
       },
       operation: 'add',   // add:发布公告  edit:编辑公告

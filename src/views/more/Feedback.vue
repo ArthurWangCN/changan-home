@@ -443,6 +443,7 @@ export default {
   right: 0;
   bottom: 0;
   padding: 0 10px;
+  padding-right: 0;
   color: #3d8cfc;
   background-color: #ffffff;
   cursor: pointer;
