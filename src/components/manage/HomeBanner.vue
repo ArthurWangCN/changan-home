@@ -181,8 +181,8 @@ export default {
     getBannerList() {
       this.isLoading = true;
       getBannerList({
-        pageIndex: this.currentPage,
-        pageSize: 10,
+        current: this.currentPage,
+        size: 10,
         search: this.searchText
       }).then(res => {
         if (res.success) {

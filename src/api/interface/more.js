@@ -21,8 +21,28 @@ export const findColleague = params => axios({
   },
 });
 
+// 意见反馈记录接口
+export const getOpinionTypeList = params => axios.get('/opinion/type/all', { params });
+
+// 意见提交接口
+export const submitOpinion = params => axios.post('/opinion/submit', params);
+
+// 提交外部行业资讯需求
+export const submitDemand = params => axios.post('/demand/add', params);
+
+// 意见反馈记录接口
+export const getOpinionList = params => axios.get('/opinion/list', { params });
+
+// 需求反馈记录接口
+export const getDemandList = params => axios.get('/demand/list', { params });
+
 export default {
   getNotice,
   getNoticeInfo,
   findColleague,
+  getOpinionTypeList,
+  submitOpinion,
+  submitDemand,
+  getOpinionList,
+  getDemandList
 }
