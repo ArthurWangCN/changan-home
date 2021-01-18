@@ -44,7 +44,7 @@ export default {
         { id:"notice", name: "系统公告设置" },
         { id:"information", name: "行业资讯设置" },
         { id:"circle", name: "热门圈子设置" },
-        { id:"column", name: "热门专栏设置" },
+        { id:"column", name: "专栏设置" },
         { id:"topic", name: "热门话题设置" },
         { id:"login", name: "登录页图片修改" }
       ],

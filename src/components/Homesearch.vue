@@ -15,7 +15,7 @@
     <div class="search-group">
       <el-input
         placeholder="知识/圈子/同事"
-        @keyup.enter="toSearch"
+        @keyup.enter.native="toSearch"
         v-model.trim="keyword"
       />
       <button class="search-btn" @click="toSearch">
@@ -28,8 +28,8 @@
     <div class="hot-search">
       <h4 class="hot-search-title">热搜</h4>
       <div class="hot-search-words">
-        <span v-for="(item, index) in hotdata" :key="index" @click="goHot(item)">{{
-          item
+        <span v-for="(item, index) in hotdata" :key="index" @click="goHot(item.keyword)">{{
+          item.keyword
         }}</span>
       </div>
     </div>
@@ -37,6 +37,9 @@
 </template>
 <script>
 import { publiceUrl } from "@/utils/index.js";
+import {
+  getHotWordList
+} from '@/api/interface/home';
 
 export default {
   data() {
@@ -47,10 +50,28 @@ export default {
       hotdata: ["防腐", "试验样车", "悬架参数", "CTS", "DVPVIPT"],
     };
   },
+  created() {
+    this.getHotWordList();
+  },
   methods: {
     // 选择主题
     changeHomeSearchTopic(topic) {
       this.currentTopic = topic;
+    },
+
+    // 热搜词
+    getHotWordList() {
+      getHotWordList()
+      .then((json) => {
+          if (json.success) {
+            this.hotdata = json.content;
+          } else {
+            this.$message.error(json.message);
+          }
+        })
+        .catch((json) => {
+          this.$message.error(json.message);
+        });
     },
 
     // 跳转到搜索页

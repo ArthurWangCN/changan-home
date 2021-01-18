@@ -22,6 +22,20 @@ const routes = [
     )
   },
   {
+    path: '/hotKno',     // 更多 热点知识
+    name: 'hotKno',
+    component: () => import(
+      /* webpackChunkName: "more" */ '@/views/more/HotKno.vue'
+    )
+  },
+  {
+    path: '/recommendKno',     // 更多 推荐知识
+    name: 'recommendKno',
+    component: () => import(
+      /* webpackChunkName: "more" */ '@/views/more/HotKno.vue'
+    )
+  },
+  {
     path: '/colleague',     // 搜同事
     name: 'colleague',
     component: () => import(

@@ -45,6 +45,9 @@ export const getForum = params => axios.get('/index/circle/joinCircle', { params
 // 轮播图列表
 export const getBanner = params => axios.get('/index/banner/list', { params });
 
+// 热搜词
+export const getHotWordList = params => axios.get('/index/hotWord/list', { params });
+
 export default {
   getUserInfo,
   getChannel,
@@ -60,5 +63,6 @@ export default {
   getSubscribe,
   DeleteSubscribe,
   getForum,
-  getBanner
+  getBanner,
+  getHotWordList
 }

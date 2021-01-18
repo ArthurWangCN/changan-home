@@ -2,7 +2,8 @@
   <div class="hot-wrapper">
     <div class="hot-header">
       <div class="header-left">
-        <el-checkbox v-if="tabActive!=='topic'" v-model="checked">{{ tips }}</el-checkbox>
+        <!-- <el-checkbox v-if="tabActive!=='topic'" v-model="checked">{{ tips }}</el-checkbox> -->
+        <p class="tip-text" v-if="tabActive==='circle'">{{ tips }}</p>
       </div>
       <div class="header-right">
         <el-input
@@ -351,5 +352,9 @@ export default {
 }
 .hot-wrapper >>> .el-table {
   width: 100%;
+}
+.tip-text {
+  font-size: 14px;
+  color: #666666;
 }
 </style>

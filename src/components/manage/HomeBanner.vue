@@ -85,7 +85,7 @@
           >
             <span class="manage-home-btn" style="width: 120px;">上传图片</span>
           </el-upload>
-          <img :src="bannerUrl" style="margin-left:10px;" width="140px" height="85px" alt="">
+          <img v-if="bannerUrl!==''" :src="bannerUrl" style="margin-left:10px;" width="140px" height="85px" alt="">
         </div>
         <div class="flex-align-c dialog-banner-title">
           <span>图片标题：</span>
@@ -156,7 +156,8 @@ export default {
       fileList: [],
       actionUrl: '/home/file/upload',
       bannerTitle: '',
-      bannerUrl: 'http://p2.itc.cn/images01/20210115/4516889a415f49ada395b415ab542cad.png',
+      bannerUrl: '',
+      // bannerUrl: require('../../assets/img/banner.jpg'),
       isTop: false,
       curBanner: '',
     }
@@ -216,6 +217,7 @@ export default {
           this.curBanner = res.content;
           this.bannerUrl = this.curBanner.imgUrl;
           this.bannerTitle = this.curBanner.title;
+          this.isTop = this.curBanner.isTop == 1 ? true : false;
         } else {
           this.$message.error(res.message);
         }
@@ -232,20 +234,21 @@ export default {
 
     // 确定新建/编辑图片
     confirmDialog() {
+      if(this.bannerTitle==='') return this.$message.warning('图片标题不能为空');
       let promise;
+      let params = {
+        imgUrl: this.bannerUrl,
+        title: this.bannerTitle,
+        isShow: 1,
+        isTop: this.isTop ? 1 : 0
+      };
       if (this.operation === 'add') {
-        promise = addBanner({
-          imgUrl: this.bannerUrl,
-          title: this.bannerTitle,
-          isShow: 1
-        })
+        promise = addBanner(params);
       } else if (this.operation === 'edit') {
         promise = editBanner({
           id: this.curBanner.id,
-          imgUrl: this.bannerUrl,
-          title: this.bannerTitle,
-          isShow: 1
-        })
+          ...params
+        });
       }
       promise.then(res => {
         if (res.success) {
@@ -267,6 +270,7 @@ export default {
       this.fileList = [];
       this.bannerUrl = '';
       this.bannerTitle = '';
+      this.isTop = false;
     },
 
     // 点击删除
@@ -307,6 +311,11 @@ export default {
 
     // 上传
     beforeUpload(file) {
+      const isLt500M = file.size / 1024 / 1024 <= 4;
+      if (!isLt500M) {
+        this.$message.warning('图片大小4M以内');
+        return false;
+      }
     },
     handleChangePic(file,fileList){
       if (fileList.length > 1) {

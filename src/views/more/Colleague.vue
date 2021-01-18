@@ -67,11 +67,15 @@
                 </svg>
                 <span  class="user-infos">{{ item.mobile || "暂无" }}</span>
               </p>
-              <p>
-                <svg class="iconfont" aria-hidden="true">
+              <p style="align-items:start;">
+                <svg class="iconfont" style="margin-top:2px;" aria-hidden="true">
                   <use xlink:href="#iconproject1" />
                 </svg>
-                <span class="user-infos">暂无项目信息</span>
+                <span class="user-infos" v-if="item.projectList.length<=0">暂无项目信息</span>
+                <ul class="user-infos" v-else>
+                  <li class="text-ellipsis" :title="item.projectList[0]">{{item.projectList[0]}}</li>
+                  <li class="text-ellipsis" :title="item.projectList[1]">{{item.projectList[1]}}</li>
+                </ul>
               </p>
             </div>
           </li>
@@ -179,6 +183,10 @@ export default {
   background-color: #ffffff;
   box-sizing: border-box;
   padding: 0 20px;
+  transition: all ease .3s;
+}
+.colleague-item:hover {
+  box-shadow: 6px 6px 6px rgba(0, 0, 0, .1);
 }
 .colleague-item:nth-child(3n) {
   margin-right: 0;
@@ -235,5 +243,8 @@ export default {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+.user-infos li {
+  margin-bottom: 6px;
 }
 </style>

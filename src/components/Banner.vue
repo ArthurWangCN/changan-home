@@ -5,9 +5,12 @@
     height="420px"
     arrow="never"
   >
-    <el-carousel-item v-if="bannerList.length<=0">
-      <img src="../assets/img/default-banner.png" alt="" />
+    <el-carousel-item>
+      <img src="../assets/img/banner-temp.png" alt="" />
     </el-carousel-item>
+    <!-- <el-carousel-item v-if="bannerList.length<=0">
+      <img src="../assets/img/default-banner.png" alt="" />
+    </el-carousel-item> -->
     <el-carousel-item v-for="banner in bannerList" :key="banner.id" v-show="banner.isShow">
       <!-- <img src="../assets/img/banner.jpg" alt="" />
       <div class="notice-link">
@@ -46,9 +49,10 @@ export default {
         .then((json) => {
           if (json.success) {
             this.bannerList = json.content;
-            // if(this.bannerList.length === 1) {
-            //   document.querySelector('.el-carousel__indicators').style.display = 'none';
-            // }
+            if(this.bannerList.length <= 0) {
+              document.querySelector('.el-carousel__indicators').style.display = 'none';
+            }
+            this.bannerList = this.bannerList.splice(0, 10);
           } else {
             this.$message.error(json.message);
           }

@@ -33,7 +33,7 @@
               </el-input>
               <div class="feedback-btns">
                 <el-button type="primary" @click="submitOpinion" round>提交</el-button>
-                <el-button @click="cancelOpinion" round>取消</el-button>
+                <el-button @click="clearOpinion" round>取消</el-button>
               </div>
             </div>
           </el-tab-pane>
@@ -66,7 +66,7 @@
               </el-input>
               <div class="feedback-btns">
                 <el-button type="primary" @click="submitDemand" round>提交</el-button>
-                <el-button @click="cancelDemand" round>取消</el-button>
+                <el-button @click="clearDemand" round>取消</el-button>
               </div>
             </div>
           </el-tab-pane>
@@ -300,14 +300,15 @@ export default {
       }).then(res => {
         if (res.success) {
           this.$message.success('提交成功');
-          this.opinionText = '';
+          this.clearOpinion();
         }
       }).catch(err => {
         this.$message.error(err.message);
       })
     },
-    cancelOpinion() {
-
+    clearOpinion() {
+      this.opinionType = this.opinionTypeList[0].id;
+      this.opinionText = '';
     },
 
     // 提交需求
@@ -322,16 +323,16 @@ export default {
       }).then(res => {
         if (res.success) {
           this.$message.success('提交成功');
-          this.demandContent = '';
-          this.supplier = '';
-          this.requiredItems = '';
+          this.clearDemand();
         }
       }).catch(err => {
         this.$message.error(err.message);
       })
     },
-    cancelDemand() {
-
+    clearDemand() {
+      this.demandContent = '';
+      this.supplier = '';
+      this.requiredItems = '';
     },
 
     handleOpinionCurrentChange(current) {

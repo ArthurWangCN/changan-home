@@ -412,7 +412,6 @@ export default {
 
     // 上传
     beforeUpload(file) {
-      console.log(file);
       const isLt500M = file.size / 1024 / 1024 <= 500;
       if (!isLt500M) {
         this.$message.warning('文件大小500M以内');

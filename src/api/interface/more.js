@@ -36,6 +36,12 @@ export const getOpinionList = params => axios.get('/opinion/list', { params });
 // 需求反馈记录接口
 export const getDemandList = params => axios.get('/demand/list', { params });
 
+// 热点知识列表
+// export const getRecommendKnoList = params => axios.get('/index/kno/recommend/list', { params });
+
+// 推荐知识列表
+export const getRecommendKnoList = params => axios.get('/index/kno/recommend/list', { params });
+
 export default {
   getNotice,
   getNoticeInfo,
@@ -44,5 +50,6 @@ export default {
   submitOpinion,
   submitDemand,
   getOpinionList,
-  getDemandList
+  getDemandList,
+  getRecommendKnoList
 }
