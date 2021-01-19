@@ -28,7 +28,8 @@
       <el-table-column prop="submitInfo" label="意见建议" align="center"></el-table-column>
       <el-table-column label="操作" align="center">
         <template slot-scope="scope">
-          <el-button type="text" @click="reply(scope.row)">回复</el-button>
+          <el-button :disabled="scope.row.replyStatus==1" type="text" @click="reply(scope.row)">回复</el-button>
+          <el-button v-if="scope.row.replyStatus==1" type="text" @click="showReply(scope.row)">回复意见</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -146,6 +147,7 @@ export default {
       }).then(res => {
         if (res.success) {
           this.$message.success('已回复');
+          this.getOpinionList();
         }
       }).catch(err => {
         this.$message.error(err.message);
@@ -157,6 +159,14 @@ export default {
       this.replyVisible = false;
       this.curReplyId = '';
       this.replyContent = '';
+    },
+
+    showReply(row) {
+      this.$alert(row.reply, '意见回复内容', {
+        confirmButtonText: '确定',
+        customClass: 'reply-alert',
+        callback: action => {}
+      });
     },
 
     // 分页器

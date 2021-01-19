@@ -27,7 +27,7 @@
             <p class="kno-title text-ellipsis" @click="goKnoDetail(item)">{{ item.title }}</p>
             <div class="kno-info">
               <span :class="{'kno-info-wide': knoType==='recommendKno'}">作者：{{ item.author }}</span>
-              <span class="kno-info-from" :class="{'kno-info-wider': knoType==='recommendKno'}">来源：{{ '暂无' }}</span>
+              <span class="kno-info-from" :class="{'kno-info-wider': knoType==='recommendKno'}">来源：{{ item.classification || '暂无' }}</span>
               <span v-if="knoType==='hotKno'">浏览量：77</span>
               <span>发布时间：{{ item.uploadTime }}</span>
             </div>

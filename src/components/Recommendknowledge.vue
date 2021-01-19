@@ -5,7 +5,7 @@
         推荐知识
         <img src="../assets/img/fire.png" alt="" />
       </div>
-      <a class="more">更多</a>
+      <a class="more" @click.prevent="goRecommendKno">更多</a>
     </div>
     <div class="recommend-knowlege-parts" v-if="loading">
       <div class="recommend-knowlege-left recommend-knowlege-part">
@@ -153,6 +153,14 @@ export default {
     //跳转知识页面
     goKnow(url) {
       window.open(url);
+    },
+
+    // 跳转推荐知识列表页
+    goRecommendKno() {
+      let routeUrl = this.$router.resolve({
+        path: "/recommendKno"
+      });
+      window.open(routeUrl.href, '_blank');
     },
   },
 };

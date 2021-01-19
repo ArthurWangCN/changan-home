@@ -86,8 +86,8 @@ export const topHotTopic = params => axios.put('/hotQuestionManage/portalCircleT
 export const getBannerList = params => axios.get('/banner/list', { params });
 
 // 添加轮播图
-// export const addBanner = params => axios.put(`/banner/add?imgUrl=${params.imgUrl}&title=${params.title}&isShow=1&isTop=${params.isTop}`);
 export const addBanner = params => axios.put('/banner/add', params);
+
 // 获取热门话题列表
 export const getBannerInfo = params => axios.get('/banner/info', { params });
 
@@ -96,6 +96,12 @@ export const editBanner = params => axios.post('/banner/update', params);
 
 // 删除通知公告
 export const delBanner = params => axios.delete('/banner/delete', { params });
+
+// 获取登录页图片
+export const getBackground = params => axios.get('/index/background/getBackground', { params });
+
+// 登录页图片上传后保存
+export const addBackground = params => axios.post('/index/background/add', params);
 
 export default {
   getOpinionList,
@@ -125,4 +131,6 @@ export default {
   getBannerInfo,
   editBanner,
   delBanner,
+  getBackground,
+  addBackground,
 }

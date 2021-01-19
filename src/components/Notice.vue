@@ -12,7 +12,7 @@
       >
         <div class="first-column-item" v-show="item.isShowPicInfo">
           <div class="item-img">
-            <img src="../assets/img/document.png" alt="" />
+            <img src="../assets/img/document0.png" alt="" />
             <!-- <svg :class="`iconfont iconHot iconHot${index}`" aria-hidden="true">
               <use xlink:href="#iconHot" />
               <text x="5" y="13" font-size="12" fill="white">
@@ -106,13 +106,13 @@ export default {
     },
 
     goMore() {
-      // let routeUrl = this.$router.resolve({
-      //   path: "/notice"
-      // });
-      // window.open(routeUrl.href, '_blank');
-      this.$router.push({
-        path: '/notice'
-      })
+      let routeUrl = this.$router.resolve({
+        path: "/notice"
+      });
+      window.open(routeUrl.href, '_blank');
+      // this.$router.push({
+      //   path: '/notice'
+      // })
     },
 
     goNoticeDetail(item) {

@@ -54,7 +54,8 @@
       <el-table-column prop="submitTime" label="提交时间" align="center"></el-table-column>
       <el-table-column label="操作" align="center">
         <template slot-scope="scope">
-          <el-button type="text" @click="reply(scope.row)">回复</el-button>
+          <el-button type="text" :disabled="scope.row.demandStatus==1" @click="reply(scope.row)">回复</el-button>
+          <el-button v-if="scope.row.demandStatus==1" type="text" @click="showReply(scope.row)">需求回复</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -173,6 +174,7 @@ export default {
       }).then(res => {
         if (res.success) {
           this.$message.success('已回复');
+          this.getDemandList();
         }
       }).catch(err => {
         this.$message.error(err.message);
@@ -184,7 +186,14 @@ export default {
       this.replyVisible = false;
       this.curDemandId = '';
       this.replyContent = '';
+    },
 
+    showReply(row) {
+      this.$alert(row.reply, '需求回复内容', {
+        confirmButtonText: '确定',
+        customClass: 'reply-alert',
+        callback: action => {}
+      });
     },
 
     // 分页器

@@ -10,6 +10,8 @@
       >{{item.name}}</li>
     </ul>
 
+    <home-layout v-if="tabActive === 'layout'"></home-layout>
+
     <home-banner v-if="tabActive === 'banner'"></home-banner>
 
     <home-notice v-if="tabActive === 'notice'"></home-notice>
@@ -18,12 +20,13 @@
     <hot-setting v-if="tabActive === 'column'" key="column" tabActive="column"></hot-setting>
     <hot-setting v-if="tabActive === 'topic'" key="topic" tabActive="topic"></hot-setting>
 
-    <!-- <login-pic v-if="tabActive === 'login'"></login-pic> -->
+    <login-pic v-if="tabActive === 'login'"></login-pic>
   </div>
 </template>
 
 <script>
 import '@/assets/css/manage.css';
+import HomeLayout from '@/components/manage/HomeLayout.vue';
 import HomeBanner from '@/components/manage/HomeBanner.vue';
 import HomeNotice from '@/components/manage/HomeNotice.vue';
 import HotSetting from '@/components/manage/HotSetting.vue';
@@ -31,6 +34,7 @@ import LoginPic from '@/components/manage/LoginPic.vue';
 export default {
   name: 'manageHome',
   components: {
+    HomeLayout,
     HomeBanner,
     HomeNotice,
     HotSetting,
@@ -48,7 +52,7 @@ export default {
         { id:"topic", name: "热门话题设置" },
         { id:"login", name: "登录页图片修改" }
       ],
-      tabActive: 'banner'
+      tabActive: 'layout'
     }
   }
 }

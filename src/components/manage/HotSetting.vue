@@ -60,12 +60,12 @@
       <!-- 热门话题 -->
       <template v-if="tabActive==='topic'">
         <el-table-column prop="questionTitle" label="题名" align="left"></el-table-column>
-        <el-table-column prop="circleName" label="圈子" align="center" width="400"></el-table-column>
-        <el-table-column prop="creatorName" label="提问人" align="center" width="200"></el-table-column>
-        <el-table-column prop="createTime" label="提交时间" align="center" width="200"></el-table-column>
+        <el-table-column prop="circleName" label="圈子" align="center" width="200"></el-table-column>
+        <el-table-column prop="creatorName" label="提问人" align="center" width="150"></el-table-column>
+        <el-table-column prop="createTime" label="提交时间" align="center" width="150"></el-table-column>
       </template>
 
-      <el-table-column label="操作" align="center" width="300">
+      <el-table-column label="操作" align="center" width="200">
         <template slot-scope="scope">
           <el-button type="text" @click="top(scope.row)">
             <span v-if="(scope.row.portalTop || scope.row.homeIsTopping)===1">取消</span><span v-if="tabActive!=='topic'">门户</span>置顶

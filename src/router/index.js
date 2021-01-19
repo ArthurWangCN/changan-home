@@ -19,42 +19,48 @@ const routes = [
     name: 'notice',
     component: () => import(
       /* webpackChunkName: "more" */ '@/views/more/Notice.vue'
-    )
+    ),
+    meta: { title: '通知公告' }
   },
   {
     path: '/hotKno',     // 更多 热点知识
     name: 'hotKno',
     component: () => import(
       /* webpackChunkName: "more" */ '@/views/more/HotKno.vue'
-    )
+    ),
+    meta: { title: '热点知识' }
   },
   {
     path: '/recommendKno',     // 更多 推荐知识
     name: 'recommendKno',
     component: () => import(
       /* webpackChunkName: "more" */ '@/views/more/HotKno.vue'
-    )
+    ),
+    meta: { title: '推荐知识' }
   },
   {
     path: '/colleague',     // 搜同事
     name: 'colleague',
     component: () => import(
       /* webpackChunkName: "more" */ '@/views/more/Colleague.vue'
-    )
+    ),
+    meta: { title: '搜同事' }
   },
   {
     path: '/notice/detail/:id',     // 更多 通知公告详情页
     name: 'noticeDetail',
     component: () => import(
       /* webpackChunkName: "more" */ '@/views/more/NoticeDetail.vue'
-    )
+    ),
+    meta: { title: '通知公告' }
   },
   {
     path: '/feedback',     // 反馈建议
     name: 'feedback',
     component: () => import(
       /* webpackChunkName: "more" */ '@/views/more/Feedback.vue'
-    )
+    ),
+    meta: { title: '反馈建议' }
   },
 
   {
