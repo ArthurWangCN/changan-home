@@ -17,7 +17,7 @@
         <p>通知公告:长安汽车与宁德时代更新盖世汽车讯距外媒</p>
         <a href="#">查看更多</a>
       </div> -->
-      <img :src="banner.imgUrl" alt=" " />
+      <img :src="banner.imgUrl" alt=" " @error="defaultImg($event)" />
       <!-- <img src="../assets/img/banner.jpg" alt="" /> -->
       <!-- <div class="notice-link">
         <p>{{ banner.title }}</p>
@@ -34,10 +34,16 @@ export default {
   data() {
     return {
       bannerList: [{}],
+      defaultBanner: require('../assets/img/default-banner.png'),
     };
   },
   created() {
     this.init();
+  },
+  computed: {
+    defaultImg1() {
+      return `this.scr="${require('../assets/img/default-banner.png')}"`
+    }
   },
   methods: {
     init() {
@@ -60,6 +66,11 @@ export default {
         .catch((json) => {
           this.$message.error(json.message);
         });
+    },
+    defaultImg(event) {
+      let img = event.srcElement;
+      img.src = this.defaultBanner;
+      img.onerror = null;
     }
   }
 };
@@ -80,7 +91,7 @@ export default {
   border-radius: 3px;
 }
 .home-carousel >>> .el-carousel__item{
-  background-image: url('../assets/img/default-banner.png');
+  /* background-image: url('../assets/img/default-banner.png'); */
   background-size: cover;
 }
 </style>

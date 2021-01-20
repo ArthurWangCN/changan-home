@@ -8,52 +8,15 @@
       </div>
       <!-- 搜索 -->
       <home-search />
-      <!-- 通用基础知识和项目知识 -->
-      <knowledge />
-      <div class="flex">
-        <!-- 专业频道、图、个人信息 -->
-        <channel />
-        <!-- <div class="banner">
-          <img src="../../assets/img/banner.jpg" alt="" />
-          <div class="notice-link">
-            <p>通知公告:长安汽车与宁德时代更新盖世汽车讯距外媒</p>
-            <a href="#">查看更多</a>
-          </div>
-        </div> -->
-        <div class="banner">
-          <!-- 轮播图 -->
-          <banner />
+      <template
+        v-for="(item,index) in layout"
+      >
+          <div :key="index" :class="{'flex': item.length >1}" class="mt20">
+          <template  v-for="item2 in item">
+          <component :key="item2.i" :is="item2.i"></component>
+          </template>
         </div>
-        <!-- 个人信息 -->
-        <personal />
-      </div>
-      <div class="flex" style="margin-top: 20px">
-        <!-- 推荐知识 -->
-        <recommendknowledge />
-        <!-- 热点知识 -->
-        <hot-knowledge />
-      </div>
-
-      <div class="flex" style="margin-top: 20px">
-        <!-- 行业资讯 -->
-        <information />
-        <!-- 通知公告 -->
-        <notice />
-      </div>
-
-      <div class="flex" style="margin-top: 20px">
-        <!-- 热门话题 -->
-        <hot-topic />
-        <!-- 热门标签 -->
-        <hot-tag />
-      </div>
-      
-      <!-- 热门圈子 -->
-      <hot-forum />
-      <!-- 专栏 -->
-      <column />
-      <!-- 知识地图 -->
-      <Map />
+      </template>
     </div>
     <common-footer />
   </div>
@@ -76,6 +39,8 @@ import Banner from "@/components/Banner.vue";
 import HotTag from "@/components/HotTag.vue";
 import Notice from "@/components/Notice.vue";
 
+import BannerComp from "@/components/ChannelBannerUser.vue";
+
 export default {
   name: "home",
   components: {
@@ -95,6 +60,7 @@ export default {
     Banner,
     HotTag,
     Notice,
+    BannerComp,
   },
   data() {
     return {
@@ -121,7 +87,122 @@ export default {
         "SRM",
         "盐雾",
       ],
+      layoutData: "",
+      layout: [],
+      oldY: "",
     };
+  },
+  created() {
+    let arr = [];
+    this.layoutData = [
+  {
+    "x": 0,
+    "y": 0,
+    "w": 9,
+    "h": 1.5,
+    "i": "Knowledge",
+    "moved": false
+  },
+  {
+    "x": 0,
+    "y": 1.5,
+    "w": 9,
+    "h": 4,
+    "i": "BannerComp",
+    "moved": false
+  },
+  {
+    "x": 0,
+    "y": 5.5,
+    "w": 7,
+    "h": 4,
+    "i": "Recommendknowledge",
+    "moved": false
+  },
+  {
+    "x": 7,
+    "y": 9.5,
+    "w": 2,
+    "h": 4,
+    "i": "HotKnowledge",
+    "moved": false
+  },
+  {
+    "x": 0,
+    "y": 9.5,
+    "w": 7,
+    "h": 4,
+    "i": "Information",
+    "moved": false
+  },
+  {
+    "x": 7,
+    "y": 5.5,
+    "w": 2,
+    "h": 4,
+    "i": "Notice",
+    "moved": false
+  },
+  {
+    "x": 0,
+    "y": 13.5,
+    "w": 7,
+    "h": 4,
+    "i": "HotTopic",
+    "moved": false
+  },
+  {
+    "x": 7,
+    "y": 13.5,
+    "w": 2,
+    "h": 4,
+    "i": "HotTag",
+    "moved": false
+  },
+  {
+    "x": 0,
+    "y": 17.5,
+    "w": 9,
+    "h": 4,
+    "i": "HotForum",
+    "moved": false
+  },
+  {
+    "x": 0,
+    "y": 21.5,
+    "w": 9,
+    "h": 4,
+    "i": "Column",
+    "moved": false
+  },
+  {
+    "x": 0,
+    "y": 25.5,
+    "w": 9,
+    "h": 4,
+    "i": "Map",
+    "moved": false
+  }
+];
+    arr = this.layoutData.sort(this.compare("y"));
+    arr.map((item, index) => {
+      if (this.oldY !== item.y) {
+        this.layout.push([item]);
+      } else {
+        let existArr = this.layout[this.layout.length - 1];
+        // existArr.push(item);
+        if (existArr[0].x < item.x) {
+          existArr.push(item);
+        } else {
+          existArr.unshift(item);
+        }
+      }
+      this.oldY = item.y;
+    });
+    // this.layout = this.layout.map(item => {
+    //   item.sort(this.compare("x"));
+    // })
+    console.log(this.layout);
   },
   methods: {
     //热门标签检索
@@ -130,9 +211,19 @@ export default {
         publiceUrl + "/krd/home/index#/generalSearch?searchKey=" + keyword
       );
     },
+    compare(property) {
+      return function (a, b) {
+        var value1 = a[property];
+        var value2 = b[property];
+        return value1 - value2;
+      };
+    },
   },
 };
 </script>
 <style scoped>
 @import "./home.css";
+.mt20 {
+  margin-top: 20px;
+}
 </style>

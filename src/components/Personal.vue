@@ -108,23 +108,23 @@ export default {
     return {
       leveldata: [
         {
-          image: require("../assets/img/level-card.png"),
+          image: require("../assets/img/medal/medal_discuss_1.png"),
           number: 1,
         },
         {
-          image: require("../assets/img/level-card.png"),
+          image: require("../assets/img/medal/medal_write_1.png"),
           number: 2,
         },
         {
-          image: require("../assets/img/level-card.png"),
+          image: require("../assets/img/medal/medal_curious_1.png"),
           number: 5,
         },
         {
-          image: require("../assets/img/level-card.png"),
+          image: require("../assets/img/medal/medal_study_1.png"),
           number: 3,
         },
         {
-          image: require("../assets/img/level-card.png"),
+          image: require("../assets/img/medal/medal_discovery_1.png"),
           number: 1,
         },
       ],

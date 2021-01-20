@@ -14,6 +14,9 @@ Vue.use(Nothing);
 
 Vue.component('nothing', Nothing);
 
+
+// import VueGridLayout from "vue-grid-layout";
+
 router.beforeEach((to, from, next) => {
   /* 路由发生变化的时候修改页面title */
   if (to.meta.title) {

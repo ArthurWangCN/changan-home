@@ -154,3 +154,20 @@
 .reply-alert .el-message-box__content {
   padding: 15px 20px;
 }
+
+/* 功能模块弹窗 */
+.module-dialog {
+  padding: 0;
+  border-radius: 6px;
+}
+.module-dialog .el-dialog__header {
+  border-bottom: 1px solid #eeeeee;
+  margin: 0 20px;
+  padding-left: 0;
+}
+.module-dialog .el-dialog__body{
+  padding: 0;
+}
+.module-dialog .el-scrollbar__wrap{
+  overflow-x: hidden;
+}
