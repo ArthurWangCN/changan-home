@@ -159,6 +159,9 @@
 .module-dialog {
   padding: 0;
   border-radius: 6px;
+  margin-left: 450px;
+  bottom: 0;
+  margin-top: calc(100vh - 530px) !important;
 }
 .module-dialog .el-dialog__header {
   border-bottom: 1px solid #eeeeee;

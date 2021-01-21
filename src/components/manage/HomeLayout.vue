@@ -22,6 +22,7 @@
         :h="item.h"
         :i="item.i"
         :key="item.i"
+        @moved="movedEvent"
       >
         <!-- {{ item.i }} -->
         <component style="width: 100%" :is="item.i"></component>
@@ -98,9 +99,9 @@ export default {
     layoutUpdatedEvent: function(newLayout) {
       console.log("Updated layout: ", newLayout);
     },
-    // movedEvent: function(i, newX, newY) {
-    //   console.log("MOVED i=" + i + ", X=" + newX + ", Y=" + newY);
-    // },
+    movedEvent: function(i, newX, newY) {
+      console.log("MOVED i=" + i + ", X=" + newX + ", Y=" + newY);
+    },
   },
 };
 </script>

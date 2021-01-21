@@ -14,8 +14,10 @@
       custom-class="module-dialog"
       width="405px"
       title="功能模块"
+      :lock-scroll="true"
+      :modal="false"
+      :append-to-body="true"
       :visible.sync="moduleDialogVisible"
-        style="right:20px;height:800px;"
     >
       <div style="height:400px;padding:10px 0;">
         <el-scrollbar style="height:100%">
@@ -25,7 +27,13 @@
               <p>{{ item.name }}</p>
               <p>{{ item.desc }}</p>
             </div>
-            <el-button round>添加</el-button>
+            <span class="add-btn">添加</span>
+            <span
+              class="remove-btn"
+              :class="{'is-remove': removeText}"
+              @mouseenter="removeText=!removeText"
+              @mouseout="removeText=!removeText"
+            >{{!removeText?'已添加':'移除'}}</span>
           </li>
         </ul>
       </el-scrollbar>
@@ -90,6 +98,7 @@ export default {
           desc: "展示相关的知识地图",
         },
       ],
+      removeText: false,
     };
   },
 };
@@ -123,5 +132,29 @@ export default {
   justify-content: space-between;
   box-sizing: border-box;
   height: 70px;
+}
+
+.add-btn,
+.remove-btn {
+  width: 60px;
+  height: 32px;
+  line-height: 32px;
+  text-align: center;
+  padding: 0;
+  border-radius: 16px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.add-btn {
+  background-color: #3789ff;
+  color: #ffffff;
+}
+.remove-btn {
+  background-color: #ebf3ff;
+  color: #3789ff;
+}
+.is-remove {
+  background-color: #eeeeee;
+  color: #333333;
 }
 </style>

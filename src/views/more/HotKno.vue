@@ -124,7 +124,7 @@ export default {
     },
 
     goKno() {
-      this.$router.push({path: '/hotKnow'});
+      this.$router.push({path: `/${this.knoType}`});
     },
   }
 }
