@@ -5,11 +5,28 @@
         <p class="circle-title-name">项目知识地图</p>
       </div>
     </div>
-    <div id="divs">
-      <div class="map" v-for="(item, index) in data" :style="item.styleObject">
-        <span>{{ item.title }}</span>
-      </div>
-    </div>
+    <el-carousel
+      height="345px"
+      :interval="5000"
+      arrow="never"
+      indicator-position="none"
+    >
+      <el-carousel-item
+        v-for="item1 in 1"
+        :key="item1"
+      >
+        <div id="divs">
+          <div
+            class="map"
+            v-for="(item, index) in data"
+            :key="index"
+            :style="item.styleObject"
+          >
+            <span>{{ item.title }}</span>
+          </div>
+        </div>
+      </el-carousel-item>
+    </el-carousel>
   </div>
 </template>
 <script>
@@ -101,5 +118,19 @@ export default {
   100% {
     margin-top: 0;
   }
+}
+
+.knowlege-map >>> .el-carousel__button {
+  opacity: 1;
+  background-color: #a8a8a8;
+  width: 20px;
+  height: 4px;
+  border-radius: 2px;
+}
+.knowlege-map >>> .el-carousel__indicator.is-active button {
+  background-color: #3d8cfc;
+  width: 30px;
+  height: 6px;
+  border-radius: 3px;
 }
 </style>

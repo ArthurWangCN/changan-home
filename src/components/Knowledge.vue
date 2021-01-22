@@ -1,5 +1,5 @@
 <template>
-  <div style="position: relative; height: 150px">
+  <div style="position: relative; height: 150px;width: 100%;">
     <div
       class="knowlege"
       :class="{ fold: fold, unfold: !fold }"

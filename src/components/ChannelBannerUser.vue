@@ -4,6 +4,7 @@
     <channel />
     <div class="banner">
       <!-- 轮播图 -->
+      <!-- <img v-if="isRemove" src="../assets/img/banner-temp.png" alt=""> -->
       <banner />
     </div>
     <!-- 个人信息 -->
@@ -22,6 +23,12 @@ export default {
     Channel,
     Personal,
   },
+  props: {
+    isRomove: {
+      type: Boolean,
+      default: false
+    }
+  }
 };
 </script>
 

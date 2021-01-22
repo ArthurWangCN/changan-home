@@ -96,6 +96,21 @@ const formatDate = (d) => {
   return date;
 }
 
+// 首页组件
+const compObj = {
+  "知识目录体系": "Knowledge",
+  "轮播图": "BannerComp",
+  "推荐知识": "Recommendknowledge",
+  "专栏广场": "Column",
+  "项目知识地图": "Map",
+  "热门话题/最新话题": "HotTopic",
+  "通知公告": "Notice",
+  "热门圈子": "HotForum",
+  "热点知识": "HotKnowledge",
+  "行业资讯": "Information",
+  "热门标签": "HotTag",
+}
+
 export {
   showDate,
   publiceUrl,
@@ -105,6 +120,7 @@ export {
   html2text,
   getFileIcon,
   formatDate,
+  compObj,
 }
 
 

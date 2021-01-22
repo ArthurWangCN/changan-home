@@ -174,3 +174,7 @@
 .module-dialog .el-scrollbar__wrap{
   overflow-x: hidden;
 }
+
+.vue-grid-layout{
+  margin-top: 50px;
+}

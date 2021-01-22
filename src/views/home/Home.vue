@@ -12,8 +12,9 @@
         v-for="(item,index) in layout"
       >
           <div :key="index" :class="{'flex': item.length >1}" class="mt20">
-          <template  v-for="item2 in item">
-          <component :key="item2.i" :is="item2.i"></component>
+          <template v-for="comp in item">
+            <component v-if="comp.componentStatus==1&&comp.i!='BannerComp'" :key="comp.i" :is="comp.i"></component>
+            <banner-comp :key="comp.i" v-if="comp.i=='BannerComp'"></banner-comp>
           </template>
         </div>
       </template>
@@ -23,6 +24,9 @@
 </template>
 <script>
 import { publiceUrl } from "@/utils/index.js";
+
+import {compObj} from '@/utils/index';
+import { getPortalCompList, savePortalComp } from "@/api/interface/manage";
 
 import HomeSearch from "@/components/Homesearch.vue";
 import Knowledge from "@/components/Knowledge.vue";
@@ -93,98 +97,40 @@ export default {
     };
   },
   created() {
-    let arr = [];
-    this.layoutData = [
-  {
-    "x": 0,
-    "y": 0,
-    "w": 9,
-    "h": 1.5,
-    "i": "Knowledge",
-    "moved": false
+    this.getPortalCompList();
   },
-  {
-    "x": 0,
-    "y": 1.5,
-    "w": 9,
-    "h": 4,
-    "i": "BannerComp",
-    "moved": false
-  },
-  {
-    "x": 0,
-    "y": 5.5,
-    "w": 7,
-    "h": 4,
-    "i": "Recommendknowledge",
-    "moved": false
-  },
-  {
-    "x": 7,
-    "y": 9.5,
-    "w": 2,
-    "h": 4,
-    "i": "HotKnowledge",
-    "moved": false
-  },
-  {
-    "x": 0,
-    "y": 9.5,
-    "w": 7,
-    "h": 4,
-    "i": "Information",
-    "moved": false
-  },
-  {
-    "x": 7,
-    "y": 5.5,
-    "w": 2,
-    "h": 4,
-    "i": "Notice",
-    "moved": false
-  },
-  {
-    "x": 0,
-    "y": 13.5,
-    "w": 7,
-    "h": 4,
-    "i": "HotTopic",
-    "moved": false
-  },
-  {
-    "x": 7,
-    "y": 13.5,
-    "w": 2,
-    "h": 4,
-    "i": "HotTag",
-    "moved": false
-  },
-  {
-    "x": 0,
-    "y": 17.5,
-    "w": 9,
-    "h": 4,
-    "i": "HotForum",
-    "moved": false
-  },
-  {
-    "x": 0,
-    "y": 21.5,
-    "w": 9,
-    "h": 4,
-    "i": "Column",
-    "moved": false
-  },
-  {
-    "x": 0,
-    "y": 25.5,
-    "w": 9,
-    "h": 4,
-    "i": "Map",
-    "moved": false
-  }
-];
-    arr = this.layoutData.sort(this.compare("y"));
+  methods: {
+    getPortalCompList() {
+      getPortalCompList()
+        .then((res) => {
+          if (res.success) {
+            let arr = res.content;
+            arr.forEach((item) => {
+              item.x = item.sizeX;
+              item.y = item.sizeY;
+              item.w = item.sizeW;
+              item.h = item.sizeH;
+              item.i = compObj[item.componentName];
+              item.moved = false;
+            });
+            this.layoutData = arr;
+            console.log(this.layout);
+            this.sortComp();
+          } else {
+            this.$message.error(res.message);
+          }
+        })
+        .catch((err) => {
+          this.$message.error(err.message);
+        })
+        .finally((_) => {
+          // this.isLoading = false;
+        });
+    },
+
+    sortComp() {
+      let arr = [];
+      arr = this.layoutData.sort(this.compare("y"));
     arr.map((item, index) => {
       if (this.oldY !== item.y) {
         this.layout.push([item]);
@@ -203,8 +149,8 @@ export default {
     //   item.sort(this.compare("x"));
     // })
     console.log(this.layout);
-  },
-  methods: {
+    },
+
     //热门标签检索
     goSearch(keyword) {
       window.open(

@@ -103,6 +103,18 @@ export const getBackground = params => axios.get('/index/background/getBackgroun
 // 登录页图片上传后保存
 export const addBackground = params => axios.post('/index/background/add', params);
 
+// 门户页组件列表
+export const getPortalCompList = params => axios.get('/portalComponent/list', { params });
+
+// 门户页组件保存拖动
+export const savePortalComp = params => axios.post('/portalComponent/save', params);
+
+// 门户页组件功能模块列表
+export const getPortalList = params => axios.get('/portalComponent/getAll', { params });
+
+// 门户页组件功能模块更新
+export const updatePortalComp = params => axios.put('/portalComponent/update', params);
+
 export default {
   getOpinionList,
   replyOpinion,
@@ -133,4 +145,8 @@ export default {
   delBanner,
   getBackground,
   addBackground,
+  getPortalCompList,
+  savePortalComp,
+  getPortalList,
+  updatePortalComp,
 }

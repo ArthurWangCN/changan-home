@@ -234,7 +234,7 @@ export default {
 
     // 确定新建/编辑图片
     confirmDialog() {
-      if(this.bannerTitle==='') return this.$message.warning('图片标题不能为空');
+      // if(this.bannerTitle==='') return this.$message.warning('图片标题不能为空');
       let promise;
       let params = {
         imgUrl: this.bannerUrl,

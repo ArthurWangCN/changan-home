@@ -19,30 +19,35 @@
       :append-to-body="true"
       :visible.sync="moduleDialogVisible"
     >
-      <div style="height:400px;padding:10px 0;">
-        <el-scrollbar style="height:100%">
-        <ul class="module-list">
-          <li class="module-item" v-for="item in modules" :key="item.name">
-            <div>
-              <p>{{ item.name }}</p>
-              <p>{{ item.desc }}</p>
-            </div>
-            <span class="add-btn">添加</span>
-            <span
-              class="remove-btn"
-              :class="{'is-remove': removeText}"
-              @mouseenter="removeText=!removeText"
-              @mouseout="removeText=!removeText"
-            >{{!removeText?'已添加':'移除'}}</span>
-          </li>
-        </ul>
-      </el-scrollbar>
+      <div style="height: 400px; padding: 10px 0">
+        <el-scrollbar style="height: 100%">
+          <ul class="module-list">
+            <li class="module-item" v-for="item in layout" :key="item.id">
+              <div>
+                <p class="module-name">{{ item.componentName }}</p>
+                <p class="module-desc">{{ item.componentDescribe }}</p>
+              </div>
+              <span
+                v-if="item.componentStatus == 1"
+                class="remove-btn"
+                :class="{ 'is-remove': item.showRemove,'btn-disabled':item.isMove==0}"
+                @mouseenter="item.showRemove = true"
+                @mouseout="item.showRemove = false"
+                @click="updatePortalComp(item, 'remove')"
+              >
+                {{ !item.showRemove&&item.isMove!=0 ? "已添加" : "移除" }}
+              </span>
+              <span v-else class="add-btn" @click="updatePortalComp(item, 'add')">添加</span>
+            </li>
+          </ul>
+        </el-scrollbar>
       </div>
     </el-dialog>
   </div>
 </template>
 
 <script>
+import { getPortalList, updatePortalComp } from "@/api/interface/manage";
 export default {
   name: "functionModule",
   data() {
@@ -98,8 +103,53 @@ export default {
           desc: "展示相关的知识地图",
         },
       ],
+      layout: [],
       removeText: false,
     };
+  },
+  created() {
+    this.init();
+  },
+  methods: {
+    init() {
+      this.getPortalList();
+    },
+
+    getPortalList() {
+      getPortalList()
+        .then((res) => {
+          if (res.success) {
+            let arr = res.content;
+            arr.forEach((item) => {
+              item.showRemove = false;
+            });
+            this.layout = arr;
+            console.log(this.layout);
+          } else {
+            this.$message.error(res.message);
+          }
+        })
+        .catch((err) => {
+          this.$message.error(err.message);
+        })
+        .finally((_) => {
+          // this.isLoading = false;
+        });
+    },
+
+    updatePortalComp(comp, operation) {
+      if (comp.isMove==0) return;
+      updatePortalComp({
+        id: comp.id,
+        isMove: operation==='add' ? 0 : 1
+      }).then(res => {
+        if (res.success) {
+          this.getPortalList();
+        }
+      }).catch((err) => {
+        this.$message.error(err.message);
+      })
+    }
   },
 };
 </script>
@@ -154,6 +204,20 @@ export default {
   color: #3789ff;
 }
 .is-remove {
+  background-color: #eeeeee;
+  color: #333333;
+}
+
+.module-item {
+  color: #333333;
+  font-size: 14px;
+}
+.module-desc {
+  font-size: 12px;
+}
+
+.btn-disabled{
+  cursor: not-allowed;
   background-color: #eeeeee;
   color: #333333;
 }

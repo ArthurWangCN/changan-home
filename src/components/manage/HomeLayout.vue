@@ -12,7 +12,7 @@
       :vertical-compact="true"
       :margin="[20, 10]"
       :use-css-transforms="true"
-        @layout-updated="layoutUpdatedEvent"
+      @layout-updated="layoutUpdatedEvent"
     >
       <grid-item
         v-for="item in layout"
@@ -24,8 +24,7 @@
         :key="item.i"
         @moved="movedEvent"
       >
-        <!-- {{ item.i }} -->
-        <component style="width: 100%" :is="item.i"></component>
+        <component v-if="item.componentStatus==1" style="width: 100%" :is="item.i"></component>
         <div class="mask"></div>
       </grid-item>
     </grid-layout>
@@ -35,7 +34,6 @@
 </template>
 
 <script>
-
 import VueGridLayout from "vue-grid-layout";
 
 const GridItem = VueGridLayout.GridItem;
@@ -56,24 +54,27 @@ import HotTag from "@/components/HotTag.vue";
 import Notice from "@/components/Notice.vue";
 import FunctionModule from "@/components/FunctionModule.vue";
 
+import {compObj} from '@/utils/index';
+import { getPortalCompList, savePortalComp } from "@/api/interface/manage";
+
 export default {
   name: "homeLayout",
   data() {
     return {
-      layout: [
-        { x: 0, y: 0, w: 9, h: 1.5, i: "Knowledge" },
-        { x: 0, y: 1.5, w: 9, h: 4, i: "BannerComp" },
-        { x: 0, y: 5.5, w: 7, h: 4, i: "Recommendknowledge" },
-        { x: 7, y: 5.5, w: 2, h: 4, i: "HotKnowledge" },
-        { x: 0, y: 9.5, w: 7, h: 4, i: "Information" },
-        { x: 7, y: 9.5, w: 2, h: 4, i: "Notice" },
-        { x: 0, y: 13.5, w: 7, h: 4, i: "HotTopic" },
-        { x: 7, y: 13.5, w: 2, h: 4, i: "HotTag" },
-        { x: 0, y: 17.5, w: 9, h: 4, i: "HotForum" },
-        { x: 0, y: 21.5, w: 9, h: 4, i: "Column" },
-        { x: 0, y: 25.5, w: 9, h: 4, i: "Map" },
-        // { x: 0, y: 0, w: 2, h: 4, i: "FunctionModule" },
-      ],
+      // layout: [
+      //   { x: 0, y: 0, w: 9, h: 1.5, i: "Knowledge" },
+      //   { x: 0, y: 1.5, w: 9, h: 4, i: "BannerComp" },
+      //   { x: 0, y: 5.5, w: 7, h: 4, i: "Recommendknowledge" },
+      //   { x: 7, y: 5.5, w: 2, h: 4, i: "HotKnowledge" },
+      //   { x: 0, y: 9.5, w: 7, h: 4, i: "Information" },
+      //   { x: 7, y: 9.5, w: 2, h: 4, i: "Notice" },
+      //   { x: 0, y: 13.5, w: 7, h: 4, i: "HotTopic" },
+      //   { x: 7, y: 13.5, w: 2, h: 4, i: "HotTag" },
+      //   { x: 0, y: 17.5, w: 9, h: 4, i: "HotForum" },
+      //   { x: 0, y: 21.5, w: 9, h: 4, i: "Column" },
+      //   { x: 0, y: 25.5, w: 9, h: 4, i: "Map" },
+      // ],
+      layout: [],
     };
   },
   components: {
@@ -95,11 +96,61 @@ export default {
     Notice,
     FunctionModule,
   },
+  created() {
+    this.init();
+  },
   methods: {
-    layoutUpdatedEvent: function(newLayout) {
-      console.log("Updated layout: ", newLayout);
+    init() {
+      this.getPortalCompList();
     },
-    movedEvent: function(i, newX, newY) {
+
+    getPortalCompList() {
+      getPortalCompList()
+        .then((res) => {
+          if (res.success) {
+            let arr = res.content;
+            arr.forEach((item) => {
+              item.x = parseFloat(item.sizeX);
+              item.y = parseFloat(item.sizeY);
+              item.w = parseFloat(item.sizeW);
+              item.h = parseFloat(item.sizeH);
+              item.i = compObj[item.componentName];
+              item.moved = false;
+            });
+            this.layout = arr;
+            console.log(this.layout);
+          } else {
+            this.$message.error(res.message);
+          }
+        })
+        .catch((err) => {
+          this.$message.error(err.message);
+        })
+        .finally(_ => {
+          // this.isLoading = false;
+        });
+    },
+
+    savePortalComp(newLayout) {
+      let params = [];
+      newLayout.forEach(item => {
+        params.push({
+          sizeX: item.x,
+          sizeY: item.y,
+          sizeW: item.w,
+          sizeH: item.h,
+          id: item.id,
+          componentName: item.componentName,
+        })
+      })
+      savePortalComp(params).then
+    },
+
+    layoutUpdatedEvent: function (newLayout) {
+      console.log("Updated layout: ", newLayout);
+      this.savePortalComp(newLayout);
+    },
+    movedEvent: function (i, newX, newY) {
       console.log("MOVED i=" + i + ", X=" + newX + ", Y=" + newY);
     },
   },

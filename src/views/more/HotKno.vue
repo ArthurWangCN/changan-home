@@ -157,7 +157,7 @@ export default {
 }
 .kno-title:hover{ color: #367fff; }
 .kno-info {
-  font-size: 12px;
+  font-size: 14px;
   color: #999999;
   margin-top: 20px;
 }

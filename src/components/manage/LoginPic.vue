@@ -4,7 +4,7 @@
       <span class="manage-home-btn" @click="addBackground">保存</span>
     </div>
 
-    <div class="login-box">
+    <div class="login-box" v-loading="isLoading">
       <div
         class="login-l"
         :style="{'background': `url(${loginPicUrl}) no-repeat 50%`, 'backgroundSize':'cover'}"
@@ -37,7 +37,9 @@ export default {
   name: 'loginPic',
   data() {
     return {
-      loginPicUrl: require('../../assets/img/login_bg.png'),
+      isLoading: false,
+      // loginPicUrl: require('../../assets/img/login_bg.png'),
+      loginPicUrl: '',
       actionUrl: '/home/file/upload',
     }
   },
@@ -54,6 +56,7 @@ export default {
 
     // 获取登录页图片
     getBackground() {
+      this.isLoading = true;
       getBackground()
       .then(res => {
         if (res.success) {
@@ -61,9 +64,10 @@ export default {
         } else {
           this.$message.error(res.message);
         }
-      })
-      .catch(err => {
+      }).catch(err => {
         this.$message.error(err.message);
+      }).finally(_ => {
+        this.isLoading = false;
       })
     },
 
