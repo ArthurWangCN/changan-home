@@ -10,7 +10,6 @@
         :style="{'background': `url(${loginPicUrl}) no-repeat 50%`, 'backgroundSize':'cover'}"
       >
         <img class="login-words" src="../../assets/img/login-words.png" alt="">
-        <!-- <el-button type="warning" class="upload-btn">上传新图片</el-button> -->
         <el-upload
             :action="actionUrl"
             ref="loginPicUpload"

@@ -29,19 +29,19 @@
       </grid-item>
     </grid-layout>
 
-    <function-module></function-module>
+    <function-module @updateComp="getPortalCompList"></function-module>
   </div>
 </template>
 
 <script>
 import VueGridLayout from "vue-grid-layout";
-
 const GridItem = VueGridLayout.GridItem;
 const GridLayout = VueGridLayout.GridLayout;
+
 import Knowledge from "@/components/Knowledge.vue";
-import Channel from "@/components/Channel.vue";
+// import Channel from "@/components/Channel.vue";
 import BannerComp from "@/components/ChannelBannerUser.vue";
-import Personal from "@/components/Personal.vue";
+// import Personal from "@/components/Personal.vue";
 import Recommendknowledge from "@/components/Recommendknowledge.vue";
 import HotKnowledge from "@/components/HotKnowledge.vue";
 import HotForum from "@/components/HotForum.vue";
@@ -49,31 +49,18 @@ import Column from "@/components/Column.vue";
 import Information from "@/components/Information.vue";
 import HotTopic from "@/components/HotTopic.vue";
 import Map from "@/components/Map.vue";
-import Banner from "@/components/Banner.vue";
+// import Banner from "@/components/Banner.vue";
 import HotTag from "@/components/HotTag.vue";
 import Notice from "@/components/Notice.vue";
 import FunctionModule from "@/components/FunctionModule.vue";
 
-import {compObj} from '@/utils/index';
+import { compObj } from '@/utils/index';
 import { getPortalCompList, savePortalComp } from "@/api/interface/manage";
 
 export default {
   name: "homeLayout",
   data() {
     return {
-      // layout: [
-      //   { x: 0, y: 0, w: 9, h: 1.5, i: "Knowledge" },
-      //   { x: 0, y: 1.5, w: 9, h: 4, i: "BannerComp" },
-      //   { x: 0, y: 5.5, w: 7, h: 4, i: "Recommendknowledge" },
-      //   { x: 7, y: 5.5, w: 2, h: 4, i: "HotKnowledge" },
-      //   { x: 0, y: 9.5, w: 7, h: 4, i: "Information" },
-      //   { x: 7, y: 9.5, w: 2, h: 4, i: "Notice" },
-      //   { x: 0, y: 13.5, w: 7, h: 4, i: "HotTopic" },
-      //   { x: 7, y: 13.5, w: 2, h: 4, i: "HotTag" },
-      //   { x: 0, y: 17.5, w: 9, h: 4, i: "HotForum" },
-      //   { x: 0, y: 21.5, w: 9, h: 4, i: "Column" },
-      //   { x: 0, y: 25.5, w: 9, h: 4, i: "Map" },
-      // ],
       layout: [],
     };
   },
@@ -82,8 +69,8 @@ export default {
     GridItem,
     BannerComp,
     Knowledge,
-    Channel,
-    Personal,
+    // Channel,
+    // Personal,
     Recommendknowledge,
     HotKnowledge,
     HotForum,
@@ -91,7 +78,7 @@ export default {
     Information,
     HotTopic,
     Map,
-    Banner,
+    // Banner,
     HotTag,
     Notice,
     FunctionModule,
@@ -104,6 +91,7 @@ export default {
       this.getPortalCompList();
     },
 
+    // 首页组件列表
     getPortalCompList() {
       getPortalCompList()
         .then((res) => {
@@ -118,7 +106,6 @@ export default {
               item.moved = false;
             });
             this.layout = arr;
-            console.log(this.layout);
           } else {
             this.$message.error(res.message);
           }
@@ -126,11 +113,9 @@ export default {
         .catch((err) => {
           this.$message.error(err.message);
         })
-        .finally(_ => {
-          // this.isLoading = false;
-        });
     },
 
+    // 移动组件保存
     savePortalComp(newLayout) {
       let params = [];
       newLayout.forEach(item => {
@@ -143,15 +128,25 @@ export default {
           componentName: item.componentName,
         })
       })
-      savePortalComp(params).then
+      savePortalComp(params)
+      .then(res => {
+        if (res.success) {
+          this.$message.success('更新组件位置成功');
+        } else {
+          this.$message.error(res.message);
+        }
+      })
+      .catch((err) => {
+        this.$message.error(err.message);
+      })
     },
 
     layoutUpdatedEvent: function (newLayout) {
-      console.log("Updated layout: ", newLayout);
+      // console.log("Updated layout: ", newLayout);
       this.savePortalComp(newLayout);
     },
     movedEvent: function (i, newX, newY) {
-      console.log("MOVED i=" + i + ", X=" + newX + ", Y=" + newY);
+      // console.log("MOVED i=" + i + ", X=" + newX + ", Y=" + newY);
     },
   },
 };

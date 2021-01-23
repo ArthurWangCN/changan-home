@@ -22,7 +22,7 @@
       <div style="height: 400px; padding: 10px 0">
         <el-scrollbar style="height: 100%">
           <ul class="module-list">
-            <li class="module-item" v-for="item in layout" :key="item.id">
+            <li class="module-item" v-for="item in moduleList" :key="item.id">
               <div>
                 <p class="module-name">{{ item.componentName }}</p>
                 <p class="module-desc">{{ item.componentDescribe }}</p>
@@ -53,68 +53,28 @@ export default {
   data() {
     return {
       moduleDialogVisible: false,
-      modules: [
-        {
-          name: "知识目录",
-          desc: "展示智谷平台知识目录体系",
-        },
-        {
-          name: "专业频道",
-          desc: "展示智谷平台所有专业频道",
-        },
-        {
-          name: "通知公告",
-          desc: "展示相关通知公告",
-        },
-        {
-          name: "轮播图",
-          desc: "展示相关宣传图片",
-        },
-        {
-          name: "推荐知识",
-          desc: "根据用户画像自动推送及管理员人工推送的相关知识",
-        },
-        {
-          name: "热点知识",
-          desc: "展示平台用户浏览较多的知识",
-        },
-        {
-          name: "行业资讯",
-          desc: "公司所处行业相关的资讯信息",
-        },
-        {
-          name: "热门标签",
-          desc: "展示平台用户检索频率高的检索词",
-        },
-        {
-          name: "热门话题/最新话题",
-          desc: "展示浏览量较多和最新提问的话题",
-        },
-        {
-          name: "热门圈子",
-          desc: "展示加入成员较多的圈子",
-        },
-        {
-          name: "专栏",
-          desc: "展示智谷平台的知识专栏",
-        },
-        {
-          name: "项目知识地图",
-          desc: "展示相关的知识地图",
-        },
-      ],
-      layout: [],
+      moduleList: [],
       removeText: false,
     };
   },
   created() {
     this.init();
   },
+  watch: {
+    moduleDialogVisible(val) {
+      if (val) {
+        this.getPortalList();
+      } else {
+        this.$emit('updateComp');
+      }
+    }
+  },
   methods: {
     init() {
-      this.getPortalList();
+      // this.getPortalList();
     },
 
+    // 功能模块列表
     getPortalList() {
       getPortalList()
         .then((res) => {
@@ -123,8 +83,7 @@ export default {
             arr.forEach((item) => {
               item.showRemove = false;
             });
-            this.layout = arr;
-            console.log(this.layout);
+            this.moduleList = arr;
           } else {
             this.$message.error(res.message);
           }
@@ -132,18 +91,17 @@ export default {
         .catch((err) => {
           this.$message.error(err.message);
         })
-        .finally((_) => {
-          // this.isLoading = false;
-        });
     },
 
+    // 添加移除功能模块
     updatePortalComp(comp, operation) {
-      if (comp.isMove==0) return;
+      if (comp.isMove==0) return; // isMove为0表示组件不可移除
       updatePortalComp({
         id: comp.id,
         isMove: operation==='add' ? 0 : 1
       }).then(res => {
         if (res.success) {
+          comp.componentStatus == 1 ? 0 : 1;
           this.getPortalList();
         }
       }).catch((err) => {

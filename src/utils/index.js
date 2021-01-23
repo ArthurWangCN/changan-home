@@ -99,7 +99,7 @@ const formatDate = (d) => {
 // 首页组件
 const compObj = {
   "知识目录体系": "Knowledge",
-  "轮播图": "BannerComp",
+  "轮播图": "BannerComp", // 专业频道/轮播图/个人中心
   "推荐知识": "Recommendknowledge",
   "专栏广场": "Column",
   "项目知识地图": "Map",

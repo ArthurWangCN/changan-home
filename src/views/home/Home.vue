@@ -8,13 +8,18 @@
       </div>
       <!-- 搜索 -->
       <home-search />
-      <template
-        v-for="(item,index) in layout"
-      >
-          <div :key="index" :class="{'flex': item.length >1}" class="mt20">
+      <template v-for="(item, index) in layout">
+        <div :key="index" :class="{ flex: item.length > 1 }" class="mt20">
           <template v-for="comp in item">
-            <component v-if="comp.componentStatus==1&&comp.i!='BannerComp'" :key="comp.i" :is="comp.i"></component>
-            <banner-comp :key="comp.i" v-if="comp.i=='BannerComp'"></banner-comp>
+            <banner-comp
+              :key="comp.i"
+              v-if="comp.i == 'BannerComp'"
+            ></banner-comp>
+            <component
+              v-if="comp.componentStatus == 1 && comp.i != 'BannerComp'"
+              :key="comp.i"
+              :is="comp.i"
+            ></component>
           </template>
         </div>
       </template>
@@ -25,8 +30,8 @@
 <script>
 import { publiceUrl } from "@/utils/index.js";
 
-import {compObj} from '@/utils/index';
-import { getPortalCompList, savePortalComp } from "@/api/interface/manage";
+import { compObj } from "@/utils/index";
+import { getPortalCompList } from "@/api/interface/manage";
 
 import HomeSearch from "@/components/Homesearch.vue";
 import Knowledge from "@/components/Knowledge.vue";
@@ -114,7 +119,7 @@ export default {
               item.moved = false;
             });
             this.layoutData = arr;
-            console.log(this.layout);
+            console.log(this.layoutData);
             this.sortComp();
           } else {
             this.$message.error(res.message);
@@ -131,24 +136,24 @@ export default {
     sortComp() {
       let arr = [];
       arr = this.layoutData.sort(this.compare("y"));
-    arr.map((item, index) => {
-      if (this.oldY !== item.y) {
-        this.layout.push([item]);
-      } else {
-        let existArr = this.layout[this.layout.length - 1];
-        // existArr.push(item);
-        if (existArr[0].x < item.x) {
-          existArr.push(item);
+      arr.map((item, index) => {
+        if (this.oldY !== item.y) {
+          this.layout.push([item]);
         } else {
-          existArr.unshift(item);
+          let existArr = this.layout[this.layout.length - 1];
+          // existArr.push(item);
+          if (existArr[0].x < item.x) {
+            existArr.push(item);
+          } else {
+            existArr.unshift(item);
+          }
         }
-      }
-      this.oldY = item.y;
-    });
-    // this.layout = this.layout.map(item => {
-    //   item.sort(this.compare("x"));
-    // })
-    console.log(this.layout);
+        this.oldY = item.y;
+      });
+      // this.layout = this.layout.map(item => {
+      //   item.sort(this.compare("x"));
+      // })
+      console.log(this.layout);
     },
 
     //热门标签检索
