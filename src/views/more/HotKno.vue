@@ -37,7 +37,7 @@
         <el-pagination
           @current-change="handleCurrentChange"
           :current-page.sync="currentPage"
-          :page-size="10"
+          :page-size="20"
           layout="prev, pager, next, jumper"
           :total="total"
           background
@@ -89,7 +89,7 @@ export default {
     getRecommendKnoList() {
       getRecommendKnoList({
         current: this.currentPage,
-        size: 10
+        size: 20
       }).then(res => {
         if (res.success) {
           this.knoList = res.content.list;

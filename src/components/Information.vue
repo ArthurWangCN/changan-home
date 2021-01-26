@@ -5,7 +5,8 @@
       style="padding-bottom: 0"
     >
       <div class="title-left">
-        <p class="circle-title-name">行业资讯</p>
+        <!-- 行业资讯 -->
+        <p class="circle-title-name">技术资讯</p>
         <ul class="industry-information-catgs">
           <li
             v-for="(item, index) in titledata"

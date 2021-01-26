@@ -119,7 +119,6 @@ export default {
               item.moved = false;
             });
             this.layoutData = arr;
-            console.log(this.layoutData);
             this.sortComp();
           } else {
             this.$message.error(res.message);
@@ -153,7 +152,6 @@ export default {
       // this.layout = this.layout.map(item => {
       //   item.sort(this.compare("x"));
       // })
-      console.log(this.layout);
     },
 
     //热门标签检索

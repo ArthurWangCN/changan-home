@@ -16,6 +16,9 @@
       <div v-for="(item, index) in leveldata" class="card-item">
         <img :src="item.image" alt="" />
         <span>{{ item.number }}</span>
+        <!-- <el-badge type="warning" :value="item.number" :max="99" class="item">
+          <img :src="item.image" alt="" />
+        </el-badge> -->
       </div>
     </div>
     <div class="information">

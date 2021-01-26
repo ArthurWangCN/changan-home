@@ -30,7 +30,7 @@
         </div>
 
         <!-- 文章 -->
-        <div class="detail-content" v-html="notice.content"></div>
+        <div class="detail-content ql-editor" v-html="notice.content"></div>
 
         <!-- 附件 -->
         <ul class="attachment-list">
@@ -52,6 +52,7 @@
 </template>
 
 <script>
+import 'quill/dist/quill.core.css'
 import '@/assets/css/more.css';
 import {
   getNotice,

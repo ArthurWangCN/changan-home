@@ -46,7 +46,7 @@ export default {
         { id:"layout", name: "门户组件显示设置" },
         { id:"banner", name: "轮播图设置" },
         { id:"notice", name: "系统公告设置" },
-        { id:"information", name: "行业资讯设置" },
+        { id:"information", name: "技术资讯设置" },
         { id:"circle", name: "热门圈子设置" },
         { id:"column", name: "专栏设置" },
         { id:"topic", name: "热门话题设置" },
