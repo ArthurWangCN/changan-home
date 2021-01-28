@@ -19,22 +19,23 @@
 </template>
 
 <script>
+import { getHotTags } from '@/api/interface/home';
 export default {
   name: "hotTag",
   data() {
     return {
       // 热门标签
       hotTags: [
-        "检查清单",
-        "开发技术要求",
-        "高压线束",
-        "拓扑优化",
-        "项目管理",
-        "热冲压",
-        "套筒",
-        "活塞",
-        "KC分析",
-        "PVC",
+        // "检查清单",
+        // "开发技术要求",
+        // "高压线束",
+        // "拓扑优化",
+        // "项目管理",
+        // "热冲压",
+        // "套筒",
+        // "活塞",
+        // "KC分析",
+        // "PVC",
         // "喷涂",
         // "涂装",
         // "摆臂",
@@ -48,5 +49,23 @@ export default {
       ],
     };
   },
+  created() {
+    this.init();
+  },
+  methods: {
+    init() {
+      this.getHotTags();
+    },
+    getHotTags() {
+      getHotTags()
+      .then(res => {
+        if (res.success) {
+          this.hotTags = res.content;
+        }
+      }).catch(err => {
+        this.$message.error(err.message);
+      })
+    }
+  }
 };
 </script>

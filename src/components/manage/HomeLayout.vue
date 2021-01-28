@@ -1,35 +1,37 @@
 <template>
   <div class="layout-wrapper">
-    <p class="layout-tip">拖动调整组件位置</p>
+    <div class="layout-inner">
+      <p class="layout-tip">拖动调整组件位置</p>
 
-    <grid-layout
-      :layout.sync="layout"
-      :col-num="9"
-      :row-height="100"
-      :is-draggable="true"
-      :is-resizable="false"
-      :is-mirrored="false"
-      :vertical-compact="true"
-      :margin="[20, 10]"
-      :use-css-transforms="true"
-      @layout-updated="layoutUpdatedEvent"
-    >
-      <grid-item
-        v-for="item in layout"
-        :x="item.x"
-        :y="item.y"
-        :w="item.w"
-        :h="item.h"
-        :i="item.i"
-        :key="item.i"
-        @moved="movedEvent"
+      <grid-layout
+        :layout.sync="layout"
+        :col-num="9"
+        :row-height="100"
+        :is-draggable="true"
+        :is-resizable="false"
+        :is-mirrored="false"
+        :vertical-compact="true"
+        :margin="[20, 10]"
+        :use-css-transforms="true"
+        @layout-updated="layoutUpdatedEvent"
       >
-        <component v-if="item.componentStatus==1" style="width: 100%" :is="item.i"></component>
-        <div class="mask"></div>
-      </grid-item>
-    </grid-layout>
+        <grid-item
+          v-for="item in layout"
+          :x="item.x"
+          :y="item.y"
+          :w="item.w"
+          :h="item.h"
+          :i="item.i"
+          :key="item.i"
+          @moved="movedEvent"
+        >
+          <component v-if="item.componentStatus==1" style="width: 100%" :is="item.i"></component>
+          <div class="mask"></div>
+        </grid-item>
+      </grid-layout>
 
-    <function-module @updateComp="getPortalCompList"></function-module>
+      <function-module @updateComp="getPortalCompList"></function-module>
+    </div>
   </div>
 </template>
 
@@ -39,9 +41,7 @@ const GridItem = VueGridLayout.GridItem;
 const GridLayout = VueGridLayout.GridLayout;
 
 import Knowledge from "@/components/Knowledge.vue";
-// import Channel from "@/components/Channel.vue";
 import BannerComp from "@/components/ChannelBannerUser.vue";
-// import Personal from "@/components/Personal.vue";
 import Recommendknowledge from "@/components/Recommendknowledge.vue";
 import HotKnowledge from "@/components/HotKnowledge.vue";
 import HotForum from "@/components/HotForum.vue";
@@ -49,12 +49,11 @@ import Column from "@/components/Column.vue";
 import Information from "@/components/Information.vue";
 import HotTopic from "@/components/HotTopic.vue";
 import Map from "@/components/Map.vue";
-// import Banner from "@/components/Banner.vue";
 import HotTag from "@/components/HotTag.vue";
 import Notice from "@/components/Notice.vue";
 import FunctionModule from "@/components/FunctionModule.vue";
 
-import { compObj } from '@/utils/index';
+import { compObj } from '@/utils/index';  // 接口返回组件名和前端组件名做映射
 import { getPortalCompList, savePortalComp } from "@/api/interface/manage";
 
 export default {
@@ -69,8 +68,6 @@ export default {
     GridItem,
     BannerComp,
     Knowledge,
-    // Channel,
-    // Personal,
     Recommendknowledge,
     HotKnowledge,
     HotForum,
@@ -78,7 +75,6 @@ export default {
     Information,
     HotTopic,
     Map,
-    // Banner,
     HotTag,
     Notice,
     FunctionModule,
@@ -154,12 +150,17 @@ export default {
 
 <style scoped>
 .layout-wrapper {
-  width: 1600px;
+  width: 100%;
+  /* width: 1600px; */
   box-sizing: border-box;
-  padding-right: 100px;
+  /* padding-right: 100px; */
   background-color: #f1f2f5;
   margin-top: 20px;
   padding-bottom: 20px;
+}
+.layout-wrapper .layout-inner {
+  width: 1500px;
+  margin: 0 auto;
 }
 .layout-tip {
   font-size: 14px;

@@ -13,7 +13,7 @@
         <div class="kno-header">
           <span>
             排序方式：
-            <span class="color-blue">时间<i class="el-icon-bottom"></i></span>
+            <span class="color-blue">{{ knoType === 'recommendKno' ? "时间" : "浏览量" }}<i class="el-icon-bottom"></i></span>
           </span>
           <span class="font-info">共{{total}}条结果</span>
         </div>
@@ -26,8 +26,10 @@
           >
             <p class="kno-title text-ellipsis" @click="goKnoDetail(item)">{{ item.title }}</p>
             <div class="kno-info">
-              <span :class="{'kno-info-wide': knoType==='recommendKno'}">作者：{{ item.author }}</span>
-              <span class="kno-info-from" :class="{'kno-info-wider': knoType==='recommendKno'}">来源：{{ item.classification || '暂无' }}</span>
+              <span :class="{'kno-info-wide': knoType==='recommendKno'}" :title="item.author">作者：{{ item.author }}</span>
+              <span class="kno-info-from" :class="{'kno-info-wider': knoType==='recommendKno'}" :title="item.classification">
+                来源：{{ item.classification || '暂无' }}
+              </span>
               <span v-if="knoType==='hotKno'">浏览量：77</span>
               <span>发布时间：{{ item.uploadTime }}</span>
             </div>
@@ -54,6 +56,7 @@
 <script>
 import '@/assets/css/more.css';
 import { formatDate } from '@/utils/index';
+import { getHotKnoList } from '@/api/interface/home';
 import {
   getRecommendKnoList
 } from '@/api/interface/more';
@@ -79,10 +82,30 @@ export default {
   methods: {
     init() {
       if (this.knoType === 'hotKno') {
-
+        this.getHotKnoList();
       } else if (this.knoType === 'recommendKno') {
         this.getRecommendKnoList();
       }
+    },
+
+    getHotKnoList() {
+      getHotKnoList({
+        current: this.currentPage,
+        size: 20
+      }).then(res => {
+        if (res.list) {
+          this.knoList = res.list;
+          this.total = res.total;
+          this.knoList.forEach(item => {
+            // 格式化时间
+            item.uploadTime = formatDate(item.uploadTime);
+          })
+        }
+      }).catch(err => {
+        this.$message.error(err.message);
+      }).finally(_ => {
+        this.isLoading = false;
+      })
     },
 
     // 推荐知识列表
@@ -113,7 +136,7 @@ export default {
     handleCurrentChange(current) {
       this.currentPage = current;
       if (this.knoType === 'hotKno') {
-
+        this.getHotKnoList();
       } else if (this.knoType === 'recommendKno') {
         this.getRecommendKnoList();
       }
@@ -186,5 +209,5 @@ export default {
   font-size: 12px;
   color: #999999;
 }
-.color-blue {color: #367fff; cursor: pointer;}
+.color-blue {color: #367fff;}
 </style>

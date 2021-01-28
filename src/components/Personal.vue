@@ -14,11 +14,11 @@
     <div class="nickname" @click="goPersonal">{{ userdata.userName }}</div>
     <div class="level-cards">
       <div v-for="(item, index) in leveldata" class="card-item">
-        <img :src="item.image" alt="" />
-        <span>{{ item.number }}</span>
-        <!-- <el-badge type="warning" :value="item.number" :max="99" class="item">
+        <!-- <img :src="item.image" alt="" />
+        <span>{{ item.number }}</span> -->
+        <el-badge class="user-badge" type="warning" :value="item.number" :max="99">
           <img :src="item.image" alt="" />
-        </el-badge> -->
+        </el-badge>
       </div>
     </div>
     <div class="information">

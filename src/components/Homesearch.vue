@@ -23,7 +23,7 @@
           <use xlink:href="#iconsearch" />
         </svg>
       </button>
-      <a href="#" class="advance-search">高级检索</a>
+      <a href="#" class="advance-search" @click.prevent="toAdvanceSearch">高级检索</a>
     </div>
     <div class="hot-search">
       <h4 class="hot-search-title">热搜</h4>
@@ -100,6 +100,13 @@ export default {
         });
         window.open(routeUrl.href, '_blank');
       }
+    },
+
+    // 高级检索
+    toAdvanceSearch() {
+      window.open(
+        publiceUrl + "/krd/home/index#/advanceSearch"
+      );
     },
 
     //热搜

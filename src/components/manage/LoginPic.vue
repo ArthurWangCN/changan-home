@@ -10,6 +10,7 @@
         :style="{'background': `url(${loginPicUrl}) no-repeat 50%`, 'backgroundSize':'cover'}"
       >
         <img class="login-words" src="../../assets/img/login-words.png" alt="">
+        <el-button class="reset-btn" @click="resetBgImage">恢复默认图片</el-button>
         <el-upload
             :action="actionUrl"
             ref="loginPicUpload"
@@ -37,9 +38,9 @@ export default {
   data() {
     return {
       isLoading: false,
-      // loginPicUrl: require('../../assets/img/login_bg.png'),
       loginPicUrl: '',
       actionUrl: '/home/file/upload',
+      operation: 'upload',  // upload 上传 reset 恢复默认图片
     }
   },
   created() {
@@ -59,7 +60,11 @@ export default {
       getBackground()
       .then(res => {
         if (res.success) {
-          this.loginPicUrl = res.content.backgroundImgUrl;
+          if (res.content.backgroundImgUrl === 'default') {
+            this.loginPicUrl = require('../../assets/img/login_bg.png');
+          } else {
+            this.loginPicUrl = res.content.backgroundImgUrl;
+          }
         } else {
           this.$message.error(res.message);
         }
@@ -71,12 +76,14 @@ export default {
     },
 
     // 登录页图片保存
+    // 恢复默认图片请求参数值为'default'
     addBackground() {
       addBackground({
-        backgroundImgUrl: this.loginPicUrl
+        backgroundImgUrl: this.operation === 'upload' ? this.loginPicUrl : 'default'
       }).then(res => {
         if (res.success) {
-          this.$message.success('保存成功!');
+          let succTip = this.operation === 'upload' ? '保存成功' : '恢复默认图片成功';
+          this.$message.success(succTip);
         } else {
           this.$message.error(res.message);
         }
@@ -84,6 +91,7 @@ export default {
       .catch(err => {
         this.$message.error(err.message);
       }).finally(_ => {
+        this.operation = 'upload';
       })
     },
 
@@ -104,6 +112,12 @@ export default {
       // this.fileList = fileList;
       this.loginPicUrl = res.message;
     },
+
+    resetBgImage() {
+      this.operation = 'reset';
+      this.loginPicUrl = require('../../assets/img/login_bg.png');
+      this.addBackground();
+    },
   }
 }
 </script>
@@ -122,11 +136,22 @@ export default {
   align-items: center;
 }
 .login-l {
+  position: relative;
   width: 65%;
   height: 100%;
   position: relative;
   /* background: url(../../assets/img/login_bg.png) no-repeat 50%; */
   background-size: cover;
+}
+.login-l:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  background: linear-gradient(90deg,rgba(24,39,181,.9),rgba(8,162,234,.9));
+  z-index: 0;
 }
 .login-r {
   width: 35%;
@@ -141,11 +166,20 @@ export default {
   width: 70%;
   left: 50%;
   transform: translateX(-50%);
+  z-index: 9;
 }
+.reset-btn,
 .upload-btn {
   position: absolute;
   right: 20px;
   top: 20px;
   width: 160px;
+  z-index: 9;
+}
+.reset-btn {
+  right: 200px;
+  background-color: #999999;
+  color: #ffffff;
+  border: none;
 }
 </style>

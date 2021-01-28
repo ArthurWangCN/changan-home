@@ -87,7 +87,7 @@ const getFileIcon = (format) => {
   return iconType || 'other';
 }
 
-// 格式化日期
+// 格式化日期  YYYY-MM-DD HH:mm:ss => YYYY/MM/DD
 const formatDate = (d) => {
   // let newDate = /\d{4}-\d{1,2}-\d{1,2}/g.exec(d);
   if (!d) return '';
@@ -107,7 +107,7 @@ const compObj = {
   "通知公告": "Notice",
   "热门圈子": "HotForum",
   "热点知识": "HotKnowledge",
-  "行业资讯": "Information",
+  "技术资讯": "Information",
   "热门标签": "HotTag",
 }
 

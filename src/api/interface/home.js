@@ -48,6 +48,12 @@ export const getBanner = params => axios.get('/index/banner/list', { params });
 // 热搜词
 export const getHotWordList = params => axios.get('/index/hotWord/list', { params });
 
+// 热门标签
+export const getHotTags = params => axios.get('/index/kno/hotLabelList', { params });
+
+// 热点知识
+export const getHotKnoList = params => axios.get('/index/kno/hotKnoList', { params });
+
 export default {
   getUserInfo,
   getChannel,
@@ -64,5 +70,7 @@ export default {
   DeleteSubscribe,
   getForum,
   getBanner,
-  getHotWordList
+  getHotWordList,
+  getHotTags,
+  getHotKnoList,
 }

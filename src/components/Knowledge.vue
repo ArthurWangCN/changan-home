@@ -68,11 +68,11 @@
                             />
                           </span>
                         </div>
-                        <div class="knowledge-nodata" v-else>
+                        <!-- <div class="knowledge-nodata" v-else>
                           <svg class="iconfont" aria-hidden="true">
                             <use xlink:href="#iconnothing" />
                           </svg><span>暂无内容</span>
-                        </div>
+                        </div> -->
                       </el-dropdown-item>
                     </div>
                   </el-scrollbar>
@@ -150,11 +150,11 @@
                             />
                           </span>
                         </div>
-                        <div class="knowledge-nodata" v-else>
+                        <!-- <div class="knowledge-nodata" v-else>
                           <svg class="iconfont" aria-hidden="true">
                             <use xlink:href="#iconnothing" />
                           </svg><span>暂无内容</span>
-                        </div>
+                        </div> -->
                       </el-dropdown-item>
                     </div>
                   </el-scrollbar>

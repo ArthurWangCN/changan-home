@@ -392,6 +392,13 @@
 .level-cards .card-item:last-child {
   margin-right: 0;
 }
+/* 用户勋章 */
+.level-cards .user-badge .el-badge__content{
+  background-color: #ffa500;
+  height: 14px;
+  line-height: 14px;
+  padding: 0 4px;
+}
 .card-item span {
   display: inline-block;
   width: 14px;
@@ -401,8 +408,6 @@
   justify-content: center;
   align-items: center;
   border-radius: 50%;
-  /* border-radius: 7px; */
-  /* background: #f55050; */
   background: #ffa500;
   font-size: 12px;
   position: absolute;
@@ -943,6 +948,8 @@
   display: flex;
   flex-wrap: wrap;
   padding: 0 30px;
+  max-height: 330px;
+  overflow: hidden;
 }
 .hot-tags .hot-tag-content .hot-tag {
   padding: 5px 21px;

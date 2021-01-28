@@ -35,7 +35,8 @@
                 @mouseout="item.showRemove = false"
                 @click="updatePortalComp(item, 'remove')"
               >
-                {{ !item.showRemove&&item.isMove!=0 ? "已添加" : "移除" }}
+                <span class="remove-btn-text added-btn" v-if="item.isMove==0" style="background-color: #ebf3ff">已添加</span>
+                <span class="remove-btn-text" v-else>{{ !item.showRemove ? "已添加" : "移除" }}</span>
               </span>
               <span v-else class="add-btn" @click="updatePortalComp(item, 'add')">添加</span>
             </li>
@@ -157,9 +158,16 @@ export default {
   background-color: #3789ff;
   color: #ffffff;
 }
-.remove-btn {
+.remove-btn,
+.added-btn {
   background-color: #ebf3ff;
   color: #3789ff;
+}
+.remove-btn-text {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  border-radius: 16px;
 }
 .is-remove {
   background-color: #eeeeee;
@@ -172,6 +180,7 @@ export default {
 }
 .module-desc {
   font-size: 12px;
+  margin-top: 6px;
 }
 
 .btn-disabled{
