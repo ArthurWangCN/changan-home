@@ -701,6 +701,7 @@
 }
 .hot-knowlege .iconHot {
   fill: #f0f0f0;
+  flex-shrink: 0;
 }
 .hot-knowlege .iconHot0 {
   fill: #ff635b;
@@ -1032,4 +1033,10 @@
 
 .el-dialog__footer {
   text-align: center !important;
+}
+
+.text-ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }

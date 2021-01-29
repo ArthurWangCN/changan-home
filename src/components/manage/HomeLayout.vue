@@ -51,7 +51,7 @@ import HotTopic from "@/components/HotTopic.vue";
 import Map from "@/components/Map.vue";
 import HotTag from "@/components/HotTag.vue";
 import Notice from "@/components/Notice.vue";
-import FunctionModule from "@/components/FunctionModule.vue";
+import FunctionModule from "@/components/manage/FunctionModule.vue";
 
 import { compObj } from '@/utils/index';  // 接口返回组件名和前端组件名做映射
 import { getPortalCompList, savePortalComp } from "@/api/interface/manage";

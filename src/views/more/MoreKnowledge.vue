@@ -44,7 +44,7 @@
           :total="total"
           background
           hide-on-single-page
-          style="text-align: center; margin-top: 50px; margin-bottom: 30px"
+          style="text-align: center; margin-top: 40px; padding-bottom: 50px"
         />
       </div>
     </div>

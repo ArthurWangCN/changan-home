@@ -116,7 +116,11 @@ export default {
     },
 
     goNoticeDetail(item) {
-      this.$router.push({path: `/notice/detail/${item.sysId}`});
+      // this.$router.push({path: `/notice/detail/${item.sysId}`});
+      let routeUrl = this.$router.resolve({
+        path: `/notice/detail/${item.sysId}`
+      });
+      window.open(routeUrl.href, '_blank');
     }
   },
 };

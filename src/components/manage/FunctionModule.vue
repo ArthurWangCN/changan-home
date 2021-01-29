@@ -25,7 +25,7 @@
             <li class="module-item" v-for="item in moduleList" :key="item.id">
               <div>
                 <p class="module-name">{{ item.componentName }}</p>
-                <p class="module-desc">{{ item.componentDescribe }}</p>
+                <p class="module-desc text-ellipsis" :title="item.componentDescribe">{{ item.componentDescribe }}</p>
               </div>
               <span
                 v-if="item.componentStatus == 1"
@@ -35,7 +35,7 @@
                 @mouseout="item.showRemove = false"
                 @click="updatePortalComp(item, 'remove')"
               >
-                <span class="remove-btn-text added-btn" v-if="item.isMove==0" style="background-color: #ebf3ff">已添加</span>
+                <span class="remove-btn-text" v-if="item.isMove==0">已添加</span>
                 <span class="remove-btn-text" v-else>{{ !item.showRemove ? "已添加" : "移除" }}</span>
               </span>
               <span v-else class="add-btn" @click="updatePortalComp(item, 'add')">添加</span>
@@ -181,11 +181,18 @@ export default {
 .module-desc {
   font-size: 12px;
   margin-top: 6px;
+  max-width: 300px;
 }
 
 .btn-disabled{
   cursor: not-allowed;
   background-color: #eeeeee;
   color: #333333;
+}
+
+.text-ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 </style>

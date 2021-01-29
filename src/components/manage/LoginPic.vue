@@ -113,10 +113,11 @@ export default {
       this.loginPicUrl = res.message;
     },
 
+    // 重置图片
     resetBgImage() {
       this.operation = 'reset';
       this.loginPicUrl = require('../../assets/img/login_bg.png');
-      this.addBackground();
+      // this.addBackground();
     },
   }
 }

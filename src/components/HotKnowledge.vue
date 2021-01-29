@@ -21,7 +21,7 @@
             </svg>
           </div>
           <div class="recommend-item-info">
-            <div class="first-item-title" @click="goKnow(item.detailUrl)">{{ item.title }}</div>
+            <div class="first-item-title" @click="goKnow(item.detailUrl)" :title="item.title">{{ item.title }}</div>
             <div class="first-item-intro">{{ item.detail }}</div>
           </div>
         </div>
@@ -41,7 +41,7 @@
             </text>
           </svg>
           <span v-else>{{ index + 1 }}</span>
-          <p class="hot-item-name" @click="goKnow(item.detailUrl)">{{ item.title }}</p>
+          <p class="hot-item-name text-ellipsis" @click="goKnow(item.detailUrl)">{{ item.title }}</p>
         </div>
       </div>
     </div>
@@ -58,7 +58,7 @@ export default {
         //   title: "长安汽车与宁德时代…",
         //   detail: "盖世汽车讯据外媒拉加拿大电池研密度的新一代电池",
         //   imgUrl: "../../assets/img/document.jpg",
-        //   isShowPicInfo: false,
+        //   isShowPicInfo: true,
         // },
         // {
         //   title: "通用为电动车信息",
@@ -76,7 +76,7 @@ export default {
         //   title: "探访XPT蔚来科技",
         //   detail: "盖世汽车讯据外媒拉加拿大电池研密度的新一代电池",
         //   imgUrl: "../../assets/img/document.jpg",
-        //   isShowPicInfo: true,
+        //   isShowPicInfo: false,
         // },
         // {
         //   title: "科学家从原子层研究",
