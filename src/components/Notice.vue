@@ -42,7 +42,7 @@
           </svg>
           <span v-else>{{ index + 1 }}</span> -->
           <span class="notice-item-dot"></span>
-          <p class="notice-item-name">{{ item.title }}</p>
+          <p class="notice-item-name text-ellipsis">{{ item.title }}</p>
         </div>
       </div>
     </div>

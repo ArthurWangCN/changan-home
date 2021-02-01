@@ -117,7 +117,7 @@ export default {
           this.$set(item, "isShowPicInfo", false);
           this.$set(item, "imgUrl", "../../assets/img/document.jpg");
         })
-        this.hotKnowlege[0].isShowPicInfo = true;
+        if(this.hotKnowlege.length>0) this.hotKnowlege[0].isShowPicInfo = true;
       }).catch(err => {
         this.$message.error(err.message);
       })

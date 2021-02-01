@@ -34,7 +34,7 @@
             @mouseenter="showleftData(index)"
             v-show="!item.isShowPicInfo"
           >
-            <p><span class="dot" />{{ item.title }}</p>
+            <p><span class="dot" /><span class="kno-title-ellipsis">{{ item.title }}</span></p>
             <span class="date">{{ item.uploadTime }}</span>
           </div>
         </div>
@@ -61,7 +61,7 @@
             @mouseenter="showrightData(index)"
             v-show="!item.isShowPicInfo"
           >
-            <p><span class="dot" />{{ item.title }}</p>
+            <p><span class="dot" /><span class="kno-title-ellipsis">{{ item.title }}</span></p>
             <span class="date">{{ item.uploadTime }}</span>
           </div>
         </div>
@@ -98,6 +98,8 @@ export default {
               this.loading = true;
               let leftdata = data.slice(0, 6);
               leftdata = leftdata.map((item, index) => {
+                item.title = item.title.replace(/###/g,'');
+                item.title = item.title.replace(/\$\$\$/g,'');
                 if (index == 0) {
                   item.isShowPicInfo = true;
                 } else {
@@ -108,6 +110,8 @@ export default {
               });
               let rightdata = data.slice(6);
               rightdata = rightdata.map((item, index) => {
+                item.title = item.title.replace(/###/g,'');
+                item.title = item.title.replace(/\$\$\$/g,'');
                 if (index == 0) {
                   item.isShowPicInfo = true;
                 } else {
@@ -123,12 +127,14 @@ export default {
             }
           } else {
             this.loading = false;
-            this.$message.error(json.message);
+            // this.$message.error(json.message);
+            console.log(json.message);
           }
         })
         .catch((json) => {
           this.loading = false;
-          this.$message.error(json.message);
+          // this.$message.error(json.message);
+          console.log(json.message);
         });
     },
 

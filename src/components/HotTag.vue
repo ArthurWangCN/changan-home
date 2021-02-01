@@ -20,6 +20,7 @@
 
 <script>
 import { getHotTags } from '@/api/interface/home';
+import { publiceUrl } from "@/utils/index.js";
 export default {
   name: "hotTag",
   data() {
@@ -65,7 +66,13 @@ export default {
       }).catch(err => {
         this.$message.error(err.message);
       })
-    }
+    },
+    //热门标签检索
+    goSearch(keyword) {
+      window.open(
+        publiceUrl + "/krd/home/index#/generalSearch?searchKey=" + keyword
+      );
+    },
   }
 };
 </script>

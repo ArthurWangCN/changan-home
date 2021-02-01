@@ -28,8 +28,8 @@
     <div class="hot-search">
       <h4 class="hot-search-title">热搜</h4>
       <div class="hot-search-words">
-        <span v-for="(item, index) in hotdata" :key="index" @click="goHot(item.keyword)">{{
-          item.keyword
+        <span v-for="(item, index) in hotdata" :key="index" :title="item.keyword" @click="goHot(item.keyword)">{{
+          item.hotword
         }}</span>
       </div>
     </div>
@@ -64,7 +64,15 @@ export default {
       getHotWordList()
       .then((json) => {
           if (json.success) {
-            this.hotdata = json.content;
+            let arr = json.content;
+            arr.forEach(item => {
+              if (item.keyword.length > 5) {
+                item.hotword = item.keyword.slice(0,5) + '...';
+              } else {
+                item.hotword = item.keyword;
+              }
+            });
+            this.hotdata = arr;
           } else {
             this.$message.error(json.message);
           }

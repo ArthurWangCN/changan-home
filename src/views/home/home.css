@@ -645,6 +645,13 @@
   font-size: 12px;
   color: #999;
 }
+.home-knowlege-items .kno-title-ellipsis{
+  display: block;
+  width: 430px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
 
 /* 热点知识 */
 /* 带有圆圈的头部 */
