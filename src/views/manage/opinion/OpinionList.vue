@@ -57,13 +57,28 @@
       <el-input
         type="textarea"
         :rows="6"
-        v-model.trim="replyContent"
+        v-model="replyContent"
         placeholder="请输入回复"
         resize="none"
       />
       <span slot="footer" class="dialog-footer">
         <el-button type="primary" @click="confirmReply" round>确 定</el-button>
         <el-button @click="cancelReply" round>取 消</el-button>
+      </span>
+    </el-dialog>
+
+    <!-- 查看回复弹窗 -->
+    <el-dialog
+      custom-class="manage-dialog"
+      :close-on-click-modal="false"
+      :visible="replyTextVisible"
+      title="回复内容"
+      width="500px"
+      :before-close="hideReply"
+    >
+      <p class="reply-text" v-html="curReplyText"></p>
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="hideReply" round>确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -99,6 +114,8 @@ export default {
       replyVisible: false,
       replyContent: '',
       curReplyId: '',
+      replyTextVisible: false,
+      curReplyText: '',
     }
   },
   props: {
@@ -141,9 +158,13 @@ export default {
       this.curReplyId = row.id;
     },
     confirmReply() {
+      if (this.replyContent.trim() === '') {
+        this.$message.warning('回复内容不能为空');
+        return;
+      }
       replyOpinion({
         id: this.curReplyId,
-        reply: this.replyContent
+        reply: this.replyContent.trim()
       }).then(res => {
         if (res.success) {
           this.$message.success('已回复');
@@ -162,11 +183,12 @@ export default {
     },
 
     showReply(row) {
-      this.$alert(row.reply, '意见回复内容', {
-        confirmButtonText: '确定',
-        customClass: 'reply-alert',
-        callback: action => {}
-      });
+      this.replyTextVisible = true;
+      this.curReplyText = row.reply.replace(/\n/g, '<br>');
+    },
+    hideReply() {
+      this.replyTextVisible = false;
+      this.curReplyText = '';
     },
 
     // 分页器

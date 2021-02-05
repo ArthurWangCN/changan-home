@@ -115,7 +115,7 @@ export default {
     },
 
     downloadFile(attachment) {
-      let downloadUrl = encodeURI(attachment.attachmentUrl);
+      let downloadUrl = attachment.attachmentUrl;
       window.open(downloadUrl, "_blank");
     }
   }

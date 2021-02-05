@@ -2,8 +2,8 @@ import axios from 'axios';
 import qs from 'qs';
 
 const instance = axios.create({
-    baseURL: ''
-    // baseURL: '/home'
+    // baseURL: ''
+    baseURL: '/home'
 });
 
 // 请求拦截器
@@ -17,7 +17,7 @@ instance.interceptors.request.use((config) => {
             return qs.stringify(params, { arrayFormat: 'repeat' })
         }
     }
-    config.headers['AID'] = '7b1eb88643f342f684fe6fd97d4d563b';
+    // config.headers['AID'] = '78811a968c6e44a49831bf31655788fc';
     return config;
 }, (error) => {
     // Do something with request error

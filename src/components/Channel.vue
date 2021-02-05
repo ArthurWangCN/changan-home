@@ -19,23 +19,28 @@
         </div>
       </div>
     </div> -->
-    <div class="channel-content">
-      <ul class="content-l">
-        <li
-          class="channel-item"
-          v-for="iteml in dataL"
-          :key="iteml.id"
-          @click="goChannel(iteml.url)"
-        >{{ iteml.title }}</li>
-      </ul>
-      <ul class="content-r">
-        <li
-          class="channel-item ml20"
-          v-for="itemr in dataR"
-          :key="itemr.id"
-          @click="goChannel(itemr.url)"
-        >{{ itemr.title }}</li>
-      </ul>
+    <div style="padding:15px 0;">
+      <el-scrollbar>
+        <div class="channel-content">
+          <ul class="content-l" :class="{'border-r': dataL.length <= 10}">
+            <li
+              class="channel-item"
+              v-for="iteml in dataL"
+              :key="iteml.id"
+              @click="goChannel(iteml.url)"
+              :class="{'border-r': dataL.length > 10}"
+            >{{ iteml.title }}</li>
+          </ul>
+          <ul class="content-r">
+            <li
+              class="channel-item ml20"
+              v-for="itemr in dataR"
+              :key="itemr.id"
+              @click="goChannel(itemr.url)"
+            >{{ itemr.title }}</li>
+          </ul>
+        </div>
+      </el-scrollbar>
     </div>
   </div>
 </template>
@@ -60,10 +65,16 @@ export default {
           if (json.success) {
             this.data = json.content;
             this.data.forEach((item, index) => {
-              if (index%2 === 0 && this.dataL.length<10) {
+              // if (index%2 === 0 && this.dataL.length<10) {
+              //   this.dataL.push(item);
+              // }
+              // if (index%2 === 1 && this.dataR.length<10) {
+              //   this.dataR.push(item);
+              // }
+              if (index%2 === 0) {
                 this.dataL.push(item);
               }
-              if (index%2 === 1 && this.dataR.length<10) {
+              if (index%2 === 1) {
                 this.dataR.push(item);
               }
             })
@@ -87,8 +98,8 @@ export default {
 <style scoped>
 .channel-content {
   margin: 0 30px;
-  margin-top: 15px;
-  height: 320px;
+  /* margin-top: 15px; */
+  height: 325px;
 }
 .channel-content > ul {
   float: left;
@@ -96,7 +107,7 @@ export default {
   width: 50%;
   height: 100%;
 }
-.content-l {
+.border-r {
   border-right: 1px solid #eeeeee;
 }
 .channel-item {
@@ -107,7 +118,7 @@ export default {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  margin-bottom: 15px;
+  padding-bottom: 15px;
 }
 .channel-item:hover {
   color: #3b83ff;

@@ -26,7 +26,7 @@
       <el-table-column label="操作" align="center" width="300">
         <template slot-scope="scope">
           <el-button type="text" @click="editType(scope.row)">编辑</el-button>
-          <el-button type="text" @click="delType(scope.row)">删除</el-button>
+          <el-button type="text" @click="showDel(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -53,7 +53,7 @@
     >
       <div class="edit-content">
         <span style="flex-shrink:0;">分类名称：</span>
-        <el-input v-model.trim="typeName" />
+        <el-input v-model="typeName" />
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button type="primary" @click="confirmDialog" round>确 定</el-button>
@@ -62,7 +62,8 @@
     </el-dialog>
 
     <!-- 删除弹窗 -->
-    <!-- <el-dialog
+    <el-dialog
+      custom-class="manage-dialog"
       :close-on-click-modal="false"
       :visible="delTypeVisible"
       title="删除提示"
@@ -74,7 +75,7 @@
         <el-button type="primary" @click="confirmDel" round>确 定</el-button>
         <el-button @click="cancelDel" round>取 消</el-button>
       </span>
-    </el-dialog> -->
+    </el-dialog>
   </div>
 </template>
 
@@ -108,10 +109,11 @@ export default {
       currentPage: 1,
       total: 0,
       typeDialogVisible: false,
-      // delTypeVisible: false,
+      delTypeVisible: false,
       typeName: '',
       operation: 'add',  // add:新建分类 ; edit:编辑分类
       curTypeId: '',
+      curDelId: '',
     }
   },
   computed:{
@@ -167,7 +169,6 @@ export default {
 
     // 编辑
     editType(row) {
-      console.log(row)
       this.typeName = row.typeName;
       this.curTypeId = row.id;
       this.operation = 'edit';
@@ -175,11 +176,14 @@ export default {
     },
     // 新建/编辑分类
     confirmDialog() {
-      console.log(this.operation);
+      if(this.typeName.trim() === '') {
+        this.$message.warning('分类名称不能为空');
+        return;
+      }
       // 新建
       if (this.operation === 'add') {
         addOpinionType({
-          typeName: this.typeName
+          typeName: this.typeName.trim()
         }).then(res => {
           if (res.success) {
             this.getOpinionTypeList();
@@ -190,7 +194,7 @@ export default {
       } else if (this.operation === 'edit') { // 编辑
         editOpinionType({
           id: this.curTypeId,
-          typeName: this.typeName
+          typeName: this.typeName.trim()
         }).then(res => {
           if (res.success) {
             this.getOpinionTypeList();
@@ -207,24 +211,25 @@ export default {
       this.typeName = '';
     },
 
-    // 删除
-    delType(row, index) {
-      this.$confirm("删除后将无法恢复，确认继续删除？", "删除提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning",
+    showDel(row) {
+      this.curDelId = row.id;
+      this.delTypeVisible = true;
+    },
+    confirmDel() {
+      delOpinionType(this.curDelId)
+      .then(res => {
+        if (res.success) {
+          this.getOpinionTypeList();
+        }
+      }).catch(err => {
+        this.$message.error(err.message);
+      }).finally(_ => {
+        this.cancelDel();
       })
-      .then(() => {
-        delOpinionType(row.id)
-        .then(res => {
-          if (res.success) {
-            this.getOpinionTypeList();
-          }
-        }).catch(err => {
-          this.$message.error(err.message);
-        })
-      })
-      .catch(() => {});
+    },
+    cancelDel() {
+      this.curDelId = '';
+      this.delTypeVisible = false;
     },
 
     // 分页器

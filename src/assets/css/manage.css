@@ -154,6 +154,9 @@
 .reply-alert .el-message-box__content {
   padding: 15px 20px;
 }
+.reply-text {
+  line-height: 22px;
+}
 
 /* 功能模块弹窗 */
 .module-dialog {

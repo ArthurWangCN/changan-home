@@ -73,7 +73,11 @@
 
           <!-- 意见反馈记录 -->
           <el-tab-pane label="意见反馈记录" name="opinionRecord">
-            <ul class="opinion-record">
+            <div class="nothing" v-if="!isLoading&&opinionList.length===0">
+              <img :src="imageUrl" />
+              <span>暂无记录</span>
+            </div>
+            <ul class="opinion-record" v-else>
               <li
                 class="record-item"
                 v-for="item of opinionList"
@@ -114,7 +118,11 @@
 
           <!-- 需求反馈记录 -->
           <el-tab-pane label="需求反馈记录" name="demandRecord">
-            <ul class="opinion-record">
+            <div class="nothing" v-if="!isLoading&&demandList.length===0">
+              <img :src="imageUrl" />
+              <span>暂无记录</span>
+            </div>
+            <ul class="opinion-record" v-else>
               <li
                 class="record-item"
                 v-for="item of demandList"
@@ -191,11 +199,12 @@ export default {
       opinionTotal: 0,
       demandCurrent: 1,
       demandTotal: 0,
+      imageUrl: require("../../assets/img/nothing_l.png"),
     }
   },
   components: {
     Top: window.TopCommonFooter.Top,
-    CommonFooter: window.TopCommonFooter.CommonFooter,
+    CommonFooter: window.TopCommonFooter.CommonFooter
   },
   created() {
     this.init();
@@ -467,5 +476,19 @@ export default {
 .demand-info-item:last-child {
   width: 20%;
   padding-right: 0;
+}
+
+/* 暂无数据 */
+.nothing {
+  height: calc(100vh - 350px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.nothing span {
+  font-size: 14px;
+  color: #333;
 }
 </style>
