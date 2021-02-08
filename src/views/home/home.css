@@ -508,6 +508,9 @@
   font-size: 14px;
   color: #333;
 }
+.recommend-item-item-title {
+  max-width: 420px;
+}
 .first-column-item {
   display: flex;
   margin-top: 20px;

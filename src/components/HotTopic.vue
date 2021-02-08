@@ -51,7 +51,10 @@
             @mouseenter="showleftData(index)"
             v-show="!item.isShowPicInfo"
           >
-            <p><span class="dot" />{{ item.questionTitle }}</p>
+            <p>
+              <span class="dot"></span>
+              <span class="recommend-item-item-title text-ellipsis">{{ item.questionTitle }}</span>
+            </p>
             <span class="date">{{ item.createTime }}</span>
           </div>
         </div>
@@ -86,7 +89,10 @@
             @mouseenter="showrightData(index)"
             v-show="!item.isShowPicInfo"
           >
-            <p><span class="dot" />{{ item.questionTitle }}</p>
+            <p>
+              <span class="dot"></span>
+              <span class="recommend-item-item-title text-ellipsis">{{ item.questionTitle }}</span>
+            </p>
             <span class="date">{{ item.createTime }}</span>
           </div>
         </div>

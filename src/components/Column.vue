@@ -20,7 +20,7 @@
           <img :src="item.img_url" class="image" />
         </div>
         <div class="home-column-card-info">
-          <p class="home-column-card-info-title" @click="goColumn(item.sys_id)">
+          <p class="home-column-card-info-title text-ellipsis" @click="goColumn(item.sys_id)">
             {{ item.title }}
           </p>
           <div class="home-column-card-info-con">

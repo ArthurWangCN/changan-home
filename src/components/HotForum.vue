@@ -19,7 +19,7 @@
           <img :src="item.imageUrl" class="image" />
         </div>
         <div class="home-column-card-info">
-          <p class="home-column-card-info-title" @click="goHotforum(item)">
+          <p class="home-column-card-info-title text-ellipsis" @click="goHotforum(item)">
             {{ item.circleName }}
           </p>
           <div class="home-column-card-info-con">
@@ -135,8 +135,13 @@ export default {
 
     //跳转圈子详情
     goHotforum(data) {
-      if (data.joinStatus == 0) {
-        this.$message.warning("您暂无权限查看该圈子，请先加入圈子");
+      if (data.joinStatus == 0 || data.joinStatus == 1) {
+        // this.$message.warning("您暂无权限查看该圈子，请先加入圈子");
+        this.$message({
+          message: '您暂无权限查看该圈子，请先加入圈子',
+          type: 'warning',
+          offset: 300
+        });
         return false;
       } else {
         window.open(

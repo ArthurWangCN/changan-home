@@ -119,7 +119,12 @@ export default {
 
     //热搜
     goHot(item) {
-      this.keyword = item;
+      // this.keyword = item;
+      window.open(
+          publiceUrl +
+            "/krd/home/index#/generalSearch?searchKey=" +
+            item
+        );
     },
   },
 };
