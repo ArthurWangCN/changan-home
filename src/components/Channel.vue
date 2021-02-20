@@ -89,7 +89,8 @@ export default {
 
     //跳转专业频道
     goChannel(url) {
-      window.open(url);
+      // window.open(url);
+      window.location.href = url;
     },
   },
 };

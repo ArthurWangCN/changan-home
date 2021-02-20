@@ -2,7 +2,7 @@
   <div class="hot-forum">
     <div class="hot-knowlege-title circle-title">
       <p class="circle-title-name">热门圈子</p>
-      <a :href="hotUrl" class="more" target="_blank">更多</a>
+      <a :href="hotUrl" class="more">更多</a>
     </div>
     <div class="hot-forum-cards" v-if="loading">
       <el-card
@@ -143,14 +143,19 @@ export default {
           offset: 300
         });
         return false;
-      } else {
-        window.open(
-          publiceUrl +
+      } else if (data.joinStatus == 2) {
+        // window.open(
+        //   publiceUrl +
+        //     "/circle/#/circle-gateway?circleId=" +
+        //     data.circleId +
+        //     "&circleName=" +
+        //     data.circleName
+        // );
+        window.location.href = publiceUrl +
             "/circle/#/circle-gateway?circleId=" +
             data.circleId +
             "&circleName=" +
-            data.circleName
-        );
+            data.circleName;
       }
     },
 

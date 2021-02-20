@@ -23,13 +23,13 @@
     </div>
     <div class="information">
       <div class="info-left">
-        <div class="info-item">
+        <div class="info-item" style="cursor: pointer" @click="goMessage">
           <svg class="iconfont fonts14" aria-hidden="true">
             <use xlink:href="#iconnews" />
           </svg>
           消息{{ userdata.messageNum }}
         </div>
-        <div class="info-item">
+        <div class="info-item" style="cursor: pointer" @click="goTodo">
           <svg class="iconfont fonts14" aria-hidden="true">
             <use xlink:href="#iconwait" />
           </svg>
@@ -159,6 +159,16 @@ export default {
     //跳转个人中心
     goPersonal() {
       window.open(publiceUrl + "/pmc/#/home");
+    },
+
+    // 跳转个人中心消息
+    goMessage() {
+      window.open(publiceUrl + "/pmc/#/message");
+    },
+
+    // 跳转个人中心待办
+    goTodo() {
+      window.open(publiceUrl + "/pmc/#/todo/myTask");
     },
 
     //跳转上传知识

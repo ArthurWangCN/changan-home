@@ -138,6 +138,118 @@
   width: 220px;
 }
 
+/* 反馈建议 */
+.feedback-content {
+  box-sizing: border-box;
+  padding: 0 30px 40px;
+}
+
+/* 反馈建议 导航栏 */
+.feedback-content .el-tabs__item {
+  height: 70px;
+  line-height: 70px;
+  font-size: 18px;
+  color: #000000;
+}
+.feedback-content .el-tabs__header{ margin-bottom: 0; }
+.feedback-content .el-tabs__item.is-active { color: #3d8cfc; }
+.feedback-content .el-tabs__active-bar {
+  height: 3px;
+  background-color: #3d8cfc;
+}
+.feedback-content .el-tabs__nav-wrap::after { background-color: #eeeeee; }
+
+/* 反馈建议 意见 */
+.feedback-opinion,
+.feedback-demand,
+.opinion-record {
+  font-size: 14px;
+  color: #333333;
+}
+.feedback-opinion .el-select {
+  width: 100%;
+}
+.feedback-opinion .el-textarea__inner{
+  resize: none;
+  height: 304px;
+}
+.feedback-btns {
+  margin-top: 100px;
+  text-align: center;
+}
+
+/* 反馈建议 需求 */
+.feedback-demand .el-textarea__inner {
+  resize: none;
+  height: 200px;
+}
+.feedback-demand .project-input .el-textarea__inner{
+  height: 160px;
+}
+.feedback-demand .feedback-btns { margin-top: 50px; }
+
+/* 反馈建议 意见记录 */
+.record-item {
+  position: relative;
+  padding: 30px 0;
+  border-bottom: 1px solid #eeeeee;
+}
+.record-time {
+  color: #999999;
+  font-size: 12px;
+  margin-top: 10px;
+}
+.record-reply {
+  margin-top: 30px;
+  padding: 20px;
+  padding-bottom: 30px;
+  background-color: #f9fafb;
+}
+.outer-text {
+  height: 38px;
+  overflow: hidden;
+}
+.record-text{
+  position: relative;
+}
+.record-text p {
+  line-height: 20px;
+}
+.record-text .text-ellipsis2 {
+  max-height: 40px;
+}
+.expand {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  padding: 0 10px;
+  padding-right: 0;
+  color: #3d8cfc;
+  background-color: #ffffff;
+  cursor: pointer;
+  line-height: 20px;
+}
+.record-reply .expand {
+  background-color: #f9fafb;
+}
+/* 反馈建议 需求 */
+.demand-info {
+  margin-top: 10px;
+  color: #999999;
+  font-size: 12px;
+}
+.demand-info-item {
+  display: inline-block;
+  box-sizing: border-box;
+  padding-right: 20px;
+  width: 40%;
+}
+.demand-info-item:last-child {
+  width: 20%;
+  padding-right: 0;
+}
 
 /* 暂无数据 */
 .more-notice .nodata-tip {

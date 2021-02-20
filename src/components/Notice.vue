@@ -106,21 +106,19 @@ export default {
     },
 
     goMore() {
-      let routeUrl = this.$router.resolve({
-        path: "/notice"
+      this.$router.push({
+        path: '/notice'
       });
-      window.open(routeUrl.href, '_blank');
-      // this.$router.push({
-      //   path: '/notice'
-      // })
     },
 
     goNoticeDetail(item) {
-      // this.$router.push({path: `/notice/detail/${item.sysId}`});
-      let routeUrl = this.$router.resolve({
+      this.$router.push({
         path: `/notice/detail/${item.sysId}`
       });
-      window.open(routeUrl.href, '_blank');
+      // let routeUrl = this.$router.resolve({
+      //   path: `/notice/detail/${item.sysId}`
+      // });
+      // window.open(routeUrl.href, '_blank');
     }
   },
 };

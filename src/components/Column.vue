@@ -2,7 +2,7 @@
   <div class="home-column">
     <div class="hot-knowlege-title circle-title">
       <p class="circle-title-name">专栏</p>
-      <a :href="hotUrl" class="more" target="_blank">更多</a>
+      <a :href="hotUrl" class="more">更多</a>
     </div>
     <div class="column-cards" v-if="loading">
       <el-card
@@ -162,7 +162,8 @@ export default {
       })
         .then((json) => {
           if (json.success) {
-            window.open(publiceUrl + "/column/#/specialDetail?id=" + id);
+            // window.open(publiceUrl + "/column/#/specialDetail?id=" + id);
+            window.location.href = publiceUrl + "/column/#/specialDetail?id=" + id;
           } else {
             this.$message.warning("您不在该专栏的权限范围内");
           }

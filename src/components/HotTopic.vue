@@ -197,9 +197,10 @@ export default {
         .then((json) => {
           if (json.success) {
             if (json.content) {
-              window.open(
-                publiceUrl + "/circle/#/circle-specialArea/detail?id=" + id
-              );
+              // window.open(
+              //   publiceUrl + "/circle/#/circle-specialArea/detail?id=" + id
+              // );
+              window.location.href = publiceUrl + "/circle/#/circle-specialArea/detail?id=" + id;
             } else {
               this.$message.warning("您暂无权限查看该话题");
             }

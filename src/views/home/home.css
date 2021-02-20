@@ -6,6 +6,7 @@
   width: 1440px;
   margin: 0 auto;
   overflow: hidden;
+  margin-bottom: 50px;
 }
 .home-title {
   text-align: center;
@@ -1038,7 +1039,7 @@
   height: 416px;
   background: #fff;
   border-radius: 10px;
-  margin-bottom: 50px;
+  /* margin-bottom: 50px; */
 }
 
 .el-dialog__footer {
