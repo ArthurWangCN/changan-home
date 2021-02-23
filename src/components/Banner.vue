@@ -11,17 +11,11 @@
     <!-- <el-carousel-item v-if="bannerList.length<=0">
       <img src="../assets/img/default-banner.png" alt="" />
     </el-carousel-item> -->
-    <el-carousel-item v-for="banner in bannerList" :key="banner.id" v-show="banner.isShow">
-      <!-- <img src="../assets/img/banner.jpg" alt="" />
-      <div class="notice-link">
-        <p>通知公告:长安汽车与宁德时代更新盖世汽车讯距外媒</p>
-        <a href="#">查看更多</a>
-      </div> -->
-      <img :src="banner.imgUrl" alt=" " @error="defaultImg($event)" />
-      <!-- <img src="../assets/img/banner.jpg" alt="" /> -->
+    <el-carousel-item v-for="banner in bannerList" class="banner-more" :key="banner.id" v-show="banner.isShow">
+      <img :src="banner.imgUrl" alt=" " @error="defaultImg($event)" @click="goBannerDetail(banner)" />
       <!-- <div class="notice-link">
         <p>{{ banner.title }}</p>
-        <a href="#">查看更多</a>
+        <span class="bannner-more" @click="goBannerDetail(banner)">查看更多</span>
       </div> -->
     </el-carousel-item>
   </el-carousel>
@@ -67,10 +61,19 @@ export default {
           this.$message.error(json.message);
         });
     },
+
+    // 默认图片
     defaultImg(event) {
       let img = event.srcElement;
       img.src = this.defaultBanner;
       img.onerror = null;
+    },
+
+    // 跳转轮播图详情
+    goBannerDetail(banner) {
+      this.$router.push({
+        path: `/banner/detail/${banner.id}`
+      })
     }
   }
 };
@@ -93,5 +96,14 @@ export default {
 .home-carousel >>> .el-carousel__item{
   /* background-image: url('../assets/img/default-banner.png'); */
   background-size: cover;
+}
+.banner-more {
+  cursor: pointer;
+}
+.notice-link > p {
+  max-width: 550px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 </style>

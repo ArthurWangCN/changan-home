@@ -55,6 +55,14 @@ const routes = [
     meta: { title: '通知公告' }
   },
   {
+    path: '/banner/detail/:id',     // 更多 轮播图详情页
+    name: 'bannerDetail',
+    component: () => import(
+      /* webpackChunkName: "more" */ '@/views/more/BannerDetail.vue'
+    ),
+    meta: { title: '轮播图详情' }
+  },
+  {
     path: '/feedback',     // 反馈建议
     name: 'feedback',
     component: () => import(

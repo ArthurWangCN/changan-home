@@ -158,15 +158,19 @@ export default {
 
     //跳转知识页面
     goKnow(url) {
-      // window.open(url);
-      window.location.href = url;
+      window.open(url);
+      // window.location.href = url;
     },
 
     // 跳转推荐知识列表页
     goRecommendKno() {
-      this.$router.push({
+      // this.$router.push({
+      //   path: "/recommendKno"
+      // });
+      let routeUrl = this.$router.resolve({
         path: "/recommendKno"
       });
+      window.open(routeUrl.href, '_blank');
     },
   },
 };

@@ -125,15 +125,19 @@ export default {
 
     // 跳转热点知识列表页
     goHotKno() {
-      this.$router.push({
+      // this.$router.push({
+      //   path: "/hotKno"
+      // });
+      let routeUrl = this.$router.resolve({
         path: "/hotKno"
       });
+      window.open(routeUrl.href, '_blank');
     },
 
     //跳转知识页面
     goKnow(url) {
-      // window.open(url);
-      window.location.href = url;
+      window.open(url);
+      // window.location.href = url;
     },
 
     // 热点知识鼠标上移显示待图片的信息

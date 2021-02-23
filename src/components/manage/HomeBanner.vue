@@ -68,11 +68,13 @@
       :close-on-click-modal="false"
       :visible="bannerDialogVisible"
       :title="dialogTitle"
-      width="500px"
+      width="700px"
       :before-close="cancelDialog"
     >
-      <div class="edit-content dialog-banner" v-loading="dialogLoading">
-        <div class="flex-align-c">
+      <div class="edit-content dialog-banner manage-editor" v-loading="dialogLoading">
+        <el-input placeholder="请输入标题，必填" class="banner-title-input" v-model="bannerTitle"></el-input>
+        <quill-editor ref="noticeContentEditor" v-model="bannerContent" :options="editorOption" @focus="onEditorFocus($event)"></quill-editor>
+        <div class="flex-align-c" style="margin-top: 20px;">
           <el-upload
             :action="actionUrl"
             ref="bannerUpload"
@@ -86,10 +88,6 @@
             <span class="manage-home-btn" style="width: 120px;">上传图片</span>
           </el-upload>
           <img v-if="bannerUrl!==''" :src="bannerUrl" style="margin-left:10px;" width="140px" height="85px" alt="">
-        </div>
-        <div class="flex-align-c dialog-banner-title">
-          <span>图片标题：</span>
-          <el-input style="width:300px" placeholder="请输入图片标题" v-model="bannerTitle"></el-input>
         </div>
         <div class="dialog-banner-isTop">
           <el-checkbox v-model="isTop">将该图片置顶</el-checkbox>
@@ -121,6 +119,11 @@
 
 <script>
 import { formatDate } from '@/utils/index';
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
+import { handlers } from '@/utils/quillEditor.js';
+import { quillEditor } from 'vue-quill-editor'
 import {
   getBannerList,
   addBanner,
@@ -156,11 +159,33 @@ export default {
       fileList: [],
       actionUrl: '/home/file/upload',
       bannerTitle: '',
+      bannerContent: '',
       bannerUrl: '',
       // bannerUrl: require('../../assets/img/banner.jpg'),
       isTop: false,
       curBanner: '',
+      editorOption: {
+        placeholder: "请输入内容，必填",
+        modules:{
+          toolbar: {
+            handlers: handlers,
+            container: [
+              [{ 'font': [] }],     //字体
+              [{ 'size': ['small', false, 'large', 'huge'] }], // 字体大小
+              // [{ 'header': [1, 2, 3, 4, 5, 6, false] }],     //几级标题
+              ['bold', 'italic', 'underline', 'strike'],    //加粗，斜体，下划线，删除线
+              [{ 'list': 'ordered'}, { 'list': 'bullet' }],     //列表
+              [{ 'color': [] }, { 'background': [] }],     // 字体颜色，字体背景颜色
+              [{ 'align': [] }],    //对齐方式
+              ['link', 'image']    //上传图片、上传视频
+            ]
+          }
+        }
+      },
     }
+  },
+  components: {
+    quillEditor
   },
   computed: {
     dialogTitle() {
@@ -217,6 +242,7 @@ export default {
           this.curBanner = res.content;
           this.bannerUrl = this.curBanner.imgUrl;
           this.bannerTitle = this.curBanner.title;
+          this.bannerContent = this.curBanner.content;
           this.isTop = this.curBanner.isTop == 1 ? true : false;
         } else {
           this.$message.error(res.message);
@@ -234,11 +260,15 @@ export default {
 
     // 确定新建/编辑图片
     confirmDialog() {
-      // if(this.bannerTitle==='') return this.$message.warning('图片标题不能为空');
+      if(this.bannerTitle.trim()==='') return this.$message.warning('图片标题不能为空');
+      if(this.bannerContent==='') return this.$message.warning('图片内容不能为空');
+      if(this.bannerUrl==='') return this.$message.warning('请上传图片');
+
       let promise;
       let params = {
         imgUrl: this.bannerUrl,
         title: this.bannerTitle,
+        content: this.bannerContent,
         isShow: 1,
         isTop: this.isTop ? 1 : 0
       };
@@ -270,6 +300,7 @@ export default {
       this.fileList = [];
       this.bannerUrl = '';
       this.bannerTitle = '';
+      this.bannerContent = '';
       this.isTop = false;
     },
 
@@ -354,5 +385,8 @@ export default {
 }
 .dialog-banner-isTop {
   margin-top: 20px;
+}
+.banner-title-input {
+  margin-bottom: 10px;
 }
 </style>

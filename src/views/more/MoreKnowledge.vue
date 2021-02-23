@@ -30,7 +30,7 @@
               <span class="kno-info-from" :class="{'kno-info-wider': knoType==='recommendKno'}" :title="item.classification">
                 来源：{{ item.classification || '暂无' }}
               </span>
-              <span v-if="knoType==='hotKno'">浏览量：77</span>
+              <span v-if="knoType==='hotKno'">浏览量：10</span>
               <span>发布时间：{{ item.uploadTime }}</span>
             </div>
           </li>

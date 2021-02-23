@@ -3,6 +3,11 @@
     <div class="layout-inner">
       <p class="layout-tip">拖动调整组件位置</p>
 
+      <div class="layout-btns">
+        <span class="btn-save" @click="saveComp">保<br />存</span>
+        <span class="btn-cancel" @click="getPortalCompList">取<br />消</span>
+      </div>
+
       <grid-layout
         :layout.sync="layout"
         :col-num="9"
@@ -137,13 +142,19 @@ export default {
       })
     },
 
+    // 组件更新事件
     layoutUpdatedEvent: function (newLayout) {
       // console.log("Updated layout: ", newLayout);
-      this.savePortalComp(newLayout);
+      // this.savePortalComp(newLayout);
     },
     movedEvent: function (i, newX, newY) {
       // console.log("MOVED i=" + i + ", X=" + newX + ", Y=" + newY);
     },
+
+    // 保存组件更新
+    saveComp () {
+      this.savePortalComp(this.layout);
+    }
   },
 };
 </script>
@@ -181,5 +192,35 @@ export default {
   top: 0;
   left: 0;
   z-index: 2009;
+}
+
+.layout-btns {
+  position: fixed;
+  right: 80px;
+  top: 178px;
+  z-index: 999;
+}
+.layout-btns .btn-save,
+.layout-btns .btn-cancel {
+  display: block;
+  width: 30px;
+  background-color: #999999;
+  color: #ffffff;
+  text-align: center;
+  font-size: 14px;
+  border-radius: 4px;
+  box-sizing: border-box;
+  padding: 10px 0;
+  cursor: pointer;
+}
+.layout-btns .btn-save {
+  background-color: #367fff;
+  margin-bottom: 10px;
+}
+
+@media screen and (max-width: 1600px) {
+  .layout-btns {
+    right: 50px;
+  }
 }
 </style>

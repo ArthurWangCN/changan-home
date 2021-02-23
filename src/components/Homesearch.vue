@@ -14,7 +14,7 @@
     </div>
     <div class="search-group">
       <el-input
-        placeholder="知识/圈子/同事"
+        placeholder="知识/话题/圈子/同事"
         @keyup.enter.native="toSearch"
         v-model.trim="keyword"
       />
@@ -46,7 +46,7 @@ export default {
     return {
       currentTopic: "知识",
       keyword: "",
-      searchdata: ["知识", "圈子", "同事"],
+      searchdata: ["知识", "话题", "圈子", "同事"],
       hotdata: ["防腐", "试验样车", "悬架参数", "CTS", "DVPVIPT"],
     };
   },
@@ -94,12 +94,13 @@ export default {
             "/krd/home/index#/generalSearch?searchKey=" +
             this.keyword
         );
+      } else if (this.currentTopic == "话题") {
+
       } else if (this.currentTopic == "圈子") {
         window.open(
           publiceUrl + "/circle/#/circle-square?searchKey=" + this.keyword
         );
       } else if (this.currentTopic == "同事") {
-        console.log("搜同事");
         let routeUrl = this.$router.resolve({
           path: "/colleague",
           query: {

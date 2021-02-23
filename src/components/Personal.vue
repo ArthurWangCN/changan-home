@@ -158,22 +158,26 @@ export default {
 
     //跳转个人中心
     goPersonal() {
-      window.open(publiceUrl + "/pmc/#/home");
+      // window.open(publiceUrl + "/pmc/#/home");
+      window.location.href = publiceUrl + "/pmc/#/home";
     },
 
     // 跳转个人中心消息
     goMessage() {
-      window.open(publiceUrl + "/pmc/#/message");
+      // window.open(publiceUrl + "/pmc/#/message");
+      window.location.href = publiceUrl + "/pmc/#/message";
     },
 
     // 跳转个人中心待办
     goTodo() {
-      window.open(publiceUrl + "/pmc/#/todo/myTask");
+      // window.open(publiceUrl + "/pmc/#/todo/myTask");
+      window.location.href = publiceUrl + "/pmc/#/todo/myTask";
     },
 
     //跳转上传知识
     goUpload() {
-      window.open(publiceUrl + "/pmc/#/knowledge");
+      // window.open(publiceUrl + "/pmc/#/knowledge");
+      window.location.href = publiceUrl + "/pmc/#/knowledge";
     },
   },
 };
