@@ -86,7 +86,7 @@
   </div>
 </template>
 <script>
-import { getHotForum, getForum } from "../api/interface/home";
+import { getHotForum, joinCircle } from "../api/interface/home";
 import { publiceUrl } from "@/utils/index.js";
 
 export default {
@@ -184,7 +184,7 @@ export default {
         return false;
       } else {
         this.isDisable = true;
-        getForum({
+        joinCircle({
           circleId: this.id,
           content: this.content,
         })

@@ -493,13 +493,24 @@
 }
 .recommend-knowlege .recommend-knowlege-title {
   font-size: 20px;
-  color: #fc8442;
+  /* color: #fc8442; */
+  color: #ffac5c;
   display: flex;
   justify-content: space-between;
 }
 .recommend-knowlege-title .more {
   font-size: 12px;
   color: #ffac5c;
+}
+.recommend-knowlege .tab-recommend {
+  cursor: pointer;
+}
+.recommend-knowlege .tab-new {
+  margin-left: 20px;
+  cursor: pointer;
+}
+.recommend-knowlege .tab-active {
+  color: #fc8442;
 }
 .recommend-item-item {
   display: flex;

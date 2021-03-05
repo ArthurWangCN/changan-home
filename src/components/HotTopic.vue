@@ -19,6 +19,7 @@
           最新话题
         </p>
       </div>
+      <a class="more" v-if="currentHotTopic === 'hot'" @click.prevent="goRecommendKno">更多</a>
     </div>
     <div class="hot-topic-content" v-if="loading">
       <div class="hot-topic-item">
@@ -31,7 +32,7 @@
               <div
                 class="first-item-title"
                 style="margin-top: 10px"
-                @click="goTopic(item.id)"
+                @click="goTopic(item)"
               >
                 {{ item.questionTitle }}
               </div>
@@ -69,7 +70,7 @@
               <div
                 class="first-item-title"
                 style="margin-top: 10px"
-                @click="goTopic(item.id)"
+                @click="goTopic(item)"
               >
                 {{ item.questionTitle }}
               </div>
@@ -99,9 +100,12 @@
       </div>
     </div>
     <nothing v-else />
+
+    <circle-dialog ref="circleDialog" :curTopic='curTopic' @joinCircle="getHotTopic"></circle-dialog>
   </div>
 </template>
 <script>
+import CircleDialog from '@/components/CircleDialog.vue';
 import { getHotTopic, getTopicItem } from "../api/interface/home";
 import { showDate, publiceUrl } from "@/utils/index.js";
 
@@ -112,13 +116,21 @@ export default {
       leftdata: [],
       rightdata: [],
       loading: true,
+      curTopic: {},
     };
+  },
+  components: {
+    CircleDialog
   },
   created() {
     this.init();
   },
   methods: {
     init() {
+      this.getHotTopic();
+    },
+
+    getHotTopic() {
       getHotTopic({
         size: 12,
         current: 1,
@@ -190,19 +202,30 @@ export default {
     },
 
     //跳转热门话题详情
-    goTopic(id) {
+    goTopic(topic) {
+      console.log(topic)
       getTopicItem({
-        questionId: id,
+        questionId: topic.id,
       })
         .then((json) => {
           if (json.success) {
-            if (json.content) {
+            if (json.content.isVerify) {
               window.open(
-                publiceUrl + "/circle/#/circle-specialArea/detail?id=" + id
+                publiceUrl + "/circle/#/circle-specialArea/detail?id=" + topic.id
               );
-              // window.location.href = publiceUrl + "/circle/#/circle-specialArea/detail?id=" + id;
             } else {
-              this.$message.warning("您暂无权限查看该话题");
+              // this.$message.warning("您暂无权限查看该话题");
+              if (topic.joinStatus == '1') {
+                this.$message({
+                  message: '圈子审核中，请稍候',
+                  type: 'warning',
+                  offset: 60
+                });
+              } else {
+                this.curTopic = topic;
+                this.$refs.circleDialog.dialogVisible = true;
+                this.$refs.circleDialog.circleId = topic.circleId;
+              }
             }
           } else {
             this.$message.error(json.message);
@@ -211,6 +234,13 @@ export default {
         .catch((json) => {
           this.$message.error(json.message);
         });
+    },
+
+    goRecommendKno() {
+      let routeUrl = this.$router.resolve({
+        path: "/hotTopic"
+      });
+      window.open(routeUrl.href, '_blank');
     },
   },
 };

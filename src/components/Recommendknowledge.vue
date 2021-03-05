@@ -2,10 +2,26 @@
   <div class="recommend-knowlege">
     <div class="recommend-knowlege-title">
       <div class="title-name">
-        推荐知识
-        <img src="../assets/img/fire.png" alt="" />
+        <span
+          class="tab-recommend"
+          :class="{ 'tab-active': tabActive === 'recommend' }"
+          @click="onTabChange('recommend')"
+        >
+          推荐知识
+          <img
+            src="../assets/img/fire.png"
+            :style="{ opacity: tabActive === 'recommend' ? 1 : 0.6 }"
+            alt=""
+          />
+        </span>
+        <span
+          class="tab-new"
+          :class="{ 'tab-active': tabActive === 'new' }"
+          @click="onTabChange('new')"
+          >最新知识</span
+        >
       </div>
-      <a class="more" @click.prevent="goRecommendKno">更多</a>
+      <a class="more" @click.prevent="goKnoMore">更多</a>
     </div>
     <div class="recommend-knowlege-parts" v-if="loading">
       <div class="recommend-knowlege-left recommend-knowlege-part">
@@ -34,7 +50,11 @@
             @mouseenter="showleftData(index)"
             v-show="!item.isShowPicInfo"
           >
-            <p><span class="dot" /><span class="kno-title-ellipsis">{{ item.title }}</span></p>
+            <p>
+              <span class="dot" /><span class="kno-title-ellipsis">{{
+                item.title
+              }}</span>
+            </p>
             <span class="date">{{ item.uploadTime }}</span>
           </div>
         </div>
@@ -61,7 +81,11 @@
             @mouseenter="showrightData(index)"
             v-show="!item.isShowPicInfo"
           >
-            <p><span class="dot" /><span class="kno-title-ellipsis">{{ item.title }}</span></p>
+            <p>
+              <span class="dot" /><span class="kno-title-ellipsis">{{
+                item.title
+              }}</span>
+            </p>
             <span class="date">{{ item.uploadTime }}</span>
           </div>
         </div>
@@ -71,8 +95,8 @@
   </div>
 </template>
 <script>
-import { getKnowledge } from "../api/interface/home";
-import { showDate } from "@/utils/index.js";
+import { getRecommendKno, getNewKno } from "../api/interface/home";
+import { showDate, publiceUrl } from "@/utils/index.js";
 
 export default {
   data() {
@@ -80,6 +104,7 @@ export default {
       leftdata: [],
       rightdata: [],
       loading: true,
+      tabActive: "recommend", // recommend推荐知识 new最新知识
     };
   },
   created() {
@@ -87,55 +112,90 @@ export default {
   },
   methods: {
     init() {
-      getKnowledge({
+      this.getRecommendKno();
+    },
+
+    onTabChange(type) {
+      this.tabActive = type;
+      if (type === "recommend") {
+        this.getRecommendKno();
+      } else if (type === "new") {
+        this.getNewKno();
+      }
+    },
+
+    // 推荐知识列表
+    getRecommendKno() {
+      getRecommendKno({
         size: 12,
         current: 1,
       })
         .then((json) => {
           if (json.success) {
-            const data = json.content.list;
-            if (data.length > 0) {
-              this.loading = true;
-              let leftdata = data.slice(0, 6);
-              leftdata = leftdata.map((item, index) => {
-                item.title = item.title.replace(/###/g,'');
-                item.title = item.title.replace(/\$\$\$/g,'');
-                if (index == 0) {
-                  item.isShowPicInfo = true;
-                } else {
-                  item.isShowPicInfo = false;
-                }
-                item.uploadTime = showDate(item.uploadTime);
-                return item;
-              });
-              let rightdata = data.slice(6);
-              rightdata = rightdata.map((item, index) => {
-                item.title = item.title.replace(/###/g,'');
-                item.title = item.title.replace(/\$\$\$/g,'');
-                if (index == 0) {
-                  item.isShowPicInfo = true;
-                } else {
-                  item.isShowPicInfo = false;
-                }
-                item.uploadTime = showDate(item.uploadTime);
-                return item;
-              });
-              this.leftdata = leftdata;
-              this.rightdata = rightdata;
-            } else {
-              this.loading = false;
-            }
+            this.handleKnoData(json.content.list);
           } else {
             this.loading = false;
-            // this.$message.error(json.message);
             console.log(json.message);
           }
         })
         .catch((json) => {
           this.loading = false;
-          // this.$message.error(json.message);
           console.log(json.message);
         });
+    },
+
+    // 推荐知识列表
+    getNewKno() {
+      getNewKno({
+        size: 12,
+        current: 1,
+      })
+        .then((json) => {
+          if (json.list) {
+            this.handleKnoData(json.list);
+          } else {
+            this.loading = false;
+            console.log(json.message);
+          }
+        })
+        .catch((json) => {
+          this.loading = false;
+          console.log(json.message);
+        });
+    },
+
+    // 处理知识接口数据
+    handleKnoData(d) {
+      const data = d;
+      if (data.length > 0) {
+        this.loading = true;
+        let leftdata = data.slice(0, 6);
+        leftdata = leftdata.map((item, index) => {
+          item.title = item.title.replace(/###|\$\$\$/g, "");
+          if (index == 0) {
+            item.isShowPicInfo = true;
+          } else {
+            item.isShowPicInfo = false;
+          }
+          item.uploadTime = showDate(item.uploadTime);
+          return item;
+        });
+        let rightdata = data.slice(6);
+        rightdata = rightdata.map((item, index) => {
+          item.title = item.title.replace(/###|\$\$\$/g, "");
+          if (index == 0) {
+            item.isShowPicInfo = true;
+          } else {
+            item.isShowPicInfo = false;
+          }
+          item.uploadTime = showDate(item.uploadTime);
+          return item;
+        });
+        this.leftdata = leftdata;
+        this.rightdata = rightdata;
+      } else {
+        this.loading = false;
+      }
     },
 
     // 推荐知识鼠标上移显示待图片的信息
@@ -159,18 +219,23 @@ export default {
     //跳转知识页面
     goKnow(url) {
       window.open(url);
-      // window.location.href = url;
+    },
+
+    // 跳转更多
+    goKnoMore() {
+      if (this.tabActive === "recommend") {
+        this.goRecommendKno();
+      } else if (this.tabActive === "new") {
+        window.open(publiceUrl + "/krd/home/index#/generalSearch?searchKey=&curSort=publicTime");
+      }
     },
 
     // 跳转推荐知识列表页
     goRecommendKno() {
-      // this.$router.push({
-      //   path: "/recommendKno"
-      // });
       let routeUrl = this.$router.resolve({
-        path: "/recommendKno"
+        path: "/recommendKno",
       });
-      window.open(routeUrl.href, '_blank');
+      window.open(routeUrl.href, "_blank");
     },
   },
 };

@@ -127,5 +127,8 @@ export default {
   box-sizing: border-box;
   padding: 0 20px 40px;
 }
-
+.more-breadcrumb .breadcrumb-cur:hover {
+  color: #3d8cfc;
+  cursor: pointer;
+}
 </style>

@@ -142,6 +142,7 @@ export default {
   align-items: center;
   justify-content: space-between;
   padding: 20px 0;
+  border-bottom: 1px solid #eeeeee;
 }
 .notice-title {
   font-size: 18px;
@@ -180,7 +181,7 @@ export default {
 .notice-item {
   box-sizing: border-box;
   padding: 20px 0 30px;
-  border-top: 1px solid #eeeeee;
+  border-bottom: 1px solid #eeeeee;
 }
 .notice-item-header{
   display: flex;

@@ -84,10 +84,10 @@ export default {
 
     // 跳转到搜索页
     toSearch() {
-      if (this.keyword == "" && this.currentTopic == "知识") {
-        this.$message.warning("请输入检索内容");
-        return false;
-      }
+      // if (this.keyword == "" && this.currentTopic == "知识") {
+      //   this.$message.warning("请输入检索内容");
+      //   return false;
+      // }
       if (this.currentTopic == "知识") {
         window.open(
           publiceUrl +
@@ -95,7 +95,9 @@ export default {
             this.keyword
         );
       } else if (this.currentTopic == "话题") {
-
+        window.open(
+          publiceUrl + "/circle/#/circle-squareMore-topic?searchFuzzyShow=" + this.keyword
+        );
       } else if (this.currentTopic == "圈子") {
         window.open(
           publiceUrl + "/circle/#/circle-square?searchKey=" + this.keyword

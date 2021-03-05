@@ -25,7 +25,10 @@ export const getInformationItem = params => axios.get('/index/information/list/'
 export const getHotTopic = params => axios.get('/index/circle/topic', { params });
 
 //获取推荐知识
-export const getKnowledge = params => axios.get('/index/kno/recommend/list', { params });
+export const getRecommendKno = params => axios.get('/index/kno/recommend/list', { params });
+
+//获取最新知识
+export const getNewKno = params => axios.get('/index/kno/knoNewestList', { params });
 
 //话题权限
 export const getTopicItem = params => axios.get('/index/circle/verifyQuestion', { params });
@@ -40,7 +43,7 @@ export const getSubscribe = params => axios.get('/index/spe/subscribe', { params
 export const DeleteSubscribe = params => axios.get('/index/spe/unsubscribe', { params });
 
 //加入圈子
-export const getForum = params => axios.get('/index/circle/joinCircle', { params });
+export const joinCircle = params => axios.get('/index/circle/joinCircle', { params });
 
 // 轮播图列表
 export const getBanner = params => axios.get('/index/banner/list', { params });
@@ -63,12 +66,13 @@ export default {
   getInformation,
   getInformationItem,
   getHotTopic,
-  getKnowledge,
+  getRecommendKno,
+  getNewKno,
   getTopicItem,
   getSpecialDetail,
   getSubscribe,
   DeleteSubscribe,
-  getForum,
+  joinCircle,
   getBanner,
   getHotWordList,
   getHotTags,

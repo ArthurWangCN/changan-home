@@ -7,13 +7,19 @@
   line-height: 50px;
   margin: 0 auto;
   font-size: 14px;
-  color: #999999;
+  color: #333333;
 }
 .more-breadcrumb span{
   cursor: pointer;
 }
-.breadcrumb-cur {
+.more-breadcrumb span:hover {
+  color: #3d8cfc;
+}
+.more-breadcrumb .breadcrumb-cur,
+.more-breadcrumb .breadcrumb-cur:hover {
   color: #333333;
+  font-weight: bold;
+  cursor: default;
 }
 .more-content {
   width: 1200px;

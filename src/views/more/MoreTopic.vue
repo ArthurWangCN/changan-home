@@ -6,14 +6,14 @@
       <div class="more-breadcrumb ">
         <span @click="goHome">智谷首页</span>
         <i class="el-icon-arrow-right" style="margin:0 6px;"></i>
-        <span @click="goKno" class="breadcrumb-cur">{{ knoType === 'hotKno' ? '热点知识' : '推荐知识' }}</span>
+        <span class="breadcrumb-cur">热门话题</span>
       </div>
 
       <div class="more-content kno-content">
         <div class="kno-header">
           <span>
             排序方式：
-            <span class="color-blue">{{ knoType === 'recommendKno' ? "时间" : "浏览量" }}<i class="el-icon-bottom"></i></span>
+            <span class="color-blue">浏览量<i class="el-icon-bottom"></i></span>
           </span>
           <span class="font-info">共{{total}}条结果</span>
         </div>
@@ -21,17 +21,17 @@
         <ul class="kno-list">
           <li
             class="kno-item"
-            v-for="(item, index) in knoList"
+            v-for="(item, index) in hotTopic"
             :key="index"
           >
-            <p class="kno-title text-ellipsis" @click="goKnoDetail(item)">{{ item.title }}</p>
+            <p class="kno-title text-ellipsis" @click="goTopicDetail(item)">{{ item.questionTitle }}</p>
             <div class="kno-info">
-              <span :class="{'kno-info-wide': knoType==='recommendKno'}" :title="item.author">作者：{{ item.author }}</span>
-              <span class="kno-info-from" :class="{'kno-info-wider': knoType==='recommendKno'}" :title="item.classification">
-                来源：{{ item.classification || '暂无' }}
+              <span :title="item.creator">作者：{{ item.creator }}</span>
+              <span class="kno-info-from" :title="item.classification">
+                来源：{{ item.classification || '圈子' }}
               </span>
-              <span v-if="knoType==='hotKno'">浏览量：{{item.viewCount | 10}}</span>
-              <span>发布时间：{{ item.uploadTime }}</span>
+              <span>浏览量：{{ item.viewCount || 0 }}</span>
+              <span>发布时间：{{ item.createTime }}</span>
             </div>
           </li>
         </ul>
@@ -50,76 +50,53 @@
     </div>
 
     <common-footer />
+
+    <circle-dialog ref="circleDialog" :curTopic='curTopic' @joinCircle="getHotTopic"></circle-dialog>
   </div>
 </template>
 
 <script>
 import '@/assets/css/more.css';
 import { formatDate } from '@/utils/index';
-import { getHotKnoList } from '@/api/interface/home';
-import {
-  getRecommendKnoList
-} from '@/api/interface/more';
+import { getHotTopic, getTopicItem } from '@/api/interface/home';
+import { publiceUrl } from "@/utils/index.js";
+import CircleDialog from '@/components/CircleDialog.vue';
 export default {
   name: 'knowledgeList',
   data() {
     return {
       isLoading: false,
-      knoType: '',  // hotKno:热点知识  recommendKno:推荐知识
       currentPage: 1,
       total: 0,
-      knoList: [],
+      hotTopic: [],
+      curTopic: {},
     }
   },
   components: {
+    CircleDialog,
     Top: window.TopCommonFooter.Top,
     CommonFooter: window.TopCommonFooter.CommonFooter,
   },
   created() {
-    this.knoType = this.$route.name;
     this.init();
   },
   methods: {
     init() {
-      if (this.knoType === 'hotKno') {
-        this.getHotKnoList();
-      } else if (this.knoType === 'recommendKno') {
-        this.getRecommendKnoList();
-      }
+      this.getHotTopic();
     },
 
-    getHotKnoList() {
-      getHotKnoList({
+    getHotTopic() {
+      getHotTopic({
         current: this.currentPage,
-        size: 20
-      }).then(res => {
-        if (res.list) {
-          this.knoList = res.list;
-          this.total = res.total;
-          this.knoList.forEach(item => {
-            // 格式化时间
-            item.uploadTime = formatDate(item.uploadTime);
-          })
-        }
-      }).catch(err => {
-        this.$message.error(err.message);
-      }).finally(_ => {
-        this.isLoading = false;
-      })
-    },
-
-    // 推荐知识列表
-    getRecommendKnoList() {
-      getRecommendKnoList({
-        current: this.currentPage,
-        size: 20
+        size: 20,
+        type: 'hot'
       }).then(res => {
         if (res.success) {
-          this.knoList = res.content.list;
-          this.total = res.content.total;
-          this.knoList.forEach(item => {
+          this.hotTopic = res.content.rows;
+          this.total = res.content.totalRows;
+          this.hotTopic.forEach(item => {
             // 格式化时间
-            item.uploadTime = formatDate(item.uploadTime);
+            item.createTime = formatDate(item.createTime);
           })
         }
       }).catch(err => {
@@ -129,26 +106,48 @@ export default {
       })
     },
 
-    goKnoDetail(kno) {
-      window.open(kno.detailUrl, '_blank')
+    goTopicDetail(topic) {
+      const id = topic.id;
+      getTopicItem({
+        questionId: id,
+      })
+        .then((json) => {
+          if (json.success) {
+            if (json.content.isVerify) {
+              window.open(
+                publiceUrl + "/circle/#/circle-specialArea/detail?id=" + id
+              );
+            } else {
+              // this.$message.warning("您暂无权限查看该话题");
+              if (topic.joinStatus == '1') {
+                this.$message({
+                  message: '圈子审核中，请稍候',
+                  type: 'warning',
+                  offset: 60
+                });
+              } else {
+                this.curTopic = topic;
+                this.$refs.circleDialog.dialogVisible = true;
+                this.$refs.circleDialog.circleId = topic.circleId;
+              }
+            }
+          } else {
+            this.$message.error(json.message);
+          }
+        })
+        .catch((json) => {
+          this.$message.error(json.message);
+        });
     },
-
     handleCurrentChange(current) {
       this.currentPage = current;
-      if (this.knoType === 'hotKno') {
-        this.getHotKnoList();
-      } else if (this.knoType === 'recommendKno') {
-        this.getRecommendKnoList();
-      }
+      this.getHotTopic();
     },
 
     goHome() {
       this.$router.push({path: '/'});
     },
 
-    goKno() {
-      this.$router.push({path: `/${this.knoType}`});
-    },
   }
 }
 </script>

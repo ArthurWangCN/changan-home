@@ -39,6 +39,14 @@ const routes = [
     meta: { title: '推荐知识' }
   },
   {
+    path: '/hotTopic',     // 更多 热门话题
+    name: 'hotTopic',
+    component: () => import(
+      /* webpackChunkName: "more" */ '@/views/more/MoreTopic.vue'
+    ),
+    meta: { title: '热门话题' }
+  },
+  {
     path: '/colleague',     // 搜同事
     name: 'colleague',
     component: () => import(

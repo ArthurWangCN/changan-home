@@ -3,7 +3,7 @@
     <top type="common" />
 
     <div  v-loading="isLoading">
-      <div class="more-breadcrumb ">
+      <div class="more-breadcrumb">
         <span @click="goHome">智谷首页</span>
         <i class="el-icon-arrow-right" style="margin:0 6px;"></i>
         <span class="breadcrumb-cur">轮播图详情</span>

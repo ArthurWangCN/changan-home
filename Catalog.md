@@ -15,7 +15,8 @@
 │  │   └─LoginPic.vue #登录页图片设置
 │  ├─Banner.vue #轮播图组件
 │  ├─Channel.vue #专业频道组件
-│  ├─ChannelBannerUser #专业频道、轮播图、用户信息组件 用于首页组件拖拽
+│  ├─ChannelBannerUser.vue #专业频道、轮播图、用户信息组件 用于首页组件拖拽
+│  ├─CirCleDialog.vue #话题无权限时加入圈子引导弹窗组件
 │  ├─Column.vue #专栏组件
 │  ├─HomeSearch.vue #首页搜索组件
 │  ├─HotForum.vue #热门圈子组件
@@ -45,6 +46,7 @@
         ├─Feedback.vue #反馈建议
         ├─Information.vue #技术资讯
         ├─MoreKnowledge.vue #热点知识、推荐知识
+        ├─MoreTopic.vue #热门话题列表页
         ├─Notice.vue #通知公告
         └─NoticeDetail.vue #通知公告详情页
 ```
