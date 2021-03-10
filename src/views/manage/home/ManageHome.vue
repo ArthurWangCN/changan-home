@@ -16,6 +16,8 @@
 
     <home-notice v-if="tabActive === 'notice'"></home-notice>
 
+    <home-information v-if="tabActive === 'information'"></home-information>
+
     <hot-setting v-if="tabActive === 'circle'" key="circle" tabActive="circle"></hot-setting>
     <hot-setting v-if="tabActive === 'column'" key="column" tabActive="column"></hot-setting>
     <hot-setting v-if="tabActive === 'topic'" key="topic" tabActive="topic"></hot-setting>
@@ -29,6 +31,7 @@ import '@/assets/css/manage.css';
 import HomeLayout from '@/components/manage/HomeLayout.vue';
 import HomeBanner from '@/components/manage/HomeBanner.vue';
 import HomeNotice from '@/components/manage/HomeNotice.vue';
+import HomeInformation from '@/components/manage/HomeInformation.vue';
 import HotSetting from '@/components/manage/HotSetting.vue';
 import LoginPic from '@/components/manage/LoginPic.vue';
 export default {
@@ -37,6 +40,7 @@ export default {
     HomeLayout,
     HomeBanner,
     HomeNotice,
+    HomeInformation,
     HotSetting,
     LoginPic,
   },

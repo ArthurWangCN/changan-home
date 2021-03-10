@@ -28,7 +28,7 @@
             <div class="kno-info">
               <span :title="item.creator">作者：{{ item.creator }}</span>
               <span class="kno-info-from" :title="item.classification">
-                来源：{{ item.classification || '圈子' }}
+                来源：{{ item.circleName || '圈子' }}
               </span>
               <span>浏览量：{{ item.viewCount || 0 }}</span>
               <span>发布时间：{{ item.createTime }}</span>
