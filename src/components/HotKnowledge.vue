@@ -6,9 +6,10 @@
     </div>
     <div class="hot-knowlege-items">
       <div
-        class="hot-knowlege-item-wrapper"
+        class="hot-knowlege-item-wrapper cp"
         v-for="(item, index) in hotKnowlege"
         :key="index"
+        @click="goKnow(item.detailUrl)"
       >
         <div class="first-column-item" v-show="item.isShowPicInfo">
           <div class="item-img">
@@ -21,7 +22,7 @@
             </svg>
           </div>
           <div class="recommend-item-info">
-            <div class="first-item-title" @click="goKnow(item.detailUrl)" :title="item.title">{{ item.title }}</div>
+            <div class="first-item-title" :title="item.title">{{ item.title }}</div>
             <div class="first-item-intro">{{ item.detail }}</div>
           </div>
         </div>
@@ -125,9 +126,6 @@ export default {
 
     // 跳转热点知识列表页
     goHotKno() {
-      // this.$router.push({
-      //   path: "/hotKno"
-      // });
       let routeUrl = this.$router.resolve({
         path: "/hotKno"
       });
@@ -137,7 +135,6 @@ export default {
     //跳转知识页面
     goKnow(url) {
       window.open(url);
-      // window.location.href = url;
     },
 
     // 热点知识鼠标上移显示待图片的信息

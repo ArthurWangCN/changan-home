@@ -30,7 +30,7 @@
               <span class="kno-info-from" :class="{'kno-info-wider': knoType==='recommendKno'}" :title="item.classification">
                 来源：{{ item.classification || '暂无' }}
               </span>
-              <span v-if="knoType==='hotKno'">浏览量：{{item.viewCount | 10}}</span>
+              <span v-if="knoType==='hotKno'">浏览量：{{item.viewCount || 0}}</span>
               <span>发布时间：{{ item.uploadTime }}</span>
             </div>
           </li>
@@ -54,6 +54,7 @@
 </template>
 
 <script>
+const MAX_TOTAL = 100;  // 热点知识显示前100条
 import '@/assets/css/more.css';
 import { formatDate } from '@/utils/index';
 import { getHotKnoList } from '@/api/interface/home';
@@ -95,7 +96,7 @@ export default {
       }).then(res => {
         if (res.list) {
           this.knoList = res.list;
-          this.total = res.total;
+          this.total = res.total>MAX_TOTAL ? MAX_TOTAL : res.total;
           this.knoList.forEach(item => {
             // 格式化时间
             item.uploadTime = formatDate(item.uploadTime);

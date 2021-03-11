@@ -578,6 +578,7 @@
   text-overflow: ellipsis;
   cursor: pointer;
 }
+.hot-knowlege-item-wrapper:hover .first-item-title,
 .recommend-item-title .first-item-title:hover {
   color: #3d8cfc;
 }
@@ -666,6 +667,9 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+.home-knowlege-items:hover .first-item-title {
+  color: #3d8cfc;
 }
 
 /* 热点知识 */
@@ -941,7 +945,8 @@
 }
 .hot-topic-title .title-left .circle-title-name {
   margin-right: 42px;
-  color: #999;
+  /* color: #999; */
+  color: #777;
   cursor: pointer;
 }
 .hot-topic-title .title-left .circle-title-name.active {
@@ -1062,3 +1067,5 @@
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+
+.cp { cursor: pointer; }

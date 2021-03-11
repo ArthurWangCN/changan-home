@@ -25,7 +25,12 @@
     </div>
     <div class="recommend-knowlege-parts" v-if="loading">
       <div class="recommend-knowlege-left recommend-knowlege-part">
-        <div class="home-knowlege-items" v-for="(item, index) in leftdata">
+        <div
+          class="home-knowlege-items cp"
+          v-for="(item, index) in leftdata"
+          :key="index"
+          @click="goKnow(item.detailUrl)"
+        >
           <div class="first-column-item" v-show="item.isShowPicInfo">
             <div class="item-img">
               <img src="../assets/img/document.png" alt="" />
@@ -34,7 +39,7 @@
               </svg>
             </div>
             <div class="recommend-item-title">
-              <div class="first-item-title" @click="goKnow(item.detailUrl)">
+              <div class="first-item-title">
                 {{ item.title }}
               </div>
               <span v-show="item.uploadTime" class="first-item-time">
@@ -60,13 +65,18 @@
         </div>
       </div>
       <div class="recommend-knowlege-right recommend-knowlege-part">
-        <div class="home-knowlege-items" v-for="(item, index) in rightdata">
+        <div
+          class="home-knowlege-items"
+          v-for="(item, index) in rightdata"
+          :key="index"
+          @click="goKnow(item.detailUrl)"
+        >
           <div class="first-column-item" v-show="item.isShowPicInfo">
             <div class="item-img">
               <img src="../assets/img/hotknowledge.png" alt="" />
             </div>
             <div class="recommend-item-title">
-              <div class="first-item-title" @click="goKnow(item.detailUrl)">
+              <div class="first-item-title">
                 {{ item.title }}
               </div>
               <span v-show="item.uploadTime" class="first-item-time">

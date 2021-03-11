@@ -6,9 +6,10 @@
     </div>
     <div class="hot-knowlege-items">
       <div
-        class="hot-knowlege-item-wrapper"
+        class="hot-knowlege-item-wrapper cp"
         v-for="(item, index) in hotKnowlege"
         :key="item.sysId"
+        @click="goNoticeDetail(item)"
       >
         <div class="first-column-item" v-show="item.isShowPicInfo">
           <div class="item-img">
@@ -21,7 +22,7 @@
             </svg> -->
           </div>
           <div class="recommend-item-info">
-            <div class="first-item-title" @click="goNoticeDetail(item)">{{ item.title }}</div>
+            <div class="first-item-title">{{ item.title }}</div>
             <div class="first-item-intro">{{ item.detail }}</div>
           </div>
         </div>

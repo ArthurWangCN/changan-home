@@ -19,11 +19,16 @@
           最新话题
         </p>
       </div>
-      <a class="more" v-if="currentHotTopic === 'hot'" @click.prevent="goRecommendKno">更多</a>
+      <a class="more" @click.prevent="goTopicPage">更多</a>
     </div>
     <div class="hot-topic-content" v-if="loading">
       <div class="hot-topic-item">
-        <div class="home-knowlege-items" v-for="(item, index) in leftdata">
+        <div
+          class="home-knowlege-items cp"
+          v-for="(item, index) in leftdata"
+          :key="index"
+          @click="goTopic(item)"
+        >
           <div class="first-column-item" v-show="item.isShowPicInfo">
             <div class="item-img">
               <img src="../assets/img/hottopic.png" alt="" />
@@ -32,7 +37,6 @@
               <div
                 class="first-item-title"
                 style="margin-top: 10px"
-                @click="goTopic(item)"
               >
                 {{ item.questionTitle }}
               </div>
@@ -61,7 +65,12 @@
         </div>
       </div>
       <div class="hot-topic-item">
-        <div class="home-knowlege-items" v-for="(item, index) in rightdata">
+        <div
+          class="home-knowlege-items cp"
+          v-for="(item, index) in rightdata"
+          :key="index"
+          @click="goTopic(item)"
+        >
           <div class="first-column-item" v-show="item.isShowPicInfo">
             <div class="item-img">
               <img src="../assets/img/hottopic.png" alt="" />
@@ -70,7 +79,6 @@
               <div
                 class="first-item-title"
                 style="margin-top: 10px"
-                @click="goTopic(item)"
               >
                 {{ item.questionTitle }}
               </div>
@@ -203,7 +211,6 @@ export default {
 
     //跳转热门话题详情
     goTopic(topic) {
-      console.log(topic)
       getTopicItem({
         questionId: topic.id,
       })
@@ -236,11 +243,17 @@ export default {
         });
     },
 
-    goRecommendKno() {
-      let routeUrl = this.$router.resolve({
-        path: "/hotTopic"
-      });
-      window.open(routeUrl.href, '_blank');
+    goTopicPage() {
+      if (this.currentHotTopic === 'hot') {
+        let routeUrl = this.$router.resolve({
+          path: "/hotTopic"
+        });
+        window.open(routeUrl.href, '_blank');
+      } else {
+        window.open(
+          publiceUrl + "/circle/#/circle-squareMore-topic?searchFuzzyShow="
+        );
+      }
     },
   },
 };

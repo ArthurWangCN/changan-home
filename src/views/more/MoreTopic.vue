@@ -24,7 +24,10 @@
             v-for="(item, index) in hotTopic"
             :key="index"
           >
-            <p class="kno-title text-ellipsis" @click="goTopicDetail(item)">{{ item.questionTitle }}</p>
+            <div class="kno-title-wrapper">
+              <p class="kno-title text-ellipsis" @click="goTopicDetail(item)">{{ item.questionTitle }}</p>
+              <span class="kno-title-top" v-if="item.portalTop==1">置顶</span>
+            </div>
             <div class="kno-info">
               <span :title="item.creator">作者：{{ item.creator }}</span>
               <span class="kno-info-from" :title="item.classification">
@@ -172,12 +175,27 @@ export default {
   padding: 20px 0 30px;
   border-bottom: 1px solid #eeeeee;
 }
+.kno-title-wrapper {
+  display: flex;
+  align-items: center;
+}
 .kno-title {
   font-size: 16px;
   color: #333333;
   cursor: pointer;
+  max-width: 1000px;
 }
 .kno-title:hover{ color: #367fff; }
+.kno-title-top {
+  margin-left: 10px;
+  padding: 2px 4px;
+  color: #367fff;
+  border: 1px solid #367fff;
+  background-color: #e7f1ff;
+  border-radius: 4px;
+  font-size: 12px;
+  line-height: 12px;
+}
 .kno-info {
   font-size: 14px;
   color: #999999;

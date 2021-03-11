@@ -8,13 +8,17 @@
         <!-- 原行业资讯 -->
         <p class="circle-title-name">技术资讯</p>
         <ul class="industry-information-catgs">
+          <!-- <li :class="{'active':currentIndusInfo===0}">
+            <span class="industry-information-catg" @click="changeIndusInfo(0)">全部</span>
+          </li> -->
           <li
             v-for="(item, index) in titledata"
+            :key="index"
             :class="currentIndusInfo === item.id ? 'active' : ''"
           >
             <span
               class="industry-information-catg"
-              @click="changgeIndusInfo(item.id)"
+              @click="changeIndusInfo(item.id)"
               >{{ item.name }}</span
             >
           </li>
@@ -24,7 +28,7 @@
     </div>
     <div class="industry-information-content" v-if="loading">
       <div class="industry-information-content-item">
-        <div class="home-knowlege-items" v-for="(item, index) in leftdata">
+        <div class="home-knowlege-items cp" v-for="(item, index) in leftdata" :key="index">
           <div class="first-column-item" v-show="item.isShowPicInfo">
             <div class="item-img">
               <img src="../assets/img/information.png" alt="" />
@@ -58,7 +62,7 @@
         </div>
       </div>
       <div class="industry-information-content-item">
-        <div class="home-knowlege-items" v-for="(item, index) in rightdata">
+        <div class="home-knowlege-items cp" v-for="(item, index) in rightdata">
           <div class="first-column-item" v-show="item.isShowPicInfo">
             <div class="item-img">
               <img src="../assets/img/information.png" alt="" />
@@ -184,7 +188,7 @@ export default {
     },
 
     // 改变行业资讯分类
-    changgeIndusInfo(catg) {
+    changeIndusInfo(catg) {
       this.currentIndusInfo = catg;
       this.getItem(catg);
     },

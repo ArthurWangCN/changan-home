@@ -63,6 +63,7 @@
         <el-table-column prop="circleName" label="圈子" align="center" width="200"></el-table-column>
         <el-table-column prop="creatorName" label="提问人" align="center" width="150"></el-table-column>
         <el-table-column prop="createTime" label="提交时间" align="center" width="150"></el-table-column>
+        <el-table-column prop="viewCount" label="浏览量" align="center" width="150"></el-table-column>
       </template>
 
       <el-table-column label="操作" align="center" width="200">
